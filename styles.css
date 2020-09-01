@@ -1,0 +1,24 @@
+#main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    background: radial-gradient(circle at 0%, rgb(0, 255, 221), rgb(0, 204, 255));
+    width: 100%;
+    height: 100%;
+}
+
+.banner {
+    width: 100%;
+    text-align: center;
+    font-family: 'Open Sans', sans-serif;
+    font-size: xx-large;
+}
+
+.title_text_1 {
+    color: black;
+}
+
+.title_text_2 {
+    color: cornflowerblue;
+}
