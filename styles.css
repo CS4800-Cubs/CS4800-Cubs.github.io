@@ -1,6 +1,6 @@
 #main {
     height: 100vh;
-    background: linear-gradient(45deg, whitesmoke, slategray);
+    background: linear-gradient(45deg, whitesmoke, lightslategray);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -8,27 +8,39 @@
     overflow: hidden;
 }
 
-.centered_text_box {
+#logo {
+    width: 85%;
+}
+
+.centered_flex_box {
     width: 50vw;
     height: 50vh;
-    background: white;
+    border-radius: 1vh;
+    overflow: hidden;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
-.banner {
+.flex_banner {
     width: 100%;
     text-align: center;
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Open Sans Light', sans-serif;
     font-size: xx-large;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-.title_text_1 {
-    color: black;
+#banner_top {
+    flex-grow: 3;
+    justify-content: center;
+    background: white;
 }
 
-.title_text_2 {
-    color: cornflowerblue;
+#banner_bottom {
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.55);
 }
