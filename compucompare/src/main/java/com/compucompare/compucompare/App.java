@@ -1,4 +1,4 @@
-package com.compucompare;
+package com.compucompare.compucompare;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
