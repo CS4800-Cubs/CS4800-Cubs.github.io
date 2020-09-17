@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
-import java.util.Arrays;
 
 @RestController
 public class MainController
@@ -50,7 +49,6 @@ public class MainController
      * Added by Natalie.
      * @return Details about listed computers on the Best Buy Website.
      */
-
     @RequestMapping("/jsoupLibrary")
     String pullComputerInfo() throws IOException {
         Document doc = Jsoup.connect("https://www.bestbuy.com/site/laptop-computers/all-laptops/pcmcat138500050001.c?id=pcmcat138500050001").get();
