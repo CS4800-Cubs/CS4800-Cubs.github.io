@@ -1,10 +1,17 @@
 package com.compucompare.compucompare;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.io.IOException;
+import java.util.Arrays;
 
 @RestController
 public class MainController
@@ -36,5 +43,25 @@ public class MainController
             return "Error Forming JSON";
         }
         return stringInfo.toString();
+    }
+
+    /**
+     * Added by Natalie.
+     * @return Details about listed computers on the Best Buy Website.
+     */
+
+    @RequestMapping("/jsoupLibrary")
+    String pullComputerInfo() throws IOException {
+        Document doc = Jsoup.connect("https://www.bestbuy.com/site/laptop-computers/all-laptops/pcmcat138500050001.c?id=pcmcat138500050001").get();
+        Elements products = doc.select("img.product-image");
+        String[] strings = new String[products.size() + 1];
+        int counter = 0;
+        strings[counter++] = "Number of computers displayed on page: " + products.size();
+        for (Element product: products)
+            strings[counter++] = "<br/>Info: " + product.attr("alt");
+        String fullString = "";
+        for(String string: strings)
+            fullString += string;
+        return fullString;
     }
 }
