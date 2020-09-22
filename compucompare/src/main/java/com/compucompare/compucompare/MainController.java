@@ -8,6 +8,7 @@ import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.Random; 
@@ -125,4 +126,21 @@ public class MainController
 
         return password.toString();
     }
+    
+    /**
+     * Author Monica
+     */
+    @RequestMapping(value = "/NeedABreak", method = RequestMethod.GET)
+    public String getText(){
+    	return "<HTML>"
+    			+"<body style =\"background-color: black;\">"
+    			+"<p style = \"color: Red; text-align: center\"> Happy ~almost~ Spooktober!<p>"
+    			+"<img src=\"https://www.gamerevolution.com/assets/uploads/2019/12/dead-by-daylight-pennywise-1280x720.jpg\" style = \"width:500px; display: block;\r\n" + 
+    			"  margin-left: auto;\r\n" + 
+    			"  margin-right: auto;\r\n" + 
+    			"  width: 50%; \">"
+    			+           "<body><h1 style = \"color: Red; text-align: center\">Play DEAD BY DAYLIGHT!</h1></body>"
+    			+       "</HTML>";
+    }
+    
 }
