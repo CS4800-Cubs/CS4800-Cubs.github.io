@@ -10,6 +10,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import java.util.Random; 
 
 import java.io.IOException;
 
@@ -62,5 +63,66 @@ public class MainController
         for(String string: strings)
             fullString += string;
         return fullString;
+    }
+
+    /**
+     * Author: Alec
+     * Generate a random password with customization options
+     * @param length String containing length of password.
+     * @param includeSpecialCharacters boolean to add special characters to password.
+     * @param includeNumbers boolean to add numbers to password.
+     * @param includeUpperCase boolean to add upper case letters to password.
+     * @param includeLowerCase boolean to add lower case letters to password.
+     * @return JSon Object with password and option fields.
+     */
+    @RequestMapping(value = "/generatePassword", produces = MediaType.APPLICATION_JSON_VALUE)
+    String generatePassword(@RequestParam(value = "length", defaultValue = "8") String length, 
+                            @RequestParam(value = "includeSpecialCharacters", required = false, defaultValue = "false") boolean includeSpecialCharacters,
+                            @RequestParam(value = "includeNumbers", required = false, defaultValue = "false") boolean includeNumbers,
+                            @RequestParam(value = "includeUpperCase", required = false, defaultValue = "false") boolean includeUpperCase,
+                            @RequestParam(value = "includeLowerCase", required = false, defaultValue = "true") boolean includeLowerCase) 
+    throws JSONException{
+
+        String options = "";
+
+        if(includeLowerCase){
+            options += "abcdefghijklmnopqrstuvwxyz";
+        }
+        if(includeUpperCase){
+            options += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        }
+        if(includeNumbers){
+            options += "0123456789";
+        }
+        if(includeSpecialCharacters){
+            options += "!@#$%^&*_=+-/";
+        }
+
+        JSONObject password = new JSONObject();
+
+        password.put("length", length);
+        password.put("includeLowerCase", includeLowerCase);
+        password.put("includeUpperCase", includeUpperCase);
+        password.put("includeNumbers", includeNumbers);
+        password.put("includeSpecialCharacters", includeSpecialCharacters);
+
+        
+        try {
+            String result = "";
+            Random rand = new Random(); 
+
+            for (int i = 0; i < Integer.parseInt(length); i++) {
+                int index = rand.nextInt(options.length());
+                result += options.charAt(index);
+            }
+            password.put("password", result);
+
+        }
+
+        catch (JSONException e) {
+            return "Error Forming JSON";
+        }
+
+        return password.toString();
     }
 }
