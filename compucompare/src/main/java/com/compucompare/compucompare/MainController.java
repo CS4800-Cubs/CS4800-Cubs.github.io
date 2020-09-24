@@ -1,6 +1,9 @@
 package com.compucompare.compucompare;
 
 import org.joda.time.LocalTime;
+import org.apache.commons.math3.linear.LUDecomposition;
+import org.apache.commons.math3.linear.MatrixUtils;
+import org.apache.commons.math3.linear.RealMatrix;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -12,7 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import java.util.Random; 
+import java.util.Random;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
 
@@ -26,7 +32,8 @@ public class MainController
     }
 
     /**
-     * Added by Markus.
+     * Assignment 3 - Added by Markus.
+     * 
      * @param str A String parameter provided in the request.
      * @return Details about the String in JSON format.
      */
@@ -46,6 +53,44 @@ public class MainController
             return "Error Forming JSON";
         }
         return stringInfo.toString();
+    }
+
+    /**
+     * Assignment 4 - Added by Markus.
+     * Finds the determinant of the given matrix.
+     * 
+     * @param jsonMatrix A matrix provided in JSON format.
+     * @return The determinant of the given matrix.
+     */
+    @RequestMapping("/determinant")
+    String determinant(@RequestParam(value = "matrix", defaultValue = "") String jsonMatrix)
+    {
+        Double[][] objectMatrix;
+        ObjectMapper jsonMapper = new ObjectMapper();
+        try
+        {
+            objectMatrix = jsonMapper.readValue(jsonMatrix, Double[][].class);
+        }
+        catch (JsonProcessingException e)
+        {
+            return "Invalid matrix data provided!";
+        }
+        double[][] unpackedMatrix = new double[objectMatrix.length][];
+        for (int row = 0; row < objectMatrix.length; row++)
+        {
+            unpackedMatrix[row] = new double[objectMatrix.length];
+            for (int col = 0; col < objectMatrix[row].length; col++)
+            {
+                if (objectMatrix[row][col] == null)
+                {
+                    return "Invalid input matrix, null values detected!";
+                }
+                unpackedMatrix[row][col] = objectMatrix[row][col];
+            }
+        }
+        RealMatrix matrix = MatrixUtils.createRealMatrix(unpackedMatrix);
+        double determinant = (new LUDecomposition(matrix)).getDeterminant();
+        return "The Determinant Is: " + determinant;
     }
 
     /**
