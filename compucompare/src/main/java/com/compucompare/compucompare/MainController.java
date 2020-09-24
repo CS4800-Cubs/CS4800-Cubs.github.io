@@ -145,7 +145,8 @@ public class MainController
      * Author Monica, A3
      */
     @RequestMapping(value = "/NeedABreak", method = RequestMethod.GET)
-    public String getHTMLString(){
+    public String needABreak(){
+
     	return "<HTML>"
     			+"<body style =\"background-color: black;\">"
     			+"<p style = \"color: Red; text-align: center\"> Happy ~almost~ Spooktober!<p>"
