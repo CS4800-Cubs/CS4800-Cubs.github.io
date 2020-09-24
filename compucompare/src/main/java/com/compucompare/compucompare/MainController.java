@@ -1,5 +1,6 @@
 package com.compucompare.compucompare;
 
+import org.joda.time.LocalTime;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -141,10 +142,10 @@ public class MainController
     }
     
     /**
-     * Author Monica
+     * Author Monica, A3
      */
     @RequestMapping(value = "/NeedABreak", method = RequestMethod.GET)
-    public String getText(){
+    public String getHTMLString(){
     	return "<HTML>"
     			+"<body style =\"background-color: black;\">"
     			+"<p style = \"color: Red; text-align: center\"> Happy ~almost~ Spooktober!<p>"
@@ -156,4 +157,20 @@ public class MainController
     			+       "</HTML>";
     }
     
+    /**
+     * Author Monica, A4
+     */
+    @RequestMapping("/SayHello")
+    public String sayHello(){
+    	LocalTime currentTime = new LocalTime();
+    	String time = ("It is currently: " + currentTime);
+    	Greeter greeter = new Greeter();
+    	return greeter.sayHello()+"\n"+time;    
+
+    }
+    public class Greeter {
+    	  public String sayHello() {
+    	    return "You look bootiful!";
+    	  }
+    	}
 }
