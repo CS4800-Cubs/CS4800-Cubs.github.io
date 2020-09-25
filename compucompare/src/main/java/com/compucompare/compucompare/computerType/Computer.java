@@ -1,7 +1,6 @@
 package com.compucompare.compucompare.computerType;
 
-import com.compucompare.compucompare.components.RAMComponent;
-import com.compucompare.compucompare.components.StorageComponent;
+import com.compucompare.compucompare.components.*;
 
 import java.util.List;
 
