@@ -17,4 +17,12 @@ public class Laptop extends Computer{
         this.display = display;
         this.battery = battery;
     }
+
+    public DisplayComponent getDisplay() {
+        return display;
+    }
+
+    public BatteryComponent getBattery() {
+        return battery;
+    }
 }
