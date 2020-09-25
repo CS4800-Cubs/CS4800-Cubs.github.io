@@ -1,5 +1,11 @@
 package com.compucompare.compucompare;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.commons.math3.linear.LUDecomposition;
+import org.apache.commons.math3.linear.MatrixUtils;
+import org.apache.commons.math3.linear.RealMatrix;
+import org.joda.time.LocalTime;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -17,14 +23,9 @@ import java.io.IOException;
 
 @RestController
 public class AssignmentController {
-    @RequestMapping("/")
-    String hello(@RequestParam(value = "name", defaultValue = "World") String name)
-    {
-        return String.format("Hello %s!", name);
-    }
-
     /**
-     * Added by Markus.
+     * Assignment 3 - Added by Markus.
+     *
      * @param str A String parameter provided in the request.
      * @return Details about the String in JSON format.
      */
@@ -47,6 +48,44 @@ public class AssignmentController {
     }
 
     /**
+     * Assignment 4 - Added by Markus.
+     * Finds the determinant of the given matrix.
+     *
+     * @param jsonMatrix A matrix provided in JSON format.
+     * @return The determinant of the given matrix.
+     */
+    @RequestMapping("/determinant")
+    String determinant(@RequestParam(value = "matrix", defaultValue = "") String jsonMatrix)
+    {
+        Double[][] objectMatrix;
+        ObjectMapper jsonMapper = new ObjectMapper();
+        try
+        {
+            objectMatrix = jsonMapper.readValue(jsonMatrix, Double[][].class);
+        }
+        catch (JsonProcessingException e)
+        {
+            return "Invalid matrix data provided!";
+        }
+        double[][] unpackedMatrix = new double[objectMatrix.length][];
+        for (int row = 0; row < objectMatrix.length; row++)
+        {
+            unpackedMatrix[row] = new double[objectMatrix.length];
+            for (int col = 0; col < objectMatrix[row].length; col++)
+            {
+                if (objectMatrix[row][col] == null)
+                {
+                    return "Invalid input matrix, null values detected!";
+                }
+                unpackedMatrix[row][col] = objectMatrix[row][col];
+            }
+        }
+        RealMatrix matrix = MatrixUtils.createRealMatrix(unpackedMatrix);
+        double determinant = (new LUDecomposition(matrix)).getDeterminant();
+        return "The Determinant Is: " + determinant;
+    }
+
+    /**
      * Added by Natalie.
      * Assignment 3 - Creates HTTP API request
      * @return an HTML design
@@ -61,6 +100,7 @@ public class AssignmentController {
 
     /**
      * Added by Natalie.
+     * Assignment 4 - Added Jsoup dependency
      * @return Details about listed computers on the Best Buy Website.
      */
     @RequestMapping("/jsoupLibrary")
@@ -137,5 +177,39 @@ public class AssignmentController {
         }
 
         return password.toString();
+    }
+
+    /**
+     * Author Monica, A3
+     */
+    @RequestMapping(value = "/NeedABreak", method = RequestMethod.GET)
+    public String needABreak(){
+
+        return "<HTML>"
+                +"<body style =\"background-color: black;\">"
+                +"<p style = \"color: Red; text-align: center\"> Happy ~almost~ Spooktober!<p>"
+                +"<img src=\"https://www.gamerevolution.com/assets/uploads/2019/12/dead-by-daylight-pennywise-1280x720.jpg\" style = \"width:500px; display: block;\r\n" +
+                "  margin-left: auto;\r\n" +
+                "  margin-right: auto;\r\n" +
+                "  width: 50%; \">"
+                +           "<body><h1 style = \"color: Red; text-align: center\">Play DEAD BY DAYLIGHT!</h1></body>"
+                +       "</HTML>";
+    }
+
+    /**
+     * Author Monica, A4
+     */
+    @RequestMapping("/SayHello")
+    public String sayHello(){
+        LocalTime currentTime = new LocalTime();
+        String time = ("It is currently: " + currentTime);
+        AssignmentController.Greeter greeter = new AssignmentController.Greeter();
+        return greeter.sayHello()+"\n"+time;
+
+    }
+    public class Greeter {
+        public String sayHello() {
+            return "You look bootiful!";
+        }
     }
 }
