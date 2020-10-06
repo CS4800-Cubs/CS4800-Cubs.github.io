@@ -48,4 +48,19 @@ public class CPUComponent extends Component
     {
         return architecture;
     }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if (!(o instanceof CPUComponent))
+        {
+            return false;
+        }
+        CPUComponent other = (CPUComponent) o;
+        return super.equals(o)
+            && other.singleBench == singleBench
+            && other.multiBench == multiBench
+            && other.numCores == numCores
+            && other.architecture.equals(architecture);
+    }
 }

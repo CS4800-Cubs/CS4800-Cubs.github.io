@@ -35,4 +35,19 @@ public class DisplayComponent extends Component{
     public int getRegY(){return regY;}
 
     public int getRefreshRate(){return refreshRate;}
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if (!(o instanceof DisplayComponent))
+        {
+            return false;
+        }
+        DisplayComponent other = (DisplayComponent) o;
+        return super.equals(o)
+            && other.size == size
+            && other.regX == regX
+            && other.regY == regY
+            && other.refreshRate == refreshRate;
+    }
 }

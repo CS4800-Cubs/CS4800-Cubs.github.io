@@ -98,4 +98,22 @@ public class Computer
     public Set<NetworkComponent> getInterfaces() {
         return interfaces;
     }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if (!(o instanceof Computer))
+        {
+            return false;
+        }
+        Computer other = (Computer) o;
+        return other.id == id
+            && other.brand.equals(brand)
+            && other.model.equals(model)
+            && other.processor.equals(processor)
+            && other.graphics.equals(graphics)
+            && other.ram.equals(ram)
+            && other.storage.equals(storage)
+            && other.interfaces.equals(interfaces);
+    }
 }

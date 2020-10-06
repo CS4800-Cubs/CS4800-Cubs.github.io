@@ -46,4 +46,17 @@ public abstract class Component
     {
         return model;
     }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if (!(o instanceof Component))
+        {
+            return false;
+        }
+        Component other = (Component) o;
+        return other.id == id
+            && other.brand.equals(brand)
+            && other.model.equals(model);
+    }
 }

@@ -34,4 +34,16 @@ public class BatteryComponent extends Component
         return capacity;
     }
 
+    @Override
+    public boolean equals(Object o)
+    {
+        if (!(o instanceof BatteryComponent))
+        {
+            return false;
+        }
+        BatteryComponent other = (BatteryComponent) o;
+        return super.equals(o)
+            && other.expectedLife == expectedLife
+            && other.capacity == capacity;
+    }
 }

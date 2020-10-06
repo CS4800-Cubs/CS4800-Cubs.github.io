@@ -29,4 +29,18 @@ public class StorageComponent extends Component{
     public boolean getSolidState(){return solidState;}
 
     public boolean getNvme(){return nvme;}
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if (!(o instanceof StorageComponent))
+        {
+            return false;
+        }
+        StorageComponent other = (StorageComponent) o;
+        return super.equals(o)
+            && other.capacity == capacity
+            && other.solidState == solidState
+            && other.nvme == nvme;
+    }
 }

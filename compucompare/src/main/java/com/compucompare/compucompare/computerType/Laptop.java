@@ -41,4 +41,17 @@ public class Laptop extends Computer
     public BatteryComponent getBattery() {
         return battery;
     }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if (!(o instanceof Laptop))
+        {
+            return false;
+        }
+        Laptop other = (Laptop) o;
+        return super.equals(o)
+            && other.battery.equals(battery)
+            && other.display.equals(display);
+    }
 }

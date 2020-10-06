@@ -45,4 +45,18 @@ public class NetworkComponent extends Component
     {
         return new HashSet<>(standards);
     }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if (!(o instanceof NetworkComponent))
+        {
+            return false;
+        }
+        NetworkComponent other = (NetworkComponent) o;
+        return super.equals(o)
+            && other.maxSpeed == maxSpeed
+            && other.wireless == wireless
+            && other.standards.equals(standards);
+    }
 }

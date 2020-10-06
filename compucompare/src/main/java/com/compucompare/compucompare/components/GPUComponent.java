@@ -27,4 +27,16 @@ public class GPUComponent extends Component
     {
         return this.benchmark;
     }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if (!(o instanceof GPUComponent))
+        {
+            return false;
+        }
+        GPUComponent other = (GPUComponent) o;
+        return super.equals(o)
+            && other.benchmark == benchmark;
+    }
 }

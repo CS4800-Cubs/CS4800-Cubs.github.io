@@ -29,4 +29,18 @@ public class RAMComponent extends Component{
     public int getSpeed(){return speed;}
 
     public boolean getDualChannel(){return dualChannel;}
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if (!(o instanceof RAMComponent))
+        {
+            return false;
+        }
+        RAMComponent other = (RAMComponent) o;
+        return super.equals(o)
+            && other.memory == memory
+            && other.speed == speed
+            && other.dualChannel == dualChannel;
+    }
 }
