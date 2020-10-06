@@ -1,21 +1,34 @@
 package com.compucompare.compucompare.components;
 
-import java.util.List;
-import java.util.ArrayList;
+import java.util.Set;
+import java.util.HashSet;
 
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+
+@Entity
 public class NetworkComponent extends Component
 {
     private int maxSpeed;
     private boolean wireless;
-    private List<String> standards;
+
+    @ElementCollection
+    private Set<String> standards;
+
+    public NetworkComponent()
+    {
+        super();
+        maxSpeed = 0;
+        wireless = false;
+    }
 
     public NetworkComponent(String brand, String model, int maxSpeed,
-                            boolean wireless, List<String> standards)
+                            boolean wireless, Set<String> standards)
     {
         super(brand, model);
         this.maxSpeed = maxSpeed;
         this.wireless = wireless;
-        this.standards = new ArrayList<>(standards);
+        this.standards = new HashSet<>(standards);
     }
 
     public int getMaxSpeed()
@@ -28,8 +41,8 @@ public class NetworkComponent extends Component
         return wireless;
     }
 
-    public List<String> getStandards()
+    public Set<String> getStandards()
     {
-        return new ArrayList<>(standards);
+        return new HashSet<>(standards);
     }
 }

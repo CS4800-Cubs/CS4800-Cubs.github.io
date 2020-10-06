@@ -1,9 +1,20 @@
 package com.compucompare.compucompare.components;
 
+import javax.persistence.Entity;
+
+@Entity
 public class RAMComponent extends Component{
     private double memory;
     private int speed;
     private boolean dualChannel;
+
+    public RAMComponent()
+    {
+        super();
+        memory = 0.0;
+        speed = 0;
+        dualChannel = false;
+    }
 
     public RAMComponent(String brand, String model, double memory,
                         int speed, boolean dualChannel){

@@ -2,17 +2,33 @@ package com.compucompare.compucompare.computerType;
 
 import com.compucompare.compucompare.components.*;
 
-import java.util.List;
+import java.util.Set;
 
-public class Laptop extends Computer{
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.OneToOne;
 
+@Entity
+public class Laptop extends Computer
+{
+    @OneToOne (cascade = CascadeType.ALL)
     private DisplayComponent display;
+
+    @OneToOne (cascade = CascadeType.ALL)
     private BatteryComponent battery;
+
+    public Laptop()
+    {
+        super();
+        display = null;
+        battery = null;
+    }
 
     public Laptop(String brand, String model, CPUComponent processor,
                   GPUComponent graphics, RAMComponent ram,
-                  List<StorageComponent> storage, List<NetworkComponent> interfaces,
-                  DisplayComponent display, BatteryComponent battery){
+                  Set<StorageComponent> storage, Set<NetworkComponent> interfaces,
+                  DisplayComponent display, BatteryComponent battery)
+    {
         super(brand, model, processor, graphics, ram, storage, interfaces);
         this.display = display;
         this.battery = battery;

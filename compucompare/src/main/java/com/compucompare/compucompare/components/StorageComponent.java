@@ -1,10 +1,20 @@
 package com.compucompare.compucompare.components;
 
+import javax.persistence.Entity;
+
+@Entity
 public class StorageComponent extends Component{
 
     private double capacity;
     private boolean solidState;
     private boolean nvme;
+
+    public StorageComponent()
+    {
+        capacity = 0.0;
+        solidState = false;
+        nvme = false;
+    }
 
     public StorageComponent(String brand, String model, double capacity,
                             boolean solidState, boolean nvme){

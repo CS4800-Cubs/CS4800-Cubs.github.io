@@ -1,12 +1,23 @@
 package com.compucompare.compucompare.components;
 
+import javax.persistence.Entity;
+
+@Entity
 public class CPUComponent extends Component
 {
-
     private int singleBench;
     private int multiBench;
     private int numCores;
     private String architecture;
+
+    public CPUComponent()
+    {
+        super();
+        singleBench = 0;
+        multiBench = 0;
+        numCores = 0;
+        architecture = "Undefined";
+    }
 
     public CPUComponent(String brand, String model, int singleBench,
                         int multiBench, int numCores, String architecture)
@@ -28,7 +39,7 @@ public class CPUComponent extends Component
         return multiBench;
     }
 
-    public int numCores()
+    public int getNumCores()
     {
         return numCores;
     }
