@@ -8,8 +8,8 @@ import java.util.Set;
 
 import com.compucompare.compucompare.components.NetworkComponent;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test various functions of the NetworkComponent class.
@@ -31,7 +31,7 @@ public class NetworkComponentTest
         return new NetworkComponent("Intel", "AX200", 2400, true, supportedWirelessStandards);
     }
 
-    @Before
+    @BeforeEach
     public void setup()
     {
         testComponent = createExampleComponent();

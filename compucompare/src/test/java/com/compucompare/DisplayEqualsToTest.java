@@ -2,9 +2,9 @@ package com.compucompare;
 
 import com.compucompare.compucompare.App;
 import com.compucompare.compucompare.components.DisplayComponent;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
@@ -18,7 +18,7 @@ public class DisplayEqualsToTest {
     private DisplayComponent display3;
     private DisplayComponent display4;
 
-    @Before
+    @BeforeEach
     public void setUp(){
         display1 = new DisplayComponent("BENQ", "GL2460", 24, 1920, 1080, 60);
         display2 = new DisplayComponent("BENQ", "GL2460", 24, 1920, 1080, 60);
@@ -35,17 +35,17 @@ public class DisplayEqualsToTest {
 
     @Test
     public void CheckingDisplaysEqual(){
-        Assert.assertTrue(display1.equals(display2));
+        Assertions.assertTrue(display1.equals(display2));
         System.out.println("Display1 is the same as display2");
-        Assert.assertFalse(display1.equals(display3));
+        Assertions.assertFalse(display1.equals(display3));
         System.out.println("Display1 is not the same as display3");
-        Assert.assertFalse(display1.equals(display4));
+        Assertions.assertFalse(display1.equals(display4));
         System.out.println("Display1 is not the same as display4");
-        Assert.assertFalse(display2.equals(display3));
+        Assertions.assertFalse(display2.equals(display3));
         System.out.println("Display2 is not the same as display4");
-        Assert.assertFalse(display2.equals(display4));
+        Assertions.assertFalse(display2.equals(display4));
         System.out.println("Display2 is not the same as display4");
-        Assert.assertFalse(display3.equals(display4));
+        Assertions.assertFalse(display3.equals(display4));
         System.out.println("Display3 is not the same as display4");
     }
 }

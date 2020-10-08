@@ -20,9 +20,9 @@ import com.compucompare.compucompare.components.StorageComponent;
 import com.compucompare.compucompare.computerType.Laptop;
 import com.compucompare.compucompare.database.LaptopRepository;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -43,7 +43,7 @@ public class DatabaseTest
     /**
      * Store an example laptop in the database.
      */
-    @Before
+    @BeforeEach
     public void setup()
     {
         Set<StorageComponent> drives = new HashSet<>();
@@ -70,7 +70,7 @@ public class DatabaseTest
         laptopRepository.save(testLaptop);
     }
 
-    @After
+    @AfterEach
     public void cleanup()
     {
         laptopRepository.delete(testLaptop);
