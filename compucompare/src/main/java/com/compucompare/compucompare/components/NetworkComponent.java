@@ -31,14 +31,29 @@ public class NetworkComponent extends Component
         this.standards = new HashSet<>(standards);
     }
 
+    public void setMaxSpeed(int maxSpeed)
+    {
+        this.maxSpeed = maxSpeed;
+    }
+
     public int getMaxSpeed()
     {
         return maxSpeed;
     }
 
+    public void setWireless(boolean wireless)
+    {
+        this.wireless = wireless;
+    }
+
     public boolean isWireless()
     {
         return wireless;
+    }
+
+    public void setStandards(Set<String> standards)
+    {
+        this.standards = new HashSet<>(standards);
     }
 
     public Set<String> getStandards()

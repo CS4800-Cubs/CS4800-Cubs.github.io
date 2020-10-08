@@ -55,7 +55,7 @@ public class AssignmentController {
      * @return The determinant of the given matrix.
      */
     @RequestMapping("/determinant")
-    String determinant(@RequestParam(value = "matrix", defaultValue = "") String jsonMatrix)
+    public String determinant(@RequestParam(value = "matrix", defaultValue = "") String jsonMatrix)
     {
         Double[][] objectMatrix;
         ObjectMapper jsonMapper = new ObjectMapper();
