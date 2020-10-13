@@ -78,14 +78,6 @@
 			<scope>runtime</scope>
 		</dependency>
 
-		<!-- Test-Only Dependencies -->
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.12</version>
-			<scope>test</scope>
-		</dependency>
-
 		<!-- For CS 4800 Assignment Purposes Only -->
 		<dependency>
 			<groupId>org.jsoup</groupId>
