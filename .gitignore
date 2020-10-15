@@ -1,33 +1,33 @@
-compucompare/HELP.md
-compucompare/target/
+HELP.md
+target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
 
 ### STS ###
-compucompare/.apt_generated
-compucompare/.classpath
-compucompare/.factorypath
-compucompare/.project
-compucompare/.settings
-compucompare/.springBeans
-compucompare/.sts4-cache
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
 
 ### IntelliJ IDEA ###
-compucompare/.idea
-compucompare/*.iws
-compucompare/*.iml
-compucompare/*.ipr
+.idea
+*.iws
+*.iml
+*.ipr
 
 ### NetBeans ###
-compucompare/nbproject/private/
-compucompare/nbbuild/
-compucompare/dist/
-compucompare/nbdist/
-compucompare/.nb-gradle/
-compucompare/build/
+nbproject/private/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
 ### VS Code ###
-compucompare/.vscode/
+.vscode/
