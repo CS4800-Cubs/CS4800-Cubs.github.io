@@ -1,15 +1,15 @@
 package com.compucompare;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+
 import com.compucompare.compucompare.App;
 import com.compucompare.compucompare.components.BatteryComponent;
 import com.compucompare.compucompare.components.RAMComponent;
 
-import org.junit.Assert;
-import org.junit.Before;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
 
@@ -34,18 +34,18 @@ public class BatteryEqualsTest {
 
 	@Test
 	public void test() {
-		Assert.assertTrue(test1.equals(test3));
-		Assert.assertTrue(test1.equals(test1));
-		Assert.assertFalse(test1.equals(test2));
-		Assert.assertFalse(test2.equals(test1));
-		Assert.assertFalse(test2.equals(test3));
-		Assert.assertTrue(test2.equals(test2));
-		Assert.assertTrue(test3.equals(test1));
-		Assert.assertTrue(test3.equals(test3));
-		Assert.assertFalse(test3.equals(test2));
-		Assert.assertFalse(test4.equals(test1));
-		Assert.assertFalse(test4.equals(test2));
-		Assert.assertFalse(test4.equals(test3));		
+		assertTrue(test1.equals(test3));
+		assertTrue(test1.equals(test1));
+		assertFalse(test1.equals(test2));
+		assertFalse(test2.equals(test1));
+		assertFalse(test2.equals(test3));
+		assertTrue(test2.equals(test2));
+		assertTrue(test3.equals(test1));
+		assertTrue(test3.equals(test3));
+		assertFalse(test3.equals(test2));
+		assertFalse(test4.equals(test1));
+		assertFalse(test4.equals(test2));
+		assertFalse(test4.equals(test3));		
 	}
 
 }
