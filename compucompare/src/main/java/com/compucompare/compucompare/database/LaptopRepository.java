@@ -11,4 +11,6 @@ import org.springframework.data.repository.CrudRepository;
 public interface LaptopRepository extends CrudRepository<Laptop, Integer>
 {
     Laptop findByModel(String model);
+
+    Laptop findByBrand(String brand);
 }
