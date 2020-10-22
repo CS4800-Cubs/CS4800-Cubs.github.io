@@ -1,6 +1,7 @@
 package com.compucompare.compucompare;
 
 import com.compucompare.compucompare.components.*;
+import com.compucompare.compucompare.computerType.Computer;
 import com.compucompare.compucompare.computerType.Laptop;
 import com.compucompare.compucompare.database.LaptopRepository;
 
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @RestController
@@ -38,15 +40,55 @@ public class MainController
     }
 
     /**
-     * Get Laptop based on search query
+     * Get Laptop based on search query.
+     * Currently will only use query searches to pull Laptops that have that brand or model
      *
      * @param query The query that the user is searching for
      * @return A laptop object.
      */
-    @RequestMapping("/search")
+    @RequestMapping("/generalSearch")
     public Laptop getBySearch(@RequestParam (value = "query") String query){
-        return laptopRepository.findByBrand(query);
+        return laptopRepository.findByBrandOrModel(query, query);
     }
+
+
+
+    /**
+     * Get Laptop or Computer based on filtered searches
+     *
+     * @param
+     * @return A Laptop/Computer object
+     */
+    @RequestMapping("/filterSearch")
+    public List<Computer> getByFilter(@RequestParam(value = "type") String type,
+                                    @RequestParam(value = "brand") String brand,
+                                    @RequestParam(value = "model") String model,
+                                    @RequestParam(value = "cpu") String cpu,
+                                    @RequestParam(value = "graphics") String graphics,
+                                    @RequestParam(value = "ram") String ram,
+                                    @RequestParam(value = "storage") Set<StorageComponent> storage,
+                                    @RequestParam(value = "interface") Set<NetworkComponent> interfaces,
+                                    @RequestParam(value = "display") String display,
+                                    @RequestParam(value = "battery") String battery){
+    List<Computer> list = null;
+    LaptopRepository laptopRepo;
+    if(type.toLowerCase().equals("laptop")) {
+        list.add(laptopRepository.findByBrand(brand));
+        list.add(laptopRepository.findByModel(model));
+        list.add(laptopRepository.findByCPUComponent(cpu));
+        list.add(laptopRepository.findByGPUComponent(graphics));
+        list.add(laptopRepository.findByRAMComponent(ram));
+        list.add(laptopRepository.findByStorage(storage));
+        list.add(laptopRepository.findByNetwork(interfaces));
+        list.add(laptopRepository.findByDisplayComponent(display));
+        list.add(laptopRepository.findByBatteryComponent(battery));
+    }else{
+        //Do the same for DesktopRepo
+    }
+    return list;
+
+    }
+
 
     /**
      * This function will act as a temporary request to allow UI team to progress
