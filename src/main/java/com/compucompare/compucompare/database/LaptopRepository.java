@@ -18,21 +18,21 @@ public interface LaptopRepository extends CrudRepository<Laptop, Integer>
 
     Laptop findByBrand(String brand);
 
-    Laptop findByCPUComponent(String cpu);
+    Laptop findByProcessor(int cpuId);
 
-    Laptop findByGPUComponent(String graphics);
+    Laptop findByGraphics(int graphicsId);
 
-    Laptop findByRAMComponent(String ram);
+    Laptop findByRam(int ramId);
 
-    Laptop findByStorage(Set<StorageComponent> storage);
+    // Laptop findByStorage(Set<StorageComponent> storage);
 
-    Laptop findByNetwork(Set<NetworkComponent> interfaces);
+    // Laptop findByNetwork(Set<NetworkComponent> interfaces);
 
-    Laptop findByDisplayComponent(String display);
+    Laptop findByDisplay(int displayId);
 
-    Laptop findByBatteryComponent(String battery);
+    Laptop findByBattery(int batteryId);
 
-    Laptop findByComponent(String component);
+    // Laptop findByComponent(int componentId);
 
     Laptop findByBrandOrModel(String brand, String model);
 

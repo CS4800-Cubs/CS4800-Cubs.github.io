@@ -74,13 +74,13 @@ public class MainController
     if(type.toLowerCase().equals("laptop")) {
         list.add(laptopRepository.findByBrand(brand));
         list.add(laptopRepository.findByModel(model));
-        list.add(laptopRepository.findByCPUComponent(cpu));
-        list.add(laptopRepository.findByGPUComponent(graphics));
-        list.add(laptopRepository.findByRAMComponent(ram));
-        list.add(laptopRepository.findByStorage(storage));
-        list.add(laptopRepository.findByNetwork(interfaces));
-        list.add(laptopRepository.findByDisplayComponent(display));
-        list.add(laptopRepository.findByBatteryComponent(battery));
+        //list.add(laptopRepository.findByCPUComponent(cpu));
+        //list.add(laptopRepository.findByGPUComponent(graphics));
+        //list.add(laptopRepository.findByRAMComponent(ram));
+        //list.add(laptopRepository.findByStorage(storage));
+        //list.add(laptopRepository.findByNetwork(interfaces));
+        //list.add(laptopRepository.findByDisplayComponent(display));
+        //list.add(laptopRepository.findByBatteryComponent(battery));
     }else{
         //Do the same for DesktopRepo
     }
