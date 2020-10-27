@@ -15,6 +15,7 @@ export default new Vuex.Store({
 	},
 	actions: {
 		async generalSearch({commit}, query){
+			console.log(query)
 			axios
 				.get(`https://compucompare/tempSearch`)
 				.then( res =>
