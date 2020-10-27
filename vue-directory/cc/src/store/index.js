@@ -16,7 +16,7 @@ export default new Vuex.Store({
 	actions: {
 		async generalSearch({commit}, query){
 			axios
-				.get(`https://jsonplaceholder.typicode.com/posts?_limit=${query}`)
+				.get(`https://compucompare/tempSearch`)
 				.then( res =>
 					commit('SET_COMPUTERS', res.data)
 				)
@@ -25,7 +25,7 @@ export default new Vuex.Store({
 		async filteredSearch({commit}, params){
 			console.log(params)
 			axios
-				.get(`https://jsonplaceholder.typicode.com/posts?_limit=6`)
+				.get(`https://compucompare/generalSearch`)
 				.then( res =>
 					commit('SET_COMPUTERS', res.data)
 				)
