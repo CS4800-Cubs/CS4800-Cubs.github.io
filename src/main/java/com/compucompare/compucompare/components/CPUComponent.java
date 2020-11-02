@@ -29,9 +29,19 @@ public class CPUComponent extends Component
         this.architecture = architecture;
     }
 
+    public void setSingleBench(int singleBench)
+    {
+        this.singleBench = singleBench;
+    }
+
     public int getSingleBench()
     {
         return singleBench;
+    }
+
+    public void setMultiBench(int multiBench)
+    {
+        this.multiBench = multiBench;
     }
 
     public int getMultiBench()
@@ -39,9 +49,19 @@ public class CPUComponent extends Component
         return multiBench;
     }
 
+    public void setNumCores(int numCores)
+    {
+        this.numCores = numCores;
+    }
+
     public int getNumCores()
     {
         return numCores;
+    }
+
+    public void setArchitecture(String architecture)
+    {
+        this.architecture = architecture;
     }
 
     public String getArchitecture()

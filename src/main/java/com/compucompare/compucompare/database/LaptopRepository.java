@@ -1,12 +1,8 @@
 package com.compucompare.compucompare.database;
 
-import com.compucompare.compucompare.components.NetworkComponent;
-import com.compucompare.compucompare.components.StorageComponent;
 import com.compucompare.compucompare.computerType.Laptop;
 
 import org.springframework.data.repository.CrudRepository;
-
-import java.util.Set;
 
 /**
  * Laptop Repository - Store & Retrieve Laptop Objects From Database
