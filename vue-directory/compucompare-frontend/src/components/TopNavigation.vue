@@ -13,13 +13,20 @@
 
         <!-- Navigation Links -->
         <v-btn
-          v-for="link in links"
-          :key="link"
           text
           small
         >
-          <router-link :to="link" style="text-decoration:none; color: black;">{{ link }}</router-link>
+          <router-link to="/Dashboard" style="text-decoration:none; color: black;">Dashboard</router-link>
         </v-btn>
+        <v-btn
+          text
+          small
+        >
+          <router-link to="/DeviceRecommendations" style="text-decoration:none; color: black;">Device Recommendations</router-link>
+        </v-btn>
+
+
+          
 
         <v-spacer></v-spacer>
         <!-- Search Bar -->
