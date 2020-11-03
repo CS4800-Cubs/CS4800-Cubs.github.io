@@ -60,12 +60,12 @@ export default{
 		display: flex;
 		flex-direction: column;
 		padding: 10px;
+		padding-top: 0;
 		justify-content: right; 
 	}
 	.card{
 		margin-right: 5px;
 		margin-left: 5px;
-		margin-top: 7.5px;
 		margin-bottom: 7.5px;
 	}
 </style>

@@ -31,10 +31,13 @@
               min-height="70vh"
               rounded="lg"
             >
+            <h4>
+              Results...
+            </h4>
             <ComputerList/>
             </v-sheet>
           </v-col>
-          
+
           <v-col cols="3">
             <Cart/>
           </v-col>
@@ -59,5 +62,10 @@ import Cart from "../components/Cart"
 </script>
 
 <style scoped>
-	
+	h4{
+    padding-left: 15px;
+    padding-top: 5px;
+    color: gray;
+    padding-bottom: 0; 
+  }
 </style>
