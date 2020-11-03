@@ -12,11 +12,7 @@ import TopNavigation from "./components/TopNavigation"
     components: {
       TopNavigation
     },
-    computed: {
-      selected(){
-        return this.$store.state.selected
-    }
-  },
-
   }
+
+
 </script>

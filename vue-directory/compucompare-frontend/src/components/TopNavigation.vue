@@ -16,7 +16,7 @@
           text
           small
         >
-          <router-link to="/Dashboard" style="text-decoration:none; color: black;">Dashboard</router-link>
+          <router-link to="/" style="text-decoration:none; color: black;">Dashboard</router-link>
         </v-btn>
         <v-btn
           text

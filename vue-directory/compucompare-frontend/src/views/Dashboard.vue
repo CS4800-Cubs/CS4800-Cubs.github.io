@@ -34,36 +34,11 @@
             <ComputerList/>
             </v-sheet>
           </v-col>
-
-          <v-col cols="2">
-            <v-sheet rounded="lg">
-              <v-list color="transparent">
-                <v-list-item
-                  v-for="computer in selected"
-                  :key="computer.id"
-                >
-                  <v-list-item-content>
-                    <v-list-item-title>
-                      {{computer.title}}
-                    </v-list-item-title>
-                  </v-list-item-content>
-                </v-list-item>
-
-                <v-divider class="my-2"></v-divider>
-
-                <v-list-item
-                  link
-                  color="blue lighten-4"
-                >
-                  <v-list-item-content>
-                    <v-list-item-title>
-                      Compare Devices
-                    </v-list-item-title>
-                  </v-list-item-content>
-                </v-list-item>
-              </v-list>
-            </v-sheet>
+          
+          <v-col cols="3">
+            <Cart/>
           </v-col>
+
         </v-row>
       </v-container>
     </v-main>
@@ -72,17 +47,15 @@
 
 <script>
 import ComputerList from "../components/ComputerList"
+import Cart from "../components/Cart"
 
   export default {
     components: {
-      ComputerList
-    },
-    computed: {
-      selected(){
-        return this.$store.state.selected
-    },
+      ComputerList,
+      Cart
+    }
+
   }
-}
 </script>
 
 <style scoped>

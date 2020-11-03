@@ -12,10 +12,11 @@ const routes = [
     component: DeviceRecommendations
   },
   {
-    path: '/Dashboard',
+    path: '/',
     name: 'Dashboard',
     component: Dashboard
-  }
+  },
+
 ]
 
 const router = new VueRouter({

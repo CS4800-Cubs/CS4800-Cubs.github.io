@@ -8,11 +8,12 @@
 				<v-list-item three-line>
 					<v-list-item-content>
 						<div class="overline mb-4">
-							{{computer.brand}}{{computer.id}}
+							{{computer.brand}} - {{computer.id}}
 						</div>
+						<!--
 						<h3>
 							{{computer.title}}
-						</h3>
+						</h3>-->
 						<v-list-item-subtitle>{{computer.model}}</v-list-item-subtitle>
 					</v-list-item-content>
 	
@@ -31,7 +32,7 @@
 					text
 					v-on:click="addToCompare(computer)"
 					>
-						Button
+						Add To Bin
 					</v-btn>
 				</v-card-actions>
 			</v-card>
