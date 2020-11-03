@@ -1,60 +1,93 @@
 <template>
-  <v-app>
-    <v-app-bar
-      app
-      color="primary"
-      dark
-    >
-      <div class="d-flex align-center">
-        <v-img
-          alt="Vuetify Logo"
-          class="shrink mr-2"
-          contain
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
-          transition="scale-transition"
-          width="40"
-        />
+  <v-app id="inspire">
+    <TopNavigation/>
 
-        <v-img
-          alt="Vuetify Name"
-          class="shrink mt-1 hidden-sm-and-down"
-          contain
-          min-width="100"
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
-          width="100"
-        />
-      </div>
 
-      <v-spacer></v-spacer>
+    <v-main class="blue lighten-5">
+      <v-container>
+        <v-row>
+          <v-col cols="2">
+            <v-sheet rounded="lg">
+              <v-list color="transparent">
+                <v-divider class="my-2"></v-divider>
 
-      <v-btn
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-        text
-      >
-        <span class="mr-2">Latest Release</span>
-        <v-icon>mdi-open-in-new</v-icon>
-      </v-btn>
-    </v-app-bar>
+                <v-list-item
+                  link
+                  color="blue lighten-4"
+                >
+                  <v-list-item-content>
+                    <v-list-item-title>
+                      <v-btn
+                        text
+                        small>
+                        Apply Filter
+                      </v-btn> 
+                    </v-list-item-title>
+                  </v-list-item-content>
+                </v-list-item>
+              </v-list>
+            </v-sheet>
+          </v-col>
 
-    <v-main>
-      <HelloWorld/>
+          <v-col>
+            <v-sheet
+              min-height="70vh"
+              rounded="lg"
+            >
+            <ComputerList/>
+
+            </v-sheet>
+          </v-col>
+
+          <v-col cols="2">
+            <v-sheet rounded="lg">
+              <v-list color="transparent">
+                <v-list-item
+                  v-for="computer in selected"
+                  :key="computer.id"
+                >
+                  <v-list-item-content>
+                    <v-list-item-title>
+                      {{computer.title}}
+                    </v-list-item-title>
+                  </v-list-item-content>
+                </v-list-item>
+
+                <v-divider class="my-2"></v-divider>
+
+                <v-list-item
+                  link
+                  color="blue lighten-4"
+                >
+                  <v-list-item-content>
+                    <v-list-item-title>
+                      Compare Devices
+                    </v-list-item-title>
+                  </v-list-item-content>
+                </v-list-item>
+              </v-list>
+            </v-sheet>
+          </v-col>
+        </v-row>
+      </v-container>
     </v-main>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld';
+import TopNavigation from "./components/TopNavigation"
+import ComputerList from "./components/ComputerList"
 
-export default {
-  name: 'App',
-
-  components: {
-    HelloWorld,
+  export default {
+    components: {
+      TopNavigation,
+      ComputerList
+    },
+    computed: {
+      selected(){
+        return this.$store.state.selected
+    }
   },
 
-  data: () => ({
-    //
-  }),
-};
+  }
 </script>
