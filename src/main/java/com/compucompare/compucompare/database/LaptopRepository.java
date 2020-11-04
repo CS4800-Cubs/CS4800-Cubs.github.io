@@ -32,4 +32,5 @@ public interface LaptopRepository extends CrudRepository<Laptop, Integer>
 
     Laptop findByBrandOrModel(String brand, String model);
 
+    Iterable<Laptop> findAll();
 }

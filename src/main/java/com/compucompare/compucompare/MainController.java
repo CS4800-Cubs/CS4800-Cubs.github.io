@@ -64,13 +64,36 @@ public class MainController
                                     @RequestParam(value = "model") String model,
                                     @RequestParam(value = "cpu") String cpu,
                                     @RequestParam(value = "graphics") String graphics,
-                                    @RequestParam(value = "ram") String ram,
-                                    @RequestParam(value = "storage") Set<StorageComponent> storage,
-                                    @RequestParam(value = "interface") Set<NetworkComponent> interfaces,
+                                    @RequestParam(value = "minRam") int minRam,
+                                    @RequestParam(value = "maxRam") int maxRam,
+                                    @RequestParam(value = "minStorage") int minStorage,
+                                    @RequestParam(value = "maxStorage") int maxStorage,
+                                    @RequestParam(value = "interface") String interfaces,
                                     @RequestParam(value = "display") String display,
                                     @RequestParam(value = "battery") String battery){
-    List<Computer> list = null;
-    LaptopRepository laptopRepo;
+    Iterable<Laptop> laptops = laptopRepository.findAll();
+    List<Laptop> results = null;
+    for(Laptop laptop: laptops){
+        int relevanceScore = 0;
+        if(laptop.getBrand().equals(brand))
+            relevanceScore++;
+        if(laptop.getModel().equals(model))
+            relevanceScore++;
+        if(laptop.getRam().getMemory() >= minRam && laptop.getRam().getMemory() <= maxRam)
+            relevanceScore++;
+        if(laptop.getProcessor().getBrand().contains(cpu))
+            relevanceScore++;
+        if(laptop.getProcessor().getModel().contains(cpu))
+            relevanceScore++;
+        if(laptop.getGraphics().getBrand().contains(graphics))
+            relevanceScore++;
+        if(laptop.getGraphics().getModel().contains(graphics))
+            relevanceScore++;
+        // Loop through storage set, add up capacities, and make sure it meets min and max
+
+
+    }
+
     if(type.toLowerCase().equals("laptop")) {
         list.add(laptopRepository.findByBrand(brand));
         list.add(laptopRepository.findByModel(model));
@@ -90,10 +113,25 @@ public class MainController
 
 
     /**
+     * Get Laptop or Computer based on filtered searches
+     *
+     * @param
+     * @return A Laptop/Computer object
+     */
+    @RequestMapping("/surveySearch")
+    public List<Computer> getByFilter(@RequestParam(value = "type") String type,
+                                      @RequestParam(value = "activity") String activity,
+                                      @RequestParam(value = "brand") String brand){
+
+        return null;
+    }
+
+    /**
      * This function will act as a temporary request to allow UI team to progress
      *
      * @return A JSON object.
      */
+
     @RequestMapping("/tempSearch")
     public Laptop returnTempResults() {
         Set<StorageComponent> drives = new HashSet<>();
