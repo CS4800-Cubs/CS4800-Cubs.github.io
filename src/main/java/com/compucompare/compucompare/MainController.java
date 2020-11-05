@@ -69,12 +69,14 @@ public class MainController
                                     @RequestParam(value = "minStorage") int minStorage,
                                     @RequestParam(value = "maxStorage") int maxStorage,
                                     @RequestParam(value = "interface") String interfaces,
-                                    @RequestParam(value = "display") String display,
+                                    @RequestParam(value = "display") int display,
                                     @RequestParam(value = "battery") String battery){
     Iterable<Laptop> laptops = laptopRepository.findAll();
-    List<Laptop> results = null;
+    List<Computer> results = null;
+    int minRelScore = 0;
     for(Laptop laptop: laptops){
         int relevanceScore = 0;
+        Set<StorageComponent> storageSet = laptop.getStorage();
         if(laptop.getBrand().equals(brand))
             relevanceScore++;
         if(laptop.getModel().equals(model))
@@ -89,28 +91,24 @@ public class MainController
             relevanceScore++;
         if(laptop.getGraphics().getModel().contains(graphics))
             relevanceScore++;
-        // Loop through storage set, add up capacities, and make sure it meets min and max
-
+        int storageTotal = getStorageTotal(storageSet);
+        if(storageTotal > minStorage && storageTotal < maxStorage)
+            relevanceScore++;
+        if(laptop.getDisplay().getSize() == display)
+            relevanceScore++;
+        if(relevanceScore >minRelScore)
+            results.add(laptop);
+    }
+    return results;
 
     }
 
-    if(type.toLowerCase().equals("laptop")) {
-        list.add(laptopRepository.findByBrand(brand));
-        list.add(laptopRepository.findByModel(model));
-        //list.add(laptopRepository.findByCPUComponent(cpu));
-        //list.add(laptopRepository.findByGPUComponent(graphics));
-        //list.add(laptopRepository.findByRAMComponent(ram));
-        //list.add(laptopRepository.findByStorage(storage));
-        //list.add(laptopRepository.findByNetwork(interfaces));
-        //list.add(laptopRepository.findByDisplayComponent(display));
-        //list.add(laptopRepository.findByBatteryComponent(battery));
-    }else{
-        //Do the same for DesktopRepo
+    public int getStorageTotal(Set<StorageComponent> set){
+        int totalStorage = 0;
+        for(StorageComponent storage: set)
+            totalStorage += storage.getCapacity();
+        return totalStorage;
     }
-    return list;
-
-    }
-
 
     /**
      * Get Laptop or Computer based on filtered searches
