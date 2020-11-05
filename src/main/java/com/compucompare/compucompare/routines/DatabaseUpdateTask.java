@@ -17,7 +17,6 @@ import org.springframework.web.client.RestTemplate;
 @Component
 public class DatabaseUpdateTask
 {
-    public static final String NOTEBOOK_DATA_URL = "https://noteb.com/api/webservice.php";
     public static final String CPU_BENCHMARK_URL = "https://browser.geekbench.com/processor-benchmarks.json";
     public static final String GPU_BENCHMARK_URL = "https://browser.geekbench.com/vulkan-benchmarks.json";
 
