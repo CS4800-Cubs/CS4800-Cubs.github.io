@@ -44,7 +44,15 @@
 export default{
 	computed: {
 		computers(){
-			return this.$store.state.computers
+			//Apply Filters
+			var filters = this.$store.state.filters
+			return this.$store.state.computers.filter(function(obj){
+				var matchingComputerBrand = true
+				if(filters["computerBrandSelected"].length != 0){
+					matchingComputerBrand = filters["computerBrandSelected"].includes(obj.brand)
+				}
+				return matchingComputerBrand
+			})
 		}
 	},
 	methods: {
@@ -60,7 +68,7 @@ export default{
 		display: flex;
 		flex-direction: column;
 		padding: 10px;
-		padding-top: 0;
+		padding-top: 10;
 		justify-content: right; 
 	}
 	.card{

@@ -9,7 +9,7 @@
             <v-list-item-content>
               <v-list-item-title
               small>
-                {{computer.brand}}{{computer.model}}
+                {{computer.brand}} - {{computer.model}}
               </v-list-item-title>
             </v-list-item-content>
             <v-btn

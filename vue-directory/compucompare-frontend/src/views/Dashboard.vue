@@ -3,38 +3,16 @@
  <v-main class="blue lighten-5">
       <v-container>
         <v-row>
-          <v-col cols="2">
-            <v-sheet rounded="lg">
-              <v-list color="transparent">
-                <v-divider class="my-2"></v-divider>
 
-                <v-list-item
-                  link
-                  color="blue lighten-4"
-                >
-                  <v-list-item-content>
-                    <v-list-item-title>
-                      <v-btn
-                        text
-                        small>
-                        Apply Filter
-                      </v-btn> 
-                    </v-list-item-title>
-                  </v-list-item-content>
-                </v-list-item>
-              </v-list>
+          <v-col cols="3">
+            <v-sheet rounded="lg">
+              <Filters/>
             </v-sheet>
           </v-col>
 
           <v-col>
-            <v-sheet
-              min-height="70vh"
-              rounded="lg"
-            >
-            <h4>
-              Results...
-            </h4>
-            <ComputerList/>
+            <v-sheet min-height="70vh" rounded="lg">
+              <ComputerList/>
             </v-sheet>
           </v-col>
 
@@ -51,11 +29,13 @@
 <script>
 import ComputerList from "../components/ComputerList"
 import Cart from "../components/Cart"
+import Filters from "../components/Filters"
 
   export default {
     components: {
       ComputerList,
-      Cart
+      Cart,
+      Filters
     }
 
   }
