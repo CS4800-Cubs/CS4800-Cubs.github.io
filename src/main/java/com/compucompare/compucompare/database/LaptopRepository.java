@@ -10,6 +10,8 @@ import org.springframework.data.repository.CrudRepository;
  */
 public interface LaptopRepository extends CrudRepository<Laptop, Integer>
 {
+    boolean existsByBrandAndModel(String brand, String model);
+
     Laptop findByModel(String model);
 
     Laptop findByBrand(String brand);
@@ -20,15 +22,9 @@ public interface LaptopRepository extends CrudRepository<Laptop, Integer>
 
     Laptop findByRam(int ramId);
 
-    // Laptop findByStorage(Set<StorageComponent> storage);
-
-    // Laptop findByNetwork(Set<NetworkComponent> interfaces);
-
     Laptop findByDisplay(int displayId);
 
     Laptop findByBattery(int batteryId);
-
-    // Laptop findByComponent(int componentId);
 
     Laptop findByBrandOrModel(String brand, String model);
 

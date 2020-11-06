@@ -18,10 +18,12 @@ public class Desktop extends Computer
         super();
     }
 
-    public Desktop(String brand, String model, CPUComponent processor,
+    public Desktop(String brand, String model, String displayName,
+                   String thumbnailUrl, String pageUrl, CPUComponent processor,
                    GPUComponent graphics, RAMComponent ram,
                    Set<StorageComponent> storage, Set<NetworkComponent> interfaces)
     {
-        super(brand, model, processor, graphics, ram, storage, interfaces);
+        super(brand, model, displayName, thumbnailUrl, pageUrl,
+              processor, graphics, ram, storage, interfaces);
     }
 }

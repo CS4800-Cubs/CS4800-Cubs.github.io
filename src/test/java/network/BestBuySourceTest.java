@@ -10,6 +10,6 @@ public class BestBuySourceTest
     public void laptopFetchTest()
     {
         BestBuySource source = new BestBuySource();
-        source.getAllLaptops();
+        source.fetchLaptopListings();
     }
 }

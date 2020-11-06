@@ -145,7 +145,7 @@ public class MainController
         supportedWirelessStandards.add("802.11ac");
         supportedWirelessStandards.add("802.11ax");
         interfaces.add(new NetworkComponent("Intel", "AX200", 2400, true, supportedWirelessStandards));
-        Laptop testLaptop = new Laptop("HP", "dsuyf7tud",
+        Laptop testLaptop = new Laptop("HP", "dsuyf7tud", "HP Laptop", "thumbnailUrl", "pageUrl",
                 new CPUComponent("Intel", "9750H", 1000, 2000, 4, "x86"),
                 new GPUComponent("Nvidia", "GTX 1660Ti Mobile", 1000),
                 new RAMComponent("Crucial", "Ballistix", 16, 2400, true),
