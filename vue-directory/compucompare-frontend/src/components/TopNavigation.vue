@@ -30,7 +30,7 @@
 
         <v-spacer></v-spacer>
         <!-- Search Bar -->
-        <v-form>  
+        <v-form action="/" method="get">  
           <v-responsive max-width="350">
             <v-toolbar
               height = "50px"

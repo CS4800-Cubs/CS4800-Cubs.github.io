@@ -22,11 +22,16 @@
 						size="80"
 						color="grey"
 					></v-list-item-avatar>
+					<v-btn
+						text
+						v-on:click="emitEvent(computer)"
+					>
+						<v-icon>mdi-chevron-right</v-icon>
+					</v-btn>
 				</v-list-item>
 	
 				<v-card-actions>
 					<v-btn
-
 					outlined
 					rounded
 					text
@@ -42,6 +47,7 @@
 
 <script>
 export default{
+	props: ['callback'],
 	computed: {
 		computers(){
 			//Apply Filters
@@ -58,7 +64,11 @@ export default{
 	methods: {
 		addToCompare(computer){
 			this.$store.dispatch('addToCompare', computer)
-		}
+		},
+		emitEvent: function (computer) {
+            this.$emit('expandDevice', computer);
+            console.log(computer)
+      }
 	}
 }
 </script>
