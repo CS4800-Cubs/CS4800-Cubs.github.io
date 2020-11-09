@@ -6,10 +6,12 @@ import com.compucompare.compucompare.computerType.Laptop;
 import com.compucompare.compucompare.database.LaptopRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -59,48 +61,68 @@ public class MainController
      * @return A Laptop/Computer object
      */
     @RequestMapping("/filterSearch")
-    public List<Computer> getByFilter(@RequestParam(value = "type") String type,
-                                    @RequestParam(value = "brand") String brand,
-                                    @RequestParam(value = "model") String model,
-                                    @RequestParam(value = "cpu") String cpu,
-                                    @RequestParam(value = "graphics") String graphics,
-                                    @RequestParam(value = "minRam") int minRam,
-                                    @RequestParam(value = "maxRam") int maxRam,
-                                    @RequestParam(value = "minStorage") int minStorage,
-                                    @RequestParam(value = "maxStorage") int maxStorage,
-                                    @RequestParam(value = "interface") String interfaces,
-                                    @RequestParam(value = "display") int display,
-                                    @RequestParam(value = "battery") String battery){
+    public List<Computer> getByFilter(@RequestParam(value = "query") String query,
+                                      @RequestParam(value = "type") String type,
+                                      @RequestParam(value = "brand") String brand,
+                                      @RequestParam(value = "cpu") String cpu,
+                                      @RequestParam(value = "graphics") String graphics,
+                                      @RequestParam(value = "minRam") int minRam,
+                                      @RequestParam(value = "maxRam") int maxRam,
+                                      @RequestParam(value = "minStorage") int minStorage,
+                                      @RequestParam(value = "maxStorage") int maxStorage,
+                                      @RequestParam(value = "interface") String interfaces,
+                                      @RequestParam(value = "display") int display,
+                                      @RequestParam(value = "battery") String battery){
     Iterable<Laptop> laptops = laptopRepository.findAll();
-    List<Computer> results = null;
+    List<Computer> results = new ArrayList<>();
     int minRelScore = 0;
     for(Laptop laptop: laptops){
+        if (!checkFilters(laptop, brand, cpu, graphics, minRam, maxRam, minStorage,
+                maxStorage, display))
+            continue;
         int relevanceScore = 0;
-        Set<StorageComponent> storageSet = laptop.getStorage();
-        if(laptop.getBrand().equals(brand))
+        if(laptop.getBrand().contains(query))
             relevanceScore++;
-        if(laptop.getModel().equals(model))
+        if(laptop.getModel().equals(query))
             relevanceScore++;
-        if(laptop.getRam().getMemory() >= minRam && laptop.getRam().getMemory() <= maxRam)
+        if(laptop.getProcessor().getBrand().contains(query))
             relevanceScore++;
-        if(laptop.getProcessor().getBrand().contains(cpu))
+        if(laptop.getProcessor().getModel().contains(query))
             relevanceScore++;
-        if(laptop.getProcessor().getModel().contains(cpu))
+        if(laptop.getGraphics().getBrand().contains(query))
             relevanceScore++;
-        if(laptop.getGraphics().getBrand().contains(graphics))
+        if(laptop.getGraphics().getModel().contains(query))
             relevanceScore++;
-        if(laptop.getGraphics().getModel().contains(graphics))
+        if(laptop.getDisplay().getBrand().contains(query))
             relevanceScore++;
-        int storageTotal = getStorageTotal(storageSet);
-        if(storageTotal > minStorage && storageTotal < maxStorage)
-            relevanceScore++;
-        if(laptop.getDisplay().getSize() == display)
-            relevanceScore++;
-        if(relevanceScore >minRelScore)
+        if(relevanceScore >= minRelScore)
             results.add(laptop);
     }
     return results;
 
+    }
+
+    public boolean checkFilters(Laptop laptop, String brand, String cpu,
+                                String graphics, int minRam, int maxRam, int minStorage,
+                                int maxStorage, int display){
+        Set<StorageComponent> storageSet = laptop.getStorage();
+        if(!laptop.getBrand().equals(brand))
+            return false;
+        if(!(laptop.getRam().getMemory() >= minRam) && !(laptop.getRam().getMemory() <= maxRam))
+            return false;
+        if(!laptop.getProcessor().getBrand().contains(cpu))
+            return false;
+        if(!laptop.getProcessor().getModel().contains(cpu))
+            return false;
+        if(!laptop.getGraphics().getBrand().contains(graphics))
+            return false;
+        int storageTotal = getStorageTotal(storageSet);
+        if(!(storageTotal > minStorage) && !(storageTotal < maxStorage))
+            return false;
+        if(laptop.getDisplay().getSize() != display)
+            return false;
+
+        return true;
     }
 
     public int getStorageTotal(Set<StorageComponent> set){
@@ -117,9 +139,8 @@ public class MainController
      * @return A Laptop/Computer object
      */
     @RequestMapping("/surveySearch")
-    public List<Computer> getByFilter(@RequestParam(value = "type") String type,
-                                      @RequestParam(value = "activity") String activity,
-                                      @RequestParam(value = "brand") String brand){
+    public List<Computer> getByFilter(@RequestParam(value = "results") JSONObject results){
+
 
         return null;
     }
