@@ -82,12 +82,14 @@
 			<scope>runtime</scope>
 		</dependency>
 
-		<!-- For CS 4800 Assignment Purposes Only -->
+		<!-- Data Fetching Dependencies -->
 		<dependency>
 			<groupId>org.jsoup</groupId>
 			<artifactId>jsoup</artifactId>
 			<version>1.13.1</version>
 		</dependency>
+
+		<!-- For CS 4800 Assignment Purposes Only -->
 		<dependency>
 			<groupId>joda-time</groupId>
 			<artifactId>joda-time</artifactId>

@@ -1,49 +1,60 @@
 <template>
 	<div>
- <v-main class="blue lighten-5">
-      <v-container>
-        <v-row>
-          <v-col cols="2">
-            <v-sheet rounded="lg">
-              <v-list color="transparent">
-                <v-divider class="my-2"></v-divider>
+    <v-main class="blue lighten-5">
 
-                <v-list-item
-                  link
-                  color="blue lighten-4"
-                >
-                  <v-list-item-content>
-                    <v-list-item-title>
-                      <v-btn
-                        text
-                        small>
-                        Apply Filter
-                      </v-btn> 
-                    </v-list-item-title>
-                  </v-list-item-content>
-                </v-list-item>
-              </v-list>
-            </v-sheet>
-          </v-col>
+      <v-window
+      v-model="window">
+        <v-window-item>
+          <v-container>
+            <v-row>
 
-          <v-col>
-            <v-sheet
-              min-height="70vh"
-              rounded="lg"
-            >
-            <h4>
-              Results...
-            </h4>
-            <ComputerList/>
-            </v-sheet>
-          </v-col>
+              <v-col cols="3">
+                <v-sheet rounded="lg">
+                  <Filters/>
 
-          <v-col cols="3">
-            <Cart/>
-          </v-col>
+                </v-sheet>
+              </v-col>
 
-        </v-row>
-      </v-container>
+              <v-col>
+                <v-sheet min-height="70vh" rounded="lg">
+                  <ComputerList v-on:expandDevice="expandDevice"> </ComputerList>
+                </v-sheet>
+              </v-col>
+
+              <v-col cols="3">
+                <Cart/>
+              </v-col>
+
+            </v-row>
+          </v-container>
+        </v-window-item>
+
+        <v-window-item>
+          <v-container>
+            <v-row>
+              <v-col cols="1">
+                <v-sheet rounded="lg" class="previous">
+                  <v-btn
+                    text
+                    v-on:click="minimizeDevice"
+                    v-ripple
+                  >
+                    <v-icon>mdi-chevron-left</v-icon>
+                  </v-btn>
+                </v-sheet>
+              </v-col>
+              <v-col>
+                <v-sheet min-height="70vh" rounded="lg">
+                  {{expandedDevice}}
+                </v-sheet>
+              </v-col>
+              <v-col cols="3">
+                <Cart/>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-window-item>
+      </v-window>
     </v-main>
 	</div>
 </template>
@@ -51,11 +62,31 @@
 <script>
 import ComputerList from "../components/ComputerList"
 import Cart from "../components/Cart"
+import Filters from "../components/Filters"
 
   export default {
     components: {
       ComputerList,
-      Cart
+      Cart,
+      Filters
+    },
+    data: ()=>({
+      window: 0,
+      length: 2,
+      expandedDevice: [],
+    }),
+    methods: {
+      expandDevice (computer) {
+        this.window = this.window + 1 === this.length
+          ? 0
+          : this.window + 1
+        this.expandedDevice = computer
+      },
+      minimizeDevice () {
+        this.window = this.window - 1 < 0
+          ? this.length - 1
+          : this.window - 1
+      }
     }
 
   }
@@ -67,5 +98,9 @@ import Cart from "../components/Cart"
     padding-top: 5px;
     color: gray;
     padding-bottom: 0; 
+  }
+  .previous{
+    display: flex;
+    justify-content: center;
   }
 </style>

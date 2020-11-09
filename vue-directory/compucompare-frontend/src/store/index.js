@@ -7,7 +7,17 @@ Vue.use(Vuex)
 export default new Vuex.Store({
 	state: {
 		computers: [],
-		selected: []
+		selected: [],
+		filters: {
+            computerTypeSelected : [],
+            computerBrandSelected : [],
+            processorBrandSelected : [],
+            processorModelSelected : [],
+            graphicsBrandSelected : [],
+            ramSizeSelected : [],
+            storageSizeSelected : [],
+            screenSizeSelected : []
+         }
 	},
 	mutations: {
 		SET_COMPUTERS(state, data){
@@ -23,22 +33,48 @@ export default new Vuex.Store({
 			sessionStorage.setItem("selected", JSON.stringify(state.selected))
 		},
 		loadCart(state){
-			state.selected = JSON.parse(sessionStorage.getItem("selected"))
+			if(JSON.parse(sessionStorage.getItem("selected")) != null){
+				state.selected = JSON.parse(sessionStorage.getItem("selected"))
+			}
 		},
 		removeFromCart(state, targetComputer){
 			state.selected.splice(state.selected.indexOf(targetComputer), 1)
 			sessionStorage.setItem("selected", JSON.stringify(state.selected))
+		},
+		SET_FILTERS(state, filtersObject){
+			state.filters = filtersObject
+			console.log(JSON.stringify(state.filters))
 		}
 	},
 	actions: {
 		async generalSearch({commit}, query){
+			var testObject = [
+				{
+					"id": 0,
+					"brand" : "HP",
+					"model" : "model1"
+				},
+				{
+					"id": 1,
+					"brand" : "Dell",
+					"model" : "model2"
+				},
+				{
+					"id": 2,
+					"brand" : "Apple",
+					"model" : "model3"
+				},
+			]
+			commit('SET_COMPUTERS', testObject)
+
 			console.log(query)
+			/*
 			axios
 				.get(`https://jsonplaceholder.typicode.com/posts?_limit=5`)
 				.then( res =>
 					commit('SET_COMPUTERS', res.data)
 				)
-				.catch(error => console.log(error))
+				.catch(error => console.log(error))*/
 		},
 		async filteredSearch({commit}, params){
 			console.log(params)
@@ -57,6 +93,9 @@ export default new Vuex.Store({
 		},
 		removeFromCart({commit}, targetComputer){
 			commit('removeFromCart', targetComputer)
+		},
+		setFilters({commit}, filtersObject){
+			commit('SET_FILTERS', filtersObject)
 		}
 	},
 	getters: {

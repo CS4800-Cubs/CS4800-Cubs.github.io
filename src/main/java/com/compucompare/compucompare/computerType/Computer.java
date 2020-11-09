@@ -20,7 +20,7 @@ public class Computer
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    private String brand, model;
+    private String brand, model, displayName, thumbnailUrl, pageUrl;
     
     @OneToOne (cascade = CascadeType.ALL)
     private CPUComponent processor;
@@ -41,6 +41,9 @@ public class Computer
     {
         brand = "Undefined";
         model = "Undefined";
+        displayName = "Undefined";
+        thumbnailUrl = "Undefined";
+        pageUrl = "No URL Available";
         processor = null;
         graphics = null;
         ram = null;
@@ -48,12 +51,15 @@ public class Computer
         interfaces = null;
     }
 
-    public Computer(String brand, String model, CPUComponent processor,
+    public Computer(String brand, String model, String displayName,
+                    String thumbnailUrl, String pageUrl, CPUComponent processor,
                     GPUComponent graphics, RAMComponent ram,
                     Set<StorageComponent> storage, Set<NetworkComponent> interfaces)
     {
         this.brand = brand;
         this.model = model;
+        this.thumbnailUrl = thumbnailUrl;
+        this.pageUrl = pageUrl;
         this.processor = processor;
         this.graphics = graphics;
         this.ram = ram;
@@ -71,31 +77,113 @@ public class Computer
         this.id = id;
     }
 
-    public String getBrand() {
+    public void setBrand(String brand)
+    {
+        this.brand = brand;
+    }
+
+    public String getBrand()
+    {
         return brand;
     }
 
-    public String getModel() {
+    public void setModel(String model)
+    {
+        this.model = model;
+    }
+
+    public String getModel() 
+    {
         return model;
     }
 
-    public CPUComponent getProcessor() {
+    public void setDisplayName(String displayName)
+    {
+        this.displayName = displayName;
+    }
+    
+    public String getDisplayName()
+    {
+        return displayName;
+    }
+
+    public void setThumnailUrl(String thumbnailUrl)
+    {
+        this.thumbnailUrl = thumbnailUrl;
+    }
+
+    public String getThumbnailUrl()
+    {
+        return thumbnailUrl;
+    }
+
+    public void setPageUrl(String pageUrl)
+    {
+        this.pageUrl = pageUrl;
+    }
+
+    public String getPageUrl()
+    {
+        return pageUrl;
+    }
+
+    public void setProcessor(CPUComponent processor)
+    {
+        this.processor = processor;
+    }
+
+    public CPUComponent getProcessor()
+    {
         return processor;
     }
 
-    public GPUComponent getGraphics() {
+    public void setGraphics(GPUComponent graphics)
+    {
+        this.graphics = graphics;
+    }
+
+    public GPUComponent getGraphics()
+    {
         return graphics;
     }
 
-    public RAMComponent getRam() {
+    public void setRam(RAMComponent ram)
+    {
+        this.ram = ram;
+    }
+
+    public RAMComponent getRam()
+    {
         return ram;
     }
 
-    public Set<StorageComponent> getStorage() {
+    public void setStorage(Set<StorageComponent> storage)
+    {
+        this.storage = storage;
+    }
+
+    public void addStorage(StorageComponent storageComponent)
+    {
+        storage.add(storageComponent);
+    }
+
+    public Set<StorageComponent> getStorage()
+    {
         return storage;
     }
 
-    public Set<NetworkComponent> getInterfaces() {
+    public void setInterfaces(Set<NetworkComponent> interfaces)
+    {
+        this.interfaces = interfaces;
+    }
+
+    public void addInterface(NetworkComponent networkComponent)
+    {
+        interfaces.add(networkComponent);
+    }
+
+    public Set<NetworkComponent> getInterfaces()
+    {
         return interfaces;
     }
 

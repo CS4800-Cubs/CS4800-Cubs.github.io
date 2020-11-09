@@ -24,21 +24,35 @@ public class Laptop extends Computer
         battery = null;
     }
 
-    public Laptop(String brand, String model, CPUComponent processor,
+    public Laptop(String brand, String model, String displayName,
+                  String thumbnailUrl, String pageUrl, CPUComponent processor,
                   GPUComponent graphics, RAMComponent ram,
                   Set<StorageComponent> storage, Set<NetworkComponent> interfaces,
                   DisplayComponent display, BatteryComponent battery)
     {
-        super(brand, model, processor, graphics, ram, storage, interfaces);
+        super(brand, model, displayName, thumbnailUrl, pageUrl,
+              processor, graphics, ram, storage, interfaces);
         this.display = display;
         this.battery = battery;
     }
 
-    public DisplayComponent getDisplay() {
+    public void setDisplay(DisplayComponent display)
+    {
+        this.display = display;
+    }
+
+    public DisplayComponent getDisplay()
+    {
         return display;
     }
 
-    public BatteryComponent getBattery() {
+    public void setBattery(BatteryComponent battery)
+    {
+        this.battery = battery;
+    }
+
+    public BatteryComponent getBattery()
+    {
         return battery;
     }
 

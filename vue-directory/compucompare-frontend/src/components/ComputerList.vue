@@ -22,11 +22,16 @@
 						size="80"
 						color="grey"
 					></v-list-item-avatar>
+					<v-btn
+						text
+						v-on:click="emitEvent(computer)"
+					>
+						<v-icon>mdi-chevron-right</v-icon>
+					</v-btn>
 				</v-list-item>
 	
 				<v-card-actions>
 					<v-btn
-
 					outlined
 					rounded
 					text
@@ -42,15 +47,28 @@
 
 <script>
 export default{
+	props: ['callback'],
 	computed: {
 		computers(){
-			return this.$store.state.computers
+			//Apply Filters
+			var filters = this.$store.state.filters
+			return this.$store.state.computers.filter(function(obj){
+				var matchingComputerBrand = true
+				if(filters["computerBrandSelected"].length != 0){
+					matchingComputerBrand = filters["computerBrandSelected"].includes(obj.brand)
+				}
+				return matchingComputerBrand
+			})
 		}
 	},
 	methods: {
 		addToCompare(computer){
 			this.$store.dispatch('addToCompare', computer)
-		}
+		},
+		emitEvent: function (computer) {
+            this.$emit('expandDevice', computer);
+            console.log(computer)
+      }
 	}
 }
 </script>
@@ -60,7 +78,7 @@ export default{
 		display: flex;
 		flex-direction: column;
 		padding: 10px;
-		padding-top: 0;
+		padding-top: 10;
 		justify-content: right; 
 	}
 	.card{

@@ -56,7 +56,7 @@ public class DatabaseTest
         supportedWirelessStandards.add("802.11ac");
         supportedWirelessStandards.add("802.11ax");
         interfaces.add(new NetworkComponent("Intel", "AX200", 2400, true, supportedWirelessStandards));
-        testLaptop = new Laptop("HP", "dsuyf7tud",
+        testLaptop = new Laptop("HP", "dsuyf7tud", "HP Laptop Name", "/thumnail.png", "/laptop_page.html",
             new CPUComponent("Intel", "9750H", 1000, 2000, 4, "x86"),
             new GPUComponent("Nvidia", "GTX 1660Ti Mobile", 1000),
             new RAMComponent("Crucial", "Ballistix", 16, 2400, true),
