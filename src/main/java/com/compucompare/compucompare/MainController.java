@@ -59,6 +59,7 @@ public class MainController
      */
     @RequestMapping("/generalSearch")
     public List<Computer> getByFilter(@RequestParam(value = "query", defaultValue = "") String query,
+                                      @RequestParam(value = "type", defaultValue = "") String type,
                                       @RequestParam(value = "brand", defaultValue = "") String brand,
                                       @RequestParam(value = "cpu", defaultValue = "") String cpu,
                                       @RequestParam(value = "graphics", defaultValue = "") String graphics,
@@ -70,24 +71,26 @@ public class MainController
     Iterable<Laptop> laptops = laptopRepository.findAll();
     List<Computer> results = new ArrayList<>();
     int minRelScore = 1;
+    // check type and then set for loop dependent on that
     for(Laptop laptop: laptops){
         if (!checkFilters(laptop, brand, cpu, graphics, minRam, maxRam, minStorage,
                 maxStorage, display))
             continue;
         int relevanceScore = 0;
-        if(laptop.getBrand().contains(query))
+        query = query.toLowerCase();
+        if(query.contains(laptop.getBrand().toLowerCase()))
             relevanceScore++;
-        if(laptop.getModel().equals(query))
+        if(query.contains(laptop.getModel().toLowerCase()))
             relevanceScore++;
-        if(laptop.getProcessor().getBrand().contains(query))
+        if(query.contains(laptop.getProcessor().getBrand().toLowerCase()))
             relevanceScore++;
-        if(laptop.getProcessor().getModel().contains(query))
+        if(query.contains(laptop.getProcessor().getModel().toLowerCase()))
             relevanceScore++;
-        if(laptop.getGraphics().getBrand().contains(query))
+        if(query.contains(laptop.getGraphics().getBrand().toLowerCase()))
             relevanceScore++;
-        if(laptop.getGraphics().getModel().contains(query))
+        if(query.contains(laptop.getGraphics().getModel().toLowerCase()))
             relevanceScore++;
-        if(laptop.getDisplay().getBrand().contains(query))
+        if(query.contains(laptop.getDisplay().getBrand().toLowerCase()))
             relevanceScore++;
         if(relevanceScore >= minRelScore)
             results.add(laptop);
