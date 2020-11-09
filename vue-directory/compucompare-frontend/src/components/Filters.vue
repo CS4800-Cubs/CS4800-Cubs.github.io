@@ -45,7 +45,7 @@
         <v-chip-group
           v-model="selections.processorBrandSelected"
           column
-          multiple
+          single
           mandatory>
           <v-chip 
             filter
