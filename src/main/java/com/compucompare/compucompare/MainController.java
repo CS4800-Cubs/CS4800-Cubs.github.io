@@ -50,26 +50,26 @@ public class MainController
      * @param brand A string denotes the brand the user wishes to see
      * @param cpu   A string that says the cpu brand
      * @param graphics A string that tells the graphics brand
-     * @param maxRam An int value that lists max ram
-     * @param minRam An int value that lists minimum ram value
-     * @param minStorage An int value that lists min. amount of storage
-     * @param maxStorage An int value that lists max amount of storage
+     * @param maxRam An double value that lists max ram
+     * @param minRam An double value that lists minimum ram value
+     * @param minStorage An double value that lists min. amount of storage
+     * @param maxStorage An double value that lists max amount of storage
      * @param display Int that tells wanted display size.
      * @return A list of Laptop/Computer objects
      */
     @RequestMapping("/generalSearch")
-    public List<Computer> getByFilter(@RequestParam(value = "query") String query,
-                                      @RequestParam(value = "brand") String brand,
-                                      @RequestParam(value = "cpu") String cpu,
-                                      @RequestParam(value = "graphics") String graphics,
-                                      @RequestParam(value = "minRam") int minRam,
-                                      @RequestParam(value = "maxRam") int maxRam,
-                                      @RequestParam(value = "minStorage") int minStorage,
-                                      @RequestParam(value = "maxStorage") int maxStorage,
-                                      @RequestParam(value = "display") int display){
+    public List<Computer> getByFilter(@RequestParam(value = "query", defaultValue = "") String query,
+                                      @RequestParam(value = "brand", defaultValue = "") String brand,
+                                      @RequestParam(value = "cpu", defaultValue = "") String cpu,
+                                      @RequestParam(value = "graphics", defaultValue = "") String graphics,
+                                      @RequestParam(value = "minRam", defaultValue = "") double minRam,
+                                      @RequestParam(value = "maxRam", defaultValue = "") double maxRam,
+                                      @RequestParam(value = "minStorage", defaultValue = "") double minStorage,
+                                      @RequestParam(value = "maxStorage", defaultValue = "") double maxStorage,
+                                      @RequestParam(value = "display", defaultValue = "") double display){
     Iterable<Laptop> laptops = laptopRepository.findAll();
     List<Computer> results = new ArrayList<>();
-    int minRelScore = 0;
+    int minRelScore = 1;
     for(Laptop laptop: laptops){
         if (!checkFilters(laptop, brand, cpu, graphics, minRam, maxRam, minStorage,
                 maxStorage, display))
@@ -97,8 +97,8 @@ public class MainController
     }
 
     public boolean checkFilters(Laptop laptop, String brand, String cpu,
-                                String graphics, int minRam, int maxRam, int minStorage,
-                                int maxStorage, int display){
+                                String graphics, double minRam, double maxRam, double minStorage,
+                                double maxStorage, double display){
         Set<StorageComponent> storageSet = laptop.getStorage();
         if(!laptop.getBrand().equals(brand))
             return false;
@@ -133,10 +133,10 @@ public class MainController
      * @return A Laptop/Computer object
      */
     @RequestMapping("/surveySearch")
-    public List<Computer> getByFilter(@RequestParam(value = "results") JSONObject results){
+    public JSONObject getByFilter(@RequestParam(value = "results") JSONObject results){
 
 
-        return null;
+        return results;
     }
 
     /**
