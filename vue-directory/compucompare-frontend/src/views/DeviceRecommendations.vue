@@ -1,42 +1,22 @@
 <template>
-	<div>
-    <v-main class="blue lighten-5">
-      <v-container>
-        <v-row>
-          <v-col cols="2">
-            <v-sheet rounded="lg">
-            </v-sheet>
-          </v-col>
-
-          <v-col>
-            <v-sheet
-              min-height="70vh"
-              rounded="lg"
-            >
-            </v-sheet>
-          </v-col>
-          
-          <v-col cols="3">
-            <Cart/>
-          </v-col>
-
-        </v-row>
-      </v-container>
-    </v-main>
-	</div>
+    <div>
+        <div id="surveyElement">
+            <SurveyComponent />
+        </div>
+    </div>
 </template>
 
 <script>
-import Cart from "../components/Cart"
+import SurveyComponent from "../components/SurveyComponent";
 export default{
 	name: "DeviceRecommendations",
   components: {
-    Cart
+    SurveyComponent
   }
-}
+};
 </script>
 
 <style scoped>
-	
+
 </style>
 
