@@ -40,29 +40,25 @@ public class MainController
         return laptopRepository.findByModel(model);
     }
 
+
+
+
     /**
-     * Get Laptop based on search query.
-     * Currently will only use query searches to pull Laptops that have that brand or model
+     * Get Laptop or Computer based on filtered searches and searchbar searches
      *
-     * @param query The query that the user is searching for
-     * @return A laptop object.
+     * @param query A string that the user has entered into the search bar
+     * @param brand A string denotes the brand the user wishes to see
+     * @param cpu   A string that says the cpu brand
+     * @param graphics A string that tells the graphics brand
+     * @param maxRam An int value that lists max ram
+     * @param minRam An int value that lists minimum ram value
+     * @param minStorage An int value that lists min. amount of storage
+     * @param maxStorage An int value that lists max amount of storage
+     * @param display Int that tells wanted display size.
+     * @return A list of Laptop/Computer objects
      */
     @RequestMapping("/generalSearch")
-    public Laptop getBySearch(@RequestParam (value = "query") String query){
-        return laptopRepository.findByBrandOrModel(query, query);
-    }
-
-
-
-    /**
-     * Get Laptop or Computer based on filtered searches
-     *
-     * @param
-     * @return A Laptop/Computer object
-     */
-    @RequestMapping("/filterSearch")
     public List<Computer> getByFilter(@RequestParam(value = "query") String query,
-                                      @RequestParam(value = "type") String type,
                                       @RequestParam(value = "brand") String brand,
                                       @RequestParam(value = "cpu") String cpu,
                                       @RequestParam(value = "graphics") String graphics,
@@ -70,9 +66,7 @@ public class MainController
                                       @RequestParam(value = "maxRam") int maxRam,
                                       @RequestParam(value = "minStorage") int minStorage,
                                       @RequestParam(value = "maxStorage") int maxStorage,
-                                      @RequestParam(value = "interface") String interfaces,
-                                      @RequestParam(value = "display") int display,
-                                      @RequestParam(value = "battery") String battery){
+                                      @RequestParam(value = "display") int display){
     Iterable<Laptop> laptops = laptopRepository.findAll();
     List<Computer> results = new ArrayList<>();
     int minRelScore = 0;
@@ -135,7 +129,7 @@ public class MainController
     /**
      * Get Laptop or Computer based on filtered searches
      *
-     * @param
+     * @param results A JSONObject that lists the survey results
      * @return A Laptop/Computer object
      */
     @RequestMapping("/surveySearch")
