@@ -9,15 +9,16 @@ export default new Vuex.Store({
 		computers: [],
 		selected: [],
 		filters: {
-            computerTypeSelected : [],
-            computerBrandSelected : [],
-            processorBrandSelected : [],
-            processorModelSelected : [],
-            graphicsBrandSelected : [],
-            ramSizeSelected : [],
+            computerTypeSelected : ["Both"],
+            computerBrandSelected : ["All"],
+            processorBrandSelected : ["All"],
+            //processorModelSelected : [],
+            //graphicsBrandSelected : [],
+            ramSizeSelected : ["All"],
             storageSizeSelected : [],
             screenSizeSelected : []
-         }
+         },
+         query: [],
 	},
 	mutations: {
 		SET_COMPUTERS(state, data){
@@ -67,7 +68,7 @@ export default new Vuex.Store({
 			]
 			commit('SET_COMPUTERS', testObject)
 
-			console.log(query)
+			sessionStorage.setItem('query', query)
 			/*
 			axios
 				.get(`https://jsonplaceholder.typicode.com/posts?_limit=5`)

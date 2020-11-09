@@ -1,11 +1,10 @@
 <template>
     <div>
-      <v-sheet rounded="lg">
         <v-list color="transparent">
           <transition name="fade" 
               v-for="computer in selected"
               :key="computer.id">
-            <v-list-item>
+            <v-list-item >
               <v-list-item-content>
                 <v-list-item-title
                 small>
@@ -21,18 +20,23 @@
 
           <v-divider class="my-2"></v-divider>
 
-          <v-list-item
-            link
-            color="blue lighten-4"
-          >
-            <v-list-item-content>
-              <v-list-item-title>
-                Compare Devices
-              </v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
+         <v-list-item
+           link
+           color="blue lighten-4"
+         >
+           <v-list-item-content>
+             <v-list-item-title>
+               <v-btn
+                 text
+                 small
+                 v-on:click="compareCart">
+                 Compare Devices
+               </v-btn> 
+             </v-list-item-title>
+           </v-list-item-content>
+
+         </v-list-item>
         </v-list>
-      </v-sheet>
     </div>
 </template>
 
@@ -50,6 +54,9 @@ export default{
     methods: {
         removeFromCart(computer){
             this.$store.dispatch("removeFromCart", computer)
+        },
+        compareCart(){
+            this.$emit('goToCompare');
         }
     }
 }

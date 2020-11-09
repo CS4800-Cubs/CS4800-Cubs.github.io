@@ -1,30 +1,107 @@
 <template>
-   <div>
+    <div>
+    <v-card class="mx=auto" max-width="450">
+      <!-- Computer Type -->
+      <v-card-text style="padding-bottom: 0;">
+        <p class="font-weight-bold">Computer Type</p>
+        <v-chip-group
+          v-model="selections.computerTypeSelected"
+          column
+          single
+          mandatory>
+          <v-chip filter 
+            outlined 
+            v-for="option in computerTypeOptions" 
+            :key="option" 
+            small 
+            flat>
+            {{option}}
+          </v-chip>
+        </v-chip-group>
+      </v-card-text>
+      <!-- Computer Brand -->
+      <v-card-text>
+        <p class="font-weight-bold">Computer Brand</p>
+        <v-chip-group
+          v-model="selections.computerBrandSelected"
+          column
+          multiple
+          mandatory>
+          <v-chip 
+            filter
+            outlined 
+            v-for="option in computerBrandOptions" 
+            :key="option" 
+            small 
+            flat
+            :value="option">
+            {{option}}
+          </v-chip>
+        </v-chip-group>
+      </v-card-text>
+      <!-- Processor Brand -->
+      <v-card-text>
+        <p class="font-weight-bold">Processor Brand</p>
+        <v-chip-group
+          v-model="selections.processorBrandSelected"
+          column
+          multiple
+          mandatory>
+          <v-chip 
+            filter
+            outlined 
+            v-for="option in processorBrandOptions" 
+            :key="option" 
+            small 
+            flat
+            :value="option">
+            {{option}}
+          </v-chip>
+        </v-chip-group>
+      </v-card-text>
+      <!-- Ram Size Options -->
+      <v-card-text>
+        <p class="font-weight-bold">Ram Size</p>
+        <v-chip-group
+          v-model="selections.ramSizeSelected"
+          row
+          single
+          mandatory>
+          <v-chip 
+            filter
+            outlined 
+            v-for="option in ramSizeOptions" 
+            :key="option" 
+            small 
+            flat
+            :value="option">
+            {{option}}
+          </v-chip>
+        </v-chip-group>
+      </v-card-text>
+      <!-- Storage Size Options -->
+      <v-card-text>
+        <p class="font-weight-bold">Storage Size</p>
+        <v-chip-group
+          v-model="selections.storageSizeSelected"
+          row
+          single
+          mandatory>
+          <v-chip 
+            filter
+            outlined 
+            v-for="option in storageSizeOptions" 
+            :key="option" 
+            small 
+            flat
+            :value="option">
+            {{option}}
+          </v-chip>
+        </v-chip-group>
+      </v-card-text>
+
       <v-list color="transparent">
-         <h4>Filters</h4>
-         <v-list-item class="small">
-            <v-list-item-content>
-               <v-list-item-title>Computer Type</v-list-item-title>
-               <v-radio-group v-model="selections.computerTypeSelected" class="group">
-                  <v-radio v-for="option in computerTypeOptions" :key="option" :label="option" :value="option" class="selection"></v-radio>
-               </v-radio-group>
-            </v-list-item-content>
-         </v-list-item>
-
-         <v-list-item class="small">
-            <v-list-item-content>
-               <v-list-item-title>Computer Brand</v-list-item-title>
-                  <v-checkbox 
-                  v-for="option in computerBrandOptions" 
-                  :key="option" 
-                  :label="option" 
-                  :value="option" 
-                  class="selection" 
-                  v-model="selections.computerBrandSelected"></v-checkbox>
-            </v-list-item-content>
-         </v-list-item>
-
-            
+      
          <v-divider class="my-2"></v-divider>
          <v-list-item
            link
@@ -43,6 +120,7 @@
 
          </v-list-item>
       </v-list>
+    </v-card>
 
    </div>
 </template>
@@ -53,14 +131,14 @@ import lodash from "lodash"
 export default{
    data: function () {
       return {
-         computerTypeOptions : ["Desktop", "Laptop", "Both"],
-         computerBrandOptions : ["Acer", "Apple", "Dell", "HP", "Lenovo"],
-         processorBrandOptions :  ["AMD", "Intel"],
-         processorModelOptions :  ["i5", "i7", "i9", "Ryzen 5", "Ryzen 7"],
-         graphicsBrandOptions :  ["NVIDIA"],
-         ramSizeOptions : ["4", "8", "16", "32"],
-         storageSizeOptions :  ["250GB", "500GB", "1TB"],
-         screenSizeOptions :  ["13inch", "15inch"],
+         computerTypeOptions : ["Both", "Desktop", "Laptop"],
+         computerBrandOptions : ["All", "Acer", "Apple", "Dell", "HP", "Lenovo"],
+         processorBrandOptions :  ["All", "AMD", "Intel"],
+         //processorModelOptions :  ["i5", "i7", "i9", "Ryzen 5", "Ryzen 7"],
+         //graphicsBrandOptions :  ["NVIDIA"],
+         ramSizeOptions : ["All", "4", "8", "16", "32"],
+         storageSizeOptions :  ["All", "250GB", "500GB", "1TB"],
+         //screenSizeOptions :  ["13inch", "15inch"],
          selections: {
             computerTypeSelected : [],
             computerBrandSelected : [],
@@ -83,19 +161,5 @@ export default{
 </script>
 
 <style scoped>
-  .group{
-      margin: 0;
-      padding: 0;
-  }
-  .selection{
-      padding-left: 10px;
-  }
-  .small{
-      margin: 0;
-      padding-bottom: 0;
-  }
-  h4{
-   padding-left: 17px;
-  }
 </style>
 
