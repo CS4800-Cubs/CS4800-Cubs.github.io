@@ -17,8 +17,8 @@ import com.compucompare.compucompare.components.GPUComponent;
 import com.compucompare.compucompare.components.NetworkComponent;
 import com.compucompare.compucompare.components.RAMComponent;
 import com.compucompare.compucompare.components.StorageComponent;
-import com.compucompare.compucompare.computerType.Laptop;
-import com.compucompare.compucompare.database.LaptopRepository;
+import com.compucompare.compucompare.computerType.Computer;
+import com.compucompare.compucompare.database.ComputerRepository;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.AfterEach;
@@ -33,9 +33,9 @@ import org.springframework.test.context.ActiveProfiles;
 public class DatabaseTest
 {
     @Autowired
-    private LaptopRepository laptopRepository;
+    private ComputerRepository laptopRepository;
 
-    private Laptop testLaptop;
+    private Computer testLaptop;
 
     /**
      * Store an example laptop in the database.
@@ -56,7 +56,8 @@ public class DatabaseTest
         supportedWirelessStandards.add("802.11ac");
         supportedWirelessStandards.add("802.11ax");
         interfaces.add(new NetworkComponent("Intel", "AX200", 2400, true, supportedWirelessStandards));
-        testLaptop = new Laptop("HP", "dsuyf7tud",
+        testLaptop = new Computer("HP", "dsuyf7tud", "HP Laptop Name",
+            "/thumnail.png", "/laptop_page.html", true,
             new CPUComponent("Intel", "9750H", 1000, 2000, 4, "x86"),
             new GPUComponent("Nvidia", "GTX 1660Ti Mobile", 1000),
             new RAMComponent("Crucial", "Ballistix", 16, 2400, true),
@@ -87,10 +88,10 @@ public class DatabaseTest
     public void storeLaptopTest()
     {
         int id = testLaptop.getId();
-        Optional<Laptop> results;
+        Optional<Computer> results;
         results = laptopRepository.findById(id);
         assertTrue(results.isPresent());
-        Laptop foundLaptop = results.get();
+        Computer foundLaptop = results.get();
         assertEquals(testLaptop, foundLaptop);
     }
 }

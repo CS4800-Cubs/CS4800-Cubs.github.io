@@ -7,37 +7,96 @@ Vue.use(Vuex)
 export default new Vuex.Store({
 	state: {
 		computers: [],
-		selected: []
+		selected: [],
+		filters: {
+            computerTypeSelected : ["Both"],
+            computerBrandSelected : ["All"],
+            processorBrandSelected : ["All"],
+            //processorModelSelected : [],
+            //graphicsBrandSelected : [],
+            ramSizeSelected : ["All"],
+            storageSizeSelected : [],
+            screenSizeSelected : []
+         },
+         query: [],
 	},
 	mutations: {
 		SET_COMPUTERS(state, data){
 			state.computers = data
 		},
 		addToCart(state, targetComputer){
+			for (var i = state.selected.length - 1; i >= 0; i--) {
+				if(state.selected[i].id == targetComputer.id){
+					return
+				}
+			}
 			state.selected.push(targetComputer)
+			sessionStorage.setItem("selected", JSON.stringify(state.selected))
+		},
+		loadCart(state){
+			if(JSON.parse(sessionStorage.getItem("selected")) != null){
+				state.selected = JSON.parse(sessionStorage.getItem("selected"))
+			}
+		},
+		removeFromCart(state, targetComputer){
+			state.selected.splice(state.selected.indexOf(targetComputer), 1)
+			sessionStorage.setItem("selected", JSON.stringify(state.selected))
+		},
+		SET_FILTERS(state, filtersObject){
+			state.filters = filtersObject
+			console.log(JSON.stringify(state.filters))
 		}
 	},
 	actions: {
 		async generalSearch({commit}, query){
-			console.log(query)
+			var testObject = [
+				{
+					"id": 0,
+					"brand" : "HP",
+					"model" : "model1"
+				},
+				{
+					"id": 1,
+					"brand" : "Dell",
+					"model" : "model2"
+				},
+				{
+					"id": 2,
+					"brand" : "Apple",
+					"model" : "model3"
+				},
+			]
+			commit('SET_COMPUTERS', testObject)
+
+			sessionStorage.setItem('query', query)
+			/*
 			axios
 				.get(`https://jsonplaceholder.typicode.com/posts?_limit=5`)
 				.then( res =>
 					commit('SET_COMPUTERS', res.data)
 				)
-				.catch(error => console.log(error))
+				.catch(error => console.log(error))*/
 		},
 		async filteredSearch({commit}, params){
 			console.log(params)
 			axios
-				.get(`https://compucompare/generalSearch`)
-				.then( res =>
+					.get(`https://compucompare/generalSearch`)
+					.then( res =>
 					commit('SET_COMPUTERS', res.data)
 				)
 				.catch(error => console.log(error))
 		},
 		addToCompare({commit}, targetComputer){
 			commit('addToCart', targetComputer)
+		},
+		loadCart({commit}){
+			commit('loadCart')
+		},
+		removeFromCart({commit}, targetComputer){
+			commit('removeFromCart', targetComputer)
+		},
+		setFilters({commit}, filtersObject){
+			commit('SET_FILTERS', filtersObject)
 		}
 	},
 	getters: {

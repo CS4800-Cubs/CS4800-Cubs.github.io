@@ -2,14 +2,16 @@ package com.compucompare.compucompare;
 
 import com.compucompare.compucompare.components.*;
 import com.compucompare.compucompare.computerType.Computer;
-import com.compucompare.compucompare.computerType.Laptop;
-import com.compucompare.compucompare.database.LaptopRepository;
+import com.compucompare.compucompare.database.ComputerRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.configurationprocessor.json.JSONObject;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -18,7 +20,7 @@ import java.util.Set;
 public class MainController
 {
     @Autowired
-    private LaptopRepository laptopRepository;
+    private ComputerRepository laptopRepository;
 
     /**
      * Gets a laptop by model.
@@ -33,69 +35,118 @@ public class MainController
      * @return A laptop object.
      */
     @RequestMapping("/getModel")
-    Laptop getModel(@RequestParam(value = "model", defaultValue = "") String model)
+    Computer getModel(@RequestParam(value = "model", defaultValue = "") String model)
     {
         return laptopRepository.findByModel(model);
     }
 
     /**
-     * Get Laptop based on search query.
-     * Currently will only use query searches to pull Laptops that have that brand or model
+     * Get Laptop or Computer based on filtered searches and searchbar searches
      *
-     * @param query The query that the user is searching for
-     * @return A laptop object.
+     * @param query A string that the user has entered into the search bar
+     * @param brand A string denotes the brand the user wishes to see
+     * @param cpu   A string that says the cpu brand
+     * @param graphics A string that tells the graphics brand
+     * @param maxRam An double value that lists max ram
+     * @param minRam An double value that lists minimum ram value
+     * @param minStorage An double value that lists min. amount of storage
+     * @param maxStorage An double value that lists max amount of storage
+     * @param display Int that tells wanted display size.
+     * @return A list of Laptop/Computer objects
      */
     @RequestMapping("/generalSearch")
-    public Laptop getBySearch(@RequestParam (value = "query") String query){
-        return laptopRepository.findByBrandOrModel(query, query);
+    public List<Computer> getByFilter(@RequestParam(value = "query", defaultValue = "") String query,
+                                      @RequestParam(value = "type", defaultValue = "") String type,
+                                      @RequestParam(value = "brand", defaultValue = "") String brand,
+                                      @RequestParam(value = "cpu", defaultValue = "") String cpu,
+                                      @RequestParam(value = "graphics", defaultValue = "") String graphics,
+                                      @RequestParam(value = "minRam", defaultValue = "") double minRam,
+                                      @RequestParam(value = "maxRam", defaultValue = "") double maxRam,
+                                      @RequestParam(value = "minStorage", defaultValue = "") double minStorage,
+                                      @RequestParam(value = "maxStorage", defaultValue = "") double maxStorage,
+                                      @RequestParam(value = "display", defaultValue = "") double display){
+    Iterable<Computer> laptops = laptopRepository.findAll();
+    List<Computer> results = new ArrayList<>();
+    int minRelScore = 1;
+    // check type and then set for loop dependent on that
+    for(Computer laptop: laptops){
+        if (!checkFilters(laptop, brand, cpu, graphics, minRam, maxRam, minStorage,
+                maxStorage, display))
+            continue;
+        int relevanceScore = 0;
+        query = query.toLowerCase();
+        if(query.contains(laptop.getBrand().toLowerCase()))
+            relevanceScore++;
+        if(query.contains(laptop.getModel().toLowerCase()))
+            relevanceScore++;
+        if(query.contains(laptop.getProcessor().getBrand().toLowerCase()))
+            relevanceScore++;
+        if(query.contains(laptop.getProcessor().getModel().toLowerCase()))
+            relevanceScore++;
+        if(query.contains(laptop.getGraphics().getBrand().toLowerCase()))
+            relevanceScore++;
+        if(query.contains(laptop.getGraphics().getModel().toLowerCase()))
+            relevanceScore++;
+        if(query.contains(laptop.getDisplay().getBrand().toLowerCase()))
+            relevanceScore++;
+        if(relevanceScore >= minRelScore)
+            results.add(laptop);
+    }
+    return results;
+
     }
 
+    public boolean checkFilters(Computer laptop, String brand, String cpu,
+                                String graphics, double minRam, double maxRam, double minStorage,
+                                double maxStorage, double display){
+        Set<StorageComponent> storageSet = laptop.getStorage();
+        if(!laptop.getBrand().equals(brand))
+            return false;
+        if(!(laptop.getRam().getMemory() >= minRam) && !(laptop.getRam().getMemory() <= maxRam))
+            return false;
+        if(!laptop.getProcessor().getBrand().contains(cpu))
+            return false;
+        if(!laptop.getProcessor().getModel().contains(cpu))
+            return false;
+        if(!laptop.getGraphics().getBrand().contains(graphics))
+            return false;
+        int storageTotal = getStorageTotal(storageSet);
+        if(!(storageTotal > minStorage) && !(storageTotal < maxStorage))
+            return false;
+        if(laptop.getDisplay().getSize() != display)
+            return false;
 
+        return true;
+    }
+
+    public int getStorageTotal(Set<StorageComponent> set){
+        int totalStorage = 0;
+        for(StorageComponent storage: set)
+            totalStorage += storage.getCapacity();
+        return totalStorage;
+    }
 
     /**
      * Get Laptop or Computer based on filtered searches
      *
-     * @param
+     * @param results A JSONObject that lists the survey results
      * @return A Laptop/Computer object
      */
-    @RequestMapping("/filterSearch")
-    public List<Computer> getByFilter(@RequestParam(value = "type") String type,
-                                    @RequestParam(value = "brand") String brand,
-                                    @RequestParam(value = "model") String model,
-                                    @RequestParam(value = "cpu") String cpu,
-                                    @RequestParam(value = "graphics") String graphics,
-                                    @RequestParam(value = "ram") String ram,
-                                    @RequestParam(value = "storage") Set<StorageComponent> storage,
-                                    @RequestParam(value = "interface") Set<NetworkComponent> interfaces,
-                                    @RequestParam(value = "display") String display,
-                                    @RequestParam(value = "battery") String battery){
-    List<Computer> list = null;
-    LaptopRepository laptopRepo;
-    if(type.toLowerCase().equals("laptop")) {
-        list.add(laptopRepository.findByBrand(brand));
-        list.add(laptopRepository.findByModel(model));
-        //list.add(laptopRepository.findByCPUComponent(cpu));
-        //list.add(laptopRepository.findByGPUComponent(graphics));
-        //list.add(laptopRepository.findByRAMComponent(ram));
-        //list.add(laptopRepository.findByStorage(storage));
-        //list.add(laptopRepository.findByNetwork(interfaces));
-        //list.add(laptopRepository.findByDisplayComponent(display));
-        //list.add(laptopRepository.findByBatteryComponent(battery));
-    }else{
-        //Do the same for DesktopRepo
-    }
-    return list;
+    @RequestMapping("/surveySearch")
+    public JSONObject getByFilter(@RequestBody JSONObject results){
 
-    }
 
+        return results;
+    }
 
     /**
      * This function will act as a temporary request to allow UI team to progress
      *
      * @return A JSON object.
      */
+
     @RequestMapping("/tempSearch")
-    public Laptop returnTempResults() {
+    public Computer returnTempResults() {
         Set<StorageComponent> drives = new HashSet<>();
         drives.add(new StorageComponent("Samsung", "EVO", 256, true, true));
         drives.add(new StorageComponent("WD", "Blue", 1000, false, false));
@@ -109,7 +160,7 @@ public class MainController
         supportedWirelessStandards.add("802.11ac");
         supportedWirelessStandards.add("802.11ax");
         interfaces.add(new NetworkComponent("Intel", "AX200", 2400, true, supportedWirelessStandards));
-        Laptop testLaptop = new Laptop("HP", "dsuyf7tud",
+        Computer testLaptop = new Computer("HP", "dsuyf7tud", "HP Laptop", "thumbnailUrl", "pageUrl", true,
                 new CPUComponent("Intel", "9750H", 1000, 2000, 4, "x86"),
                 new GPUComponent("Nvidia", "GTX 1660Ti Mobile", 1000),
                 new RAMComponent("Crucial", "Ballistix", 16, 2400, true),
