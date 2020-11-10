@@ -24,44 +24,44 @@
                             elements: [
                              {
                               type: "radiogroup",
-                              name: "question1",
+                              name: "portable",
                               title: "Are you looking for a laptop or a desktop?",
                               isRequired: true,
                               choices: [
                                {
-                                value: "item1",
+                                value: "true",
                                 text: "Laptop"
                                },
                                {
-                                value: "item2",
+                                value: "false",
                                 text: "Desktop"
                                },
                                {
-                                value: "item3",
+                                value: "",
                                 text: "Both"
                                }
                               ]
                              },
                              {
                               type: "checkbox",
-                              name: "question2",
+                              name: "categories",
                               title: "Purpose for laptop or desktop? Select all that apply",
                               isRequired: true,
                               choices: [
                                {
-                                value: "item1",
+                                value: "Editing",
                                 text: "Editing"
                                },
                                {
-                                value: "item2",
+                                value: "Gaming",
                                 text: "Gaming or Streaming"
                                },
                                {
-                                value: "item3",
+                                value: "Work",
                                 text: "Work"
                                },
                                {
-                                value: "item4",
+                                value: "Education",
                                 text: "Education"
                                }
                               ],
@@ -73,7 +73,7 @@
                              },
                              {
                               type: "checkbox",
-                              name: "question3",
+                              name: "brands",
                               title: "Which brand(s) do you prefer? Select up to 3 options ",
                               isRequired: true,
                               validators: [
@@ -88,51 +88,51 @@
                               ],
                               choices: [
                                {
-                                value: "item1",
+                                value: "Acer",
                                 text: "Acer"
                                },
                                {
-                                value: "item3",
+                                value: "Apple",
                                 text: "Apple"
                                },
                                {
-                                value: "item2",
+                                value: "Asus",
                                 text: "Asus"
                                },
                                {
-                                value: "item12",
+                                value: "Dell",
                                 text: "Dell"
                                },
                                {
-                                value: "item4",
+                                value: "hp",
                                 text: "hp"
                                },
                                {
-                                value: "item5",
+                                value: "Kano",
                                 text: "Kano"
                                },
                                {
-                                value: "item6",
+                                value: "Lenovo",
                                 text: "Lenovo"
                                },
                                {
-                                value: "item7",
+                                value: "LG",
                                 text: "LG"
                                },
                                {
-                                value: "item8",
+                                value: "Microsoft",
                                 text: "Microsoft"
                                },
                                {
-                                value: "item9",
+                                value: "MSI",
                                 text: "MSI"
                                },
                                {
-                                value: "item10",
+                                value: "Razer",
                                 text: "Razer"
                                },
                                {
-                                value: "item11",
+                                value: "Samsung",
                                 text: "Samsung"
                                }
                               ],
@@ -142,11 +142,20 @@
                              }
                             ]
                            }
-                          ]
+                          ],
+                          "navigateToUrl" : "/"
+
                          };
 const survey = new Survey.Model(json);
+        survey.onComplete.add(function () {
+                //this.$store.state.windowPosition = 3
+                window.location.href = "/surveySearch"; //?results="  + JSON.stringify(result.data, null, 3);
+
+
+            });
             return {
                 survey: survey
+
             };
         }
     };

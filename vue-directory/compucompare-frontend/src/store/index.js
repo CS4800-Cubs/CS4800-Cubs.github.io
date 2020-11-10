@@ -18,6 +18,8 @@ export default new Vuex.Store({
             storageSizeSelected : [],
             screenSizeSelected : []
          },
+         results: [],
+         windowPosition: 0,
          query: [],
 	},
 	mutations: {
@@ -45,7 +47,12 @@ export default new Vuex.Store({
 		SET_FILTERS(state, filtersObject){
 			state.filters = filtersObject
 			console.log(JSON.stringify(state.filters))
+		},
+		SET_SurveyResults(state, results){
+            state.results = results
 		}
+
+
 	},
 	actions: {
 		async generalSearch({commit}, query){
@@ -97,8 +104,15 @@ export default new Vuex.Store({
 		},
 		setFilters({commit}, filtersObject){
 			commit('SET_FILTERS', filtersObject)
-		}
+		},
+		async surveySearch({commit}, surveyResults){
+            axios
+                   .post('https://compucompare/surveySearch', surveyResults)
+                   .then( res => commit('SET_SurveyResults', res.data))
+				.catch(error => console.log(error))
+				}
 	},
+
 	getters: {
 
 	},

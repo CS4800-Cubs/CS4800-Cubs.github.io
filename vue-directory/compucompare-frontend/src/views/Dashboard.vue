@@ -16,6 +16,14 @@
               </v-col>
 
               <v-col>
+              <v-banner>
+                <v-btn v-on:click="goToSurveyResults">
+                View your survey results!
+                <v-icon>
+                mdi-laptop
+                </v-icon>
+                </v-btn>
+              </v-banner>
                 <v-card min-height="70vh">
                   <ComputerList v-on:expandDevice="expandDevice"> </ComputerList>
                 </v-card>
@@ -38,7 +46,7 @@
                 <v-sheet rounded="lg" class="previous">
                   <v-btn
                     text
-                    flat  
+
                     v-on:click="minimizeDevice"
                     v-ripple
                   >
@@ -120,7 +128,7 @@
                 <v-sheet rounded="lg" class="previous">
                   <v-btn
                     text
-                    flat  
+
                     v-on:click="goToCompare()"
                     v-ripple
                   >
@@ -138,6 +146,36 @@
             </v-row>
           </v-container>
         </v-window-item>
+
+        <v-window-item>
+                  <v-container>
+                    <v-row>
+                      <v-col cols="1">
+                        <v-sheet rounded="lg" class="previous">
+                          <v-btn
+                            text
+
+                            v-on:click="returnFromSurveyResults()"
+                            v-ripple
+                          >
+                            <v-icon>mdi-chevron-left</v-icon>
+                          </v-btn>
+                        </v-sheet>
+                      </v-col>
+                      <v-col>
+                        <v-card min-height="70vh">
+                          monica
+                        </v-card>
+                      </v-col>
+                      <v-col cols="3">
+                                     <v-card class="mx-auto">
+                                       <Cart v-on:goToCompare="goToCompare"></Cart>
+                                     </v-card>
+                                   </v-col>
+                    </v-row>
+                  </v-container>
+                </v-window-item>
+
 
 
       </v-window>
@@ -164,29 +202,45 @@ import Filters from "../components/Filters"
     methods: {
       expandDevice (computer) {
         this.window = 1
+        this.$store.state.windowPosition = 1
         this.expandedDevice = computer
       },
       minimizeDevice () {
         this.window = 0
+        this.$store.state.windowPosition = 0
       },
       expandDeviceFromCompare(computer){
         this.window = 3
+        this.$store.state.windowPosition = 3
         this.expandedDevice = computer
       },
       goToCompare() {
         this.window = 2
+        this.$store.state.windowPosition = 2
       },
       returnFromCompare(){
         this.window = 0
+        this.$store.state.windowPosition = 0
+      },
+      returnFromSurveyResults(){
+        this.window = 0
+        this.$store.state.windowPosition = 0
+      },
+      goToSurveyResults() {
+      this.window = 4
+      this.$store.state.windowPosition = 4
       }
     },
     computed: {
       computers(){
         return this.$store.state.selected
       }
-    }
-
-  }
+    },
+    created(){
+        this.window = 4
+        console.log(this.$store.state.windowPosition)
+       //this.window = this.$store.state.windowPosition
+       }}
 </script>
 
 <style scoped>
