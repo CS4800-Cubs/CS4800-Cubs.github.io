@@ -11,12 +11,12 @@ import com.compucompare.compucompare.components.GPUComponent;
 import com.compucompare.compucompare.components.NetworkComponent;
 import com.compucompare.compucompare.components.RAMComponent;
 import com.compucompare.compucompare.components.StorageComponent;
-import com.compucompare.compucompare.computerType.Laptop;
+import com.compucompare.compucompare.computerType.Computer;
 import com.compucompare.compucompare.database.BatteryRepository;
 import com.compucompare.compucompare.database.CPURepository;
 import com.compucompare.compucompare.database.DisplayRepository;
 import com.compucompare.compucompare.database.GPURepository;
-import com.compucompare.compucompare.database.LaptopRepository;
+import com.compucompare.compucompare.database.ComputerRepository;
 import com.compucompare.compucompare.database.NetworkRepository;
 import com.compucompare.compucompare.database.RAMRepository;
 import com.compucompare.compucompare.database.StorageRepository;
@@ -26,7 +26,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 public abstract class LaptopSource implements DataSource
 {
     @Autowired
-    LaptopRepository laptopRepository;
+    ComputerRepository laptopRepository;
 
     @Autowired
     CPURepository cpuRepository;
@@ -75,11 +75,11 @@ public abstract class LaptopSource implements DataSource
             GPUComponent gpu = gpuRepository.findByBrandAndModel(listing.gpuBrand, listing.gpuModel);
             if (gpu == null)
             {
-                System.out.println("No Benchmark Available For GPU: " + listing.gpuModel);
+                System.out.println("No Benchmark Available For GPU: " + listing.gpuBrand + ", " + listing.gpuModel);
                 continue;
             }
             // With Primary Benchmarks Available, Can Create Laptop
-            Laptop laptop = new Laptop();
+            Computer laptop = new Computer();
             laptop.setBrand(listing.brand);
             laptop.setModel(listing.model);
             laptop.setDisplayName(listing.displayName);
@@ -94,6 +94,7 @@ public abstract class LaptopSource implements DataSource
             {
                 ram = new RAMComponent(listing.ramBrand, listing.ramModel, listing.ramAmount,
                                        listing.ramSpeed, listing.dualChannelRam);
+                ramRepository.save(ram);
             }
             laptop.setRam(ram);
             // Set Storage, Linking Existing Database Entries If Possible
@@ -105,6 +106,7 @@ public abstract class LaptopSource implements DataSource
                 {
                     storage = new StorageComponent(storageListing.brand, storageListing.model,
                                                    storageListing.capacity, storageListing.isSolidState, storageListing.isNvme);
+                    storageRepository.save(storage);
                 }
                 laptop.addStorage(storage);
             }
@@ -117,6 +119,7 @@ public abstract class LaptopSource implements DataSource
                 {
                     network = new NetworkComponent(networkListing.brand, networkListing.model, networkListing.maxSpeed,
                                                    networkListing.isWireless, networkListing.standards);
+                    networkRepository.save(network);
                 }
                 laptop.addInterface(network);
             }
@@ -127,6 +130,7 @@ public abstract class LaptopSource implements DataSource
             {
                 display = new DisplayComponent(listing.displayBrand, listing.displayModel, listing.displaySize,
                                                listing.resX, listing.resY, listing.refreshRate);
+                displayRepository.save(display);
             }
             laptop.setDisplay(display);
             // Set Battery, Linking Existing Database Entry If Possible
@@ -136,6 +140,7 @@ public abstract class LaptopSource implements DataSource
             {
                 battery = new BatteryComponent(listing.batteryBrand, listing.batteryModel,
                                                listing.expectedBatteryLife, listing.batteryCapacity);
+                batteryRepository.save(battery);
             }
             laptop.setBattery(battery);
             laptopRepository.save(laptop);

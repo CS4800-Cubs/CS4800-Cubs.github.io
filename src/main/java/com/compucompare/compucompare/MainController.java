@@ -2,8 +2,7 @@ package com.compucompare.compucompare;
 
 import com.compucompare.compucompare.components.*;
 import com.compucompare.compucompare.computerType.Computer;
-import com.compucompare.compucompare.computerType.Laptop;
-import com.compucompare.compucompare.database.LaptopRepository;
+import com.compucompare.compucompare.database.ComputerRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
@@ -20,7 +19,7 @@ import java.util.Set;
 public class MainController
 {
     @Autowired
-    private LaptopRepository laptopRepository;
+    private ComputerRepository laptopRepository;
 
     /**
      * Gets a laptop by model.
@@ -35,13 +34,10 @@ public class MainController
      * @return A laptop object.
      */
     @RequestMapping("/getModel")
-    Laptop getModel(@RequestParam(value = "model", defaultValue = "") String model)
+    Computer getModel(@RequestParam(value = "model", defaultValue = "") String model)
     {
         return laptopRepository.findByModel(model);
     }
-
-
-
 
     /**
      * Get Laptop or Computer based on filtered searches and searchbar searches
@@ -68,11 +64,11 @@ public class MainController
                                       @RequestParam(value = "minStorage", defaultValue = "") double minStorage,
                                       @RequestParam(value = "maxStorage", defaultValue = "") double maxStorage,
                                       @RequestParam(value = "display", defaultValue = "") double display){
-    Iterable<Laptop> laptops = laptopRepository.findAll();
+    Iterable<Computer> laptops = laptopRepository.findAll();
     List<Computer> results = new ArrayList<>();
     int minRelScore = 1;
     // check type and then set for loop dependent on that
-    for(Laptop laptop: laptops){
+    for(Computer laptop: laptops){
         if (!checkFilters(laptop, brand, cpu, graphics, minRam, maxRam, minStorage,
                 maxStorage, display))
             continue;
@@ -99,7 +95,7 @@ public class MainController
 
     }
 
-    public boolean checkFilters(Laptop laptop, String brand, String cpu,
+    public boolean checkFilters(Computer laptop, String brand, String cpu,
                                 String graphics, double minRam, double maxRam, double minStorage,
                                 double maxStorage, double display){
         Set<StorageComponent> storageSet = laptop.getStorage();
@@ -149,7 +145,7 @@ public class MainController
      */
 
     @RequestMapping("/tempSearch")
-    public Laptop returnTempResults() {
+    public Computer returnTempResults() {
         Set<StorageComponent> drives = new HashSet<>();
         drives.add(new StorageComponent("Samsung", "EVO", 256, true, true));
         drives.add(new StorageComponent("WD", "Blue", 1000, false, false));
@@ -163,7 +159,7 @@ public class MainController
         supportedWirelessStandards.add("802.11ac");
         supportedWirelessStandards.add("802.11ax");
         interfaces.add(new NetworkComponent("Intel", "AX200", 2400, true, supportedWirelessStandards));
-        Laptop testLaptop = new Laptop("HP", "dsuyf7tud", "HP Laptop", "thumbnailUrl", "pageUrl",
+        Computer testLaptop = new Computer("HP", "dsuyf7tud", "HP Laptop", "thumbnailUrl", "pageUrl", true,
                 new CPUComponent("Intel", "9750H", 1000, 2000, 4, "x86"),
                 new GPUComponent("Nvidia", "GTX 1660Ti Mobile", 1000),
                 new RAMComponent("Crucial", "Ballistix", 16, 2400, true),

@@ -25,11 +25,16 @@ public class GeekbenchGPUSource implements DataSource
         GPUBenchmark[] benchmarks = fetchGPUs();
         for (GPUBenchmark benchmark : benchmarks)
         {
-            String[] name = benchmark.getName().split("(\\s|-|\\(TM\\))+", 2);
+            String[] name = benchmark.getName().split("(\\s|-|\\((TM|R)\\))+", 2);
             if (name.length == 2)
             {
-                String brand = name[0];
-                String model = name[1];
+                String brand = name[0].trim();
+                String model = name[1].replaceAll("\\((TM|R)\\)|Graphics|with|Design|,", "").replaceAll("\\s+", " ").trim();
+                if (brand.equals("GeForce"))
+                {
+                    model = brand + " " + model;
+                    brand = "NVIDIA";
+                }
                 GPUComponent gpuComponent = gpuRepository.findByBrandAndModel(brand, model);
                 if (gpuComponent == null)
                 {

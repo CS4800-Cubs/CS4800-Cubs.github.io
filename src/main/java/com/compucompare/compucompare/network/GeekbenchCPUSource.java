@@ -29,12 +29,8 @@ public class GeekbenchCPUSource implements DataSource
             String[] description = benchmark.getDescription().split("(\\s|\\(|\\))+", 4);
             if (name.length == 2 && description.length == 4)
             {
-                String brand = name[0];
-                String model = name[1];
-                if (cpuRepository == null)
-                {
-                    System.out.println("we got an issue");
-                }
+                String brand = name[0].trim();
+                String model = name[1].trim();
                 CPUComponent cpuComponent = cpuRepository.findByBrandAndModel(brand, model);
                 if (cpuComponent == null)
                 {

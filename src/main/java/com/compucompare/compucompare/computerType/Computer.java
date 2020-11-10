@@ -2,18 +2,20 @@ package com.compucompare.compucompare.computerType;
 
 import com.compucompare.compucompare.components.*;
 
-import java.util.Set;
-import java.util.HashSet;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
-import javax.persistence.CascadeType;
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 
-@MappedSuperclass
+@Entity
 public class Computer
 {
     @Id
@@ -21,21 +23,33 @@ public class Computer
     private int id;
 
     private String brand, model, displayName, thumbnailUrl, pageUrl;
-    
-    @OneToOne (cascade = CascadeType.ALL)
+    private boolean portable;
+
+    @ManyToOne
     private CPUComponent processor;
 
-    @OneToOne (cascade = CascadeType.ALL)
+    @ManyToOne
     private GPUComponent graphics;
 
-    @OneToOne (cascade = CascadeType.ALL)
+    @ManyToOne
+    @Cascade({CascadeType.SAVE_UPDATE})
     private RAMComponent ram;
 
-    @OneToMany (cascade = CascadeType.ALL)
+    @ManyToMany
+    @Cascade({CascadeType.SAVE_UPDATE})
     private Set<StorageComponent> storage;
 
-    @OneToMany (cascade = CascadeType.ALL)
+    @ManyToMany
+    @Cascade({CascadeType.SAVE_UPDATE})
     private Set<NetworkComponent> interfaces;
+
+    @ManyToOne
+    @Cascade({CascadeType.SAVE_UPDATE})
+    private DisplayComponent display;
+
+    @ManyToOne
+    @Cascade({CascadeType.SAVE_UPDATE})
+    private BatteryComponent battery;
 
     public Computer()
     {
@@ -44,17 +58,21 @@ public class Computer
         displayName = "Undefined";
         thumbnailUrl = "Undefined";
         pageUrl = "No URL Available";
+        portable = true;
         processor = null;
         graphics = null;
         ram = null;
         storage = null;
         interfaces = null;
+        display = null;
+        battery = null;
     }
 
     public Computer(String brand, String model, String displayName,
-                    String thumbnailUrl, String pageUrl, CPUComponent processor,
-                    GPUComponent graphics, RAMComponent ram,
-                    Set<StorageComponent> storage, Set<NetworkComponent> interfaces)
+                    String thumbnailUrl, String pageUrl, boolean portable,
+                    CPUComponent processor, GPUComponent graphics, RAMComponent ram,
+                    Set<StorageComponent> storage, Set<NetworkComponent> interfaces,
+                    DisplayComponent display, BatteryComponent battery)
     {
         this.brand = brand;
         this.model = model;
@@ -65,6 +83,8 @@ public class Computer
         this.ram = ram;
         this.storage = new HashSet<>(storage);
         this.interfaces = new HashSet<>(interfaces);
+        this.display = display;
+        this.battery = battery;
     }
 
     public int getId()
@@ -127,6 +147,16 @@ public class Computer
         return pageUrl;
     }
 
+    public boolean isPortable()
+    {
+        return portable;
+    }
+
+    public void setPortable(boolean isPortable)
+    {
+        portable = isPortable;
+    }
+
     public void setProcessor(CPUComponent processor)
     {
         this.processor = processor;
@@ -187,6 +217,26 @@ public class Computer
         return interfaces;
     }
 
+    public void setDisplay(DisplayComponent display)
+    {
+        this.display = display;
+    }
+
+    public DisplayComponent getDisplay()
+    {
+        return display;
+    }
+
+    public void setBattery(BatteryComponent battery)
+    {
+        this.battery = battery;
+    }
+
+    public BatteryComponent getBattery()
+    {
+        return battery;
+    }
+
     @Override
     public boolean equals(Object o)
     {
@@ -202,6 +252,8 @@ public class Computer
             && other.graphics.equals(graphics)
             && other.ram.equals(ram)
             && other.storage.equals(storage)
-            && other.interfaces.equals(interfaces);
+            && other.interfaces.equals(interfaces)
+            && other.battery.equals(battery)
+            && other.display.equals(display);
     }
 }
