@@ -29,11 +29,18 @@ public class GeekbenchGPUSource implements DataSource
             if (name.length == 2)
             {
                 String brand = name[0].trim();
-                String model = name[1].replaceAll("\\((TM|R)\\)|Graphics|with|Design|,", "").replaceAll("\\s+", " ").trim();
+                String model = name[1].replaceAll("\\((TM|R)\\)|Graphics|with|Design|,", "")
+                                      .replaceAll("\\s+", " ")
+                                      .trim();
                 if (brand.equals("GeForce"))
                 {
                     model = brand + " " + model;
                     brand = "NVIDIA";
+                }
+                else if (brand.equals("Radeon"))
+                {
+                    model = brand + " " + model;
+                    brand = "AMD";
                 }
                 GPUComponent gpuComponent = gpuRepository.findByBrandAndModel(brand, model);
                 if (gpuComponent == null)
