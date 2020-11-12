@@ -11,10 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @RestController
 public class MainController
@@ -24,7 +21,7 @@ public class MainController
 
     /**
      * Gets a laptop by model.
-     * 
+     *
      * Only for testing purposes, the client will
      * give a search query where we will give a list
      * of laptops rather than a single laptop.
@@ -56,43 +53,44 @@ public class MainController
      */
     @RequestMapping("/generalSearch")
     public List<Computer> getByFilter(@RequestParam(value = "query", defaultValue = "") String query,
-                                      @RequestParam(value = "type", defaultValue = "") String type,
+                                      @RequestParam(value = "portable", defaultValue = "") String portable,
                                       @RequestParam(value = "brand", defaultValue = "") String brand,
                                       @RequestParam(value = "cpu", defaultValue = "") String cpu,
                                       @RequestParam(value = "graphics", defaultValue = "") String graphics,
-                                      @RequestParam(value = "minRam", defaultValue = "") double minRam,
-                                      @RequestParam(value = "maxRam", defaultValue = "") double maxRam,
-                                      @RequestParam(value = "minStorage", defaultValue = "") double minStorage,
-                                      @RequestParam(value = "maxStorage", defaultValue = "") double maxStorage,
-                                      @RequestParam(value = "display", defaultValue = "") double display){
-    Iterable<Computer> laptops = laptopRepository.findAll();
-    List<Computer> results = new ArrayList<>();
-    int minRelScore = 1;
-    // check type and then set for loop dependent on that
-    for(Computer laptop: laptops){
-        if (!checkFilters(laptop, brand, cpu, graphics, minRam, maxRam, minStorage,
-                maxStorage, display))
-            continue;
-        int relevanceScore = 0;
-        query = query.toLowerCase();
-        if(query.contains(laptop.getBrand().toLowerCase()))
-            relevanceScore++;
-        if(query.contains(laptop.getModel().toLowerCase()))
-            relevanceScore++;
-        if(query.contains(laptop.getProcessor().getBrand().toLowerCase()))
-            relevanceScore++;
-        if(query.contains(laptop.getProcessor().getModel().toLowerCase()))
-            relevanceScore++;
-        if(query.contains(laptop.getGraphics().getBrand().toLowerCase()))
-            relevanceScore++;
-        if(query.contains(laptop.getGraphics().getModel().toLowerCase()))
-            relevanceScore++;
-        if(query.contains(laptop.getDisplay().getBrand().toLowerCase()))
-            relevanceScore++;
-        if(relevanceScore >= minRelScore)
-            results.add(laptop);
-    }
-    return results;
+                                      @RequestParam(value = "minRam", defaultValue = "0.0") double minRam,
+                                      @RequestParam(value = "maxRam", defaultValue = "0.0") double maxRam,
+                                      @RequestParam(value = "minStorage", defaultValue = "0.0") double minStorage,
+                                      @RequestParam(value = "maxStorage", defaultValue = "0.0") double maxStorage,
+                                      @RequestParam(value = "display", defaultValue = "0.0") double display){
+        Iterable<Computer> computers = laptopRepository.findAll();
+
+        List<Computer> results = new ArrayList<>();
+        int minRelScore = 1;
+
+        for (Computer laptop : computers) {
+            if (!checkFilters(laptop, brand, cpu, graphics, minRam, maxRam, minStorage,
+                    maxStorage, display))
+                continue;
+            int relevanceScore = 0;
+            query = query.toLowerCase();
+            if (query.contains(laptop.getBrand().toLowerCase()))
+                relevanceScore++;
+            if (query.contains(laptop.getModel().toLowerCase()))
+                relevanceScore++;
+            if (query.contains(laptop.getProcessor().getBrand().toLowerCase()))
+                relevanceScore++;
+            if (query.contains(laptop.getProcessor().getModel().toLowerCase()))
+                relevanceScore++;
+            if (query.contains(laptop.getGraphics().getBrand().toLowerCase()))
+                relevanceScore++;
+            if (query.contains(laptop.getGraphics().getModel().toLowerCase()))
+                relevanceScore++;
+            if (query.contains(laptop.getDisplay().getBrand().toLowerCase()))
+                relevanceScore++;
+            if (relevanceScore >= minRelScore)
+                results.add(laptop);
+        }
+        return results;
 
     }
 
@@ -100,7 +98,8 @@ public class MainController
                                 String graphics, double minRam, double maxRam, double minStorage,
                                 double maxStorage, double display){
         Set<StorageComponent> storageSet = laptop.getStorage();
-        if(!laptop.getBrand().equals(brand))
+        // Check if it's default value, then continue
+        if (!laptop.getBrand().equals(brand))
             return false;
         if(!(laptop.getRam().getMemory() >= minRam) && !(laptop.getRam().getMemory() <= maxRam))
             return false;
@@ -110,7 +109,7 @@ public class MainController
             return false;
         if(!laptop.getGraphics().getBrand().contains(graphics))
             return false;
-        int storageTotal = getStorageTotal(storageSet);
+        double storageTotal = getStorageTotal(storageSet);
         if(!(storageTotal > minStorage) && !(storageTotal < maxStorage))
             return false;
         if(laptop.getDisplay().getSize() != display)
@@ -119,8 +118,8 @@ public class MainController
         return true;
     }
 
-    public int getStorageTotal(Set<StorageComponent> set){
-        int totalStorage = 0;
+    public double getStorageTotal(Set<StorageComponent> set){
+        double totalStorage = 0;
         for(StorageComponent storage: set)
             totalStorage += storage.getCapacity();
         return totalStorage;
@@ -133,8 +132,7 @@ public class MainController
      * @return A Laptop/Computer object
      */
     @RequestMapping("/surveySearch")
-    public JSONObject getByFilter(@RequestBody JSONObject results){
-
+    public SurveyResponse getByFilter(@RequestBody SurveyResponse results){
 
         return results;
     }
