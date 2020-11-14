@@ -62,8 +62,8 @@ public class Computer
         processor = null;
         graphics = null;
         ram = null;
-        storage = null;
-        interfaces = null;
+        storage = new HashSet<>();
+        interfaces = new HashSet<>();
         display = null;
         battery = null;
     }

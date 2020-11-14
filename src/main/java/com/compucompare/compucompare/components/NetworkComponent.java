@@ -20,6 +20,7 @@ public class NetworkComponent extends Component
         super();
         maxSpeed = 0;
         wireless = false;
+        standards = new HashSet<>();
     }
 
     public NetworkComponent(String brand, String model, int maxSpeed,
