@@ -17,6 +17,7 @@ import org.springframework.stereotype.Component;
 public class BestBuySource extends LaptopSource
 {
     public static final String LAPTOP_LIST_URL = "https://www.bestbuy.com/site/laptop-computers/all-laptops/pcmcat138500050001.c?id=pcmcat138500050001";
+    public static final int MAX_PAGES = 100;
 
     @Autowired
     ComputerRepository laptopRepository;
@@ -25,25 +26,36 @@ public class BestBuySource extends LaptopSource
     public Set<LaptopListing> fetchLaptopListings()
     {
         Set<LaptopListing> listings = new HashSet<>();
+        String currentPageUrl = LAPTOP_LIST_URL;
         try
         {
-            Document resultPage = Jsoup.connect(LAPTOP_LIST_URL).get();
-            Elements laptopElements = resultPage.getElementsByClass("sku-item");
-            for (Element element : laptopElements)
+            Element nextPageLink = null;
+            int pages = 0;
+            do
             {
-                Element skuHeader = element.selectFirst(".sku-header");
-                if (skuHeader == null)
+                if (nextPageLink != null)
                 {
-                    continue;
+                    currentPageUrl = nextPageLink.attr("href");
                 }
-                Element link = skuHeader.selectFirst("a");
-                if (link == null)
+                Document resultPage = Jsoup.connect(currentPageUrl).get();
+                Elements laptopElements = resultPage.getElementsByClass("sku-item");
+                for (Element element : laptopElements)
                 {
-                    continue;
+                    Element skuHeader = element.selectFirst(".sku-header");
+                    if (skuHeader == null)
+                    {
+                        continue;
+                    }
+                    Element link = skuHeader.selectFirst("a");
+                    if (link == null)
+                    {
+                        continue;
+                    }
+                    String laptopPageUrl = link.attr("abs:href");
+                    listings.add(fetchLaptopListing(laptopPageUrl));
                 }
-                String laptopPageUrl = link.attr("abs:href");
-                listings.add(fetchLaptopListing(laptopPageUrl));
-            }
+                nextPageLink = resultPage.selectFirst(".sku-list-page-next");
+            } while (nextPageLink != null && ++pages < MAX_PAGES);
         }
         catch (IOException e)
         {
@@ -179,7 +191,7 @@ public class BestBuySource extends LaptopSource
                         System.out.println("Error Parsing Resolution");
                     }
                 }
-                else if (key.equals("Storage State Drive Capacity"))
+                else if (key.equals("Solid State Drive Capacity"))
                 {
                     if (solidStateStorage == null)
                     {
@@ -224,7 +236,7 @@ public class BestBuySource extends LaptopSource
                         wirelessInterface = new NetworkListing();
                         wirelessInterface.isWireless = true;
                     }
-                    wirelessInterface.standards.add(key);
+                    wirelessInterface.standards.add(val);
                 }
                 else if (key.equals("Bluetooth Enabled"))
                 {
