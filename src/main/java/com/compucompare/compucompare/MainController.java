@@ -1,5 +1,7 @@
 package com.compucompare.compucompare;
 
+import com.compucompare.compucompare.comparison.WeightedComparator;
+import com.compucompare.compucompare.comparison.WeightedPreferences;
 import com.compucompare.compucompare.components.*;
 import com.compucompare.compucompare.computerType.Computer;
 import com.compucompare.compucompare.database.ComputerRepository;
@@ -136,6 +138,20 @@ public class MainController
     public SurveyResponse getByFilter(@RequestBody SurveyResponse results){
 
         return results;
+    }
+
+    @RequestMapping("/compare")
+    public Set<Computer> compareComputers(@RequestParam(value = "ids") Set<Integer> ids)
+    {
+        WeightedPreferences weights = new WeightedPreferences();
+        WeightedComparator comparator = new WeightedComparator(weights);
+        Set<Computer> comparedComputers = new TreeSet<>(comparator);
+        Iterable<Computer> selected = laptopRepository.findAllById(ids);
+        for (Computer computer : selected)
+        {
+            comparedComputers.add(computer);
+        }
+        return comparedComputers;
     }
 
     /**
