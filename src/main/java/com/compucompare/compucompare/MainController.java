@@ -51,7 +51,7 @@ public class MainController
      * @return A list of Laptop/Computer objects
      */
     @RequestMapping("/generalSearch")
-    public List<Computer> getByFilter(@RequestParam(value = "query", defaultValue = "") String query,
+    public Set<SearchResult> getByFilter(@RequestParam(value = "query", defaultValue = "") String query,
                                       @RequestParam(value = "portable", defaultValue = "") String portable,
                                       @RequestParam(value = "brand", defaultValue = "") String brand,
                                       @RequestParam(value = "cpu", defaultValue = "") String cpu,
@@ -63,7 +63,7 @@ public class MainController
                                       @RequestParam(value = "display", defaultValue = "0.0") double display){
         Iterable<Computer> computers = laptopRepository.findAll();
 
-        List<Computer> results = new ArrayList<>();
+        Set<SearchResult> results = new TreeSet<>();
         int minRelScore = 1;
 
         for (Computer laptop : computers) {
@@ -87,7 +87,7 @@ public class MainController
             if (query.contains(laptop.getDisplay().getBrand().toLowerCase()))
                 relevanceScore++;
             if (relevanceScore >= minRelScore)
-                results.add(laptop);
+                results.add(new SearchResult(laptop, relevanceScore));
         }
         return results;
 
