@@ -2,8 +2,12 @@ package com.compucompare.compucompare.components;
 
 import javax.persistence.Entity;
 
+import com.compucompare.compucompare.comparison.WeightedComparable;
+import com.compucompare.compucompare.comparison.WeightedPreferences;
+
 @Entity
 public class CPUComponent extends Component
+    implements Comparable<CPUComponent>, WeightedComparable<CPUComponent>
 {
     private int singleBench;
     private int multiBench;
@@ -67,6 +71,26 @@ public class CPUComponent extends Component
     public String getArchitecture()
     {
         return architecture;
+    }
+
+    @Override
+    public int compareTo(CPUComponent other)
+    {
+        int result = (multiBench == 0 || other.multiBench == 0)
+                     ? 0 : multiBench - other.multiBench;
+        result += (singleBench == 0 || other.singleBench == 0)
+                  ? 0 : singleBench - other.singleBench;
+        return result;
+    }
+
+    @Override
+    public int compareTo(CPUComponent other, WeightedPreferences weights)
+    {
+        int result = (multiBench == 0 || other.multiBench == 0)
+                     ? 0 : (int) (weights.getMultiThreadMultiplier() * (multiBench - other.multiBench));
+        result += (singleBench == 0 || other.singleBench == 0)
+                  ? 0 : (int) (weights.getSingleThreadMultiplier() * (singleBench - other.singleBench));
+        return result;
     }
 
     @Override
