@@ -2,9 +2,7 @@ package com.compucompare.compucompare.comparison;
 
 import java.util.Comparator;
 
-import com.compucompare.compucompare.computerType.Computer;
-
-public class WeightedComparator implements Comparator<Computer>
+public class WeightedComparator<T extends WeightedComparable<T>> implements Comparator<T>
 {
     private WeightedPreferences weights;
 
@@ -14,7 +12,7 @@ public class WeightedComparator implements Comparator<Computer>
     }
 
     @Override
-    public int compare(Computer first, Computer second)
+    public int compare(T first, T second)
     {
         return first.compareTo(second, weights);
     }

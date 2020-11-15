@@ -144,7 +144,7 @@ public class MainController
     public Set<Computer> compareComputers(@RequestParam(value = "ids") Set<Integer> ids)
     {
         WeightedPreferences weights = new WeightedPreferences();
-        WeightedComparator comparator = new WeightedComparator(weights);
+        WeightedComparator<Computer> comparator = new WeightedComparator<>(weights);
         Set<Computer> comparedComputers = new TreeSet<>(comparator);
         Iterable<Computer> selected = laptopRepository.findAllById(ids);
         for (Computer computer : selected)
