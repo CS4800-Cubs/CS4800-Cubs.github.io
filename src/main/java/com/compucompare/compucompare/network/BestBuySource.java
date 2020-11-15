@@ -36,6 +36,10 @@ public class BestBuySource extends LaptopSource
                 if (nextPageLink != null)
                 {
                     currentPageUrl = nextPageLink.attr("href");
+                    if (currentPageUrl.isBlank())
+                    {
+                        break;
+                    }
                 }
                 Document resultPage = Jsoup.connect(currentPageUrl).get();
                 Elements laptopElements = resultPage.getElementsByClass("sku-item");

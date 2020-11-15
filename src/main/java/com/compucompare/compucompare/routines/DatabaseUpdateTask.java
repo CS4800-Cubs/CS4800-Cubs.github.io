@@ -25,6 +25,7 @@ public class DatabaseUpdateTask
     @Scheduled(fixedDelay = 86400000, initialDelay = 0)
     public void updateDatabase()
     {
+        System.out.println("Scheduled Update Tasks Starting...");
         cpuData.updateDatabase();
         gpuData.updateDatabase();
         laptopData.updateDatabase();
