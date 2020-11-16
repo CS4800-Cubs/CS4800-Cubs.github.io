@@ -6,8 +6,12 @@ import java.util.HashSet;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 
+import com.compucompare.compucompare.comparison.WeightedComparable;
+import com.compucompare.compucompare.comparison.WeightedPreferences;
+
 @Entity
 public class NetworkComponent extends Component
+    implements Comparable<NetworkComponent>, WeightedComparable<NetworkComponent>
 {
     private int maxSpeed;
     private boolean wireless;
@@ -60,6 +64,21 @@ public class NetworkComponent extends Component
     public Set<String> getStandards()
     {
         return new HashSet<>(standards);
+    }
+
+    @Override
+    public int compareTo(NetworkComponent other)
+    {
+        return (maxSpeed == 0 || other.maxSpeed == 0)
+               ? 0 : maxSpeed - other.maxSpeed;
+    }
+
+    @Override
+    public int compareTo(NetworkComponent other, WeightedPreferences weights)
+    {
+        return (maxSpeed == 0 || other.maxSpeed == 0)
+               ? 0 : (int) ((wireless ? weights.getWiredSpeedMultiplier() :
+               weights.getWiredSpeedMultiplier()) * (maxSpeed - other.maxSpeed));
     }
 
     @Override

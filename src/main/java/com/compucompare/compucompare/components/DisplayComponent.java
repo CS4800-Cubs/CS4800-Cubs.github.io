@@ -2,8 +2,13 @@ package com.compucompare.compucompare.components;
 
 import javax.persistence.Entity;
 
+import com.compucompare.compucompare.comparison.WeightedComparable;
+import com.compucompare.compucompare.comparison.WeightedPreferences;
+
 @Entity
-public class DisplayComponent extends Component{
+public class DisplayComponent extends Component
+    implements Comparable<DisplayComponent>, WeightedComparable<DisplayComponent>
+{
 
     private double size;
     private int resX;
@@ -56,6 +61,28 @@ public class DisplayComponent extends Component{
     }
 
     public int getRefreshRate(){return refreshRate;}
+
+    @Override
+    public int compareTo(DisplayComponent other)
+    {
+        int result = (size == 0.0 || other.size == 0.0) ? 0 : (int) (size - other.size);
+        int resolution = resX * resY;
+        int otherResolution = other.resX * resY;
+        result += (resolution == 0 || otherResolution == 0) ? 0 : resolution - otherResolution;
+        return result;
+    }
+
+    @Override
+    public int compareTo(DisplayComponent other, WeightedPreferences weights)
+    {
+        int result = (size == 0.0 || other.size == 0.0)
+                     ? 0 : (int) (weights.getScreenSizeMultiplier() * (size - other.size));
+        int resolution = resX * resY;
+        int otherResolution = other.resX * resY;
+        result += (resolution == 0 || otherResolution == 0)
+                  ? 0 : (int) (weights.getScreenResolutionMultiplier() * (resolution - otherResolution));
+        return result;
+    }
 
     @Override
     public boolean equals(Object o)

@@ -1,5 +1,7 @@
 package com.compucompare.compucompare.computerType;
 
+import com.compucompare.compucompare.comparison.WeightedComparable;
+import com.compucompare.compucompare.comparison.WeightedPreferences;
 import com.compucompare.compucompare.components.*;
 
 import org.hibernate.annotations.Cascade;
@@ -16,7 +18,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Computer
+public class Computer implements Comparable<Computer>, WeightedComparable<Computer>
 {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -235,6 +237,142 @@ public class Computer
     public BatteryComponent getBattery()
     {
         return battery;
+    }
+
+    @Override
+    public int compareTo(Computer other)
+    {
+        int result = processor.compareTo(other.processor)
+            + graphics.compareTo(other.graphics)
+            + ram.compareTo(other.ram)
+            + battery.compareTo(other.battery)
+            + display.compareTo(other.display);
+        result += compareDrives(other, null);
+        result += compareInterfaces(other, null);
+        return result;
+    }
+
+    @Override
+    public int compareTo(Computer other, WeightedPreferences weights)
+    {
+        int result = processor.compareTo(other.processor, weights)
+            + graphics.compareTo(other.graphics, weights)
+            + ram.compareTo(other.ram, weights)
+            + battery.compareTo(other.battery, weights)
+            + display.compareTo(other.display, weights);
+        result += compareDrives(other, weights);
+        result += compareInterfaces(other, weights);
+        return result;
+    }
+
+    private int compareDrives(Computer other, WeightedPreferences weights)
+    {
+        int result = 0;
+        StorageComponent[] hardDrive = new StorageComponent[2];
+        StorageComponent[] solidStateDrive = new StorageComponent[2];
+        StorageComponent[] nvmeDrive = new StorageComponent[2];
+        for (StorageComponent drive : storage)
+        {
+            if (drive.isNvme())
+            {
+                nvmeDrive[0] = drive;
+            }
+            else if (drive.isSolidState())
+            {
+                solidStateDrive[0] = drive;
+            }
+            else
+            {
+                hardDrive[0] = drive;
+            }
+        }
+        for (StorageComponent drive : other.storage)
+        {
+            if (drive.isNvme())
+            {
+                nvmeDrive[1] = drive;
+            }
+            else if (drive.isSolidState())
+            {
+                solidStateDrive[1] = drive;
+            }
+            else
+            {
+                hardDrive[1] = drive;
+            }
+        }
+        if (hardDrive[0] != null && hardDrive[1] != null)
+        {
+            if (weights == null)
+            {
+                result += hardDrive[0].compareTo(hardDrive[1]);
+            }
+            else
+            {
+                result += hardDrive[0].compareTo(hardDrive[1], weights);
+            }
+        }
+        if (solidStateDrive[0] != null && solidStateDrive[1] != null)
+        {
+            if (weights == null)
+            {
+                result += solidStateDrive[0].compareTo(solidStateDrive[1]);
+            }
+            else
+            {
+                result += solidStateDrive[0].compareTo(solidStateDrive[1], weights);
+            }
+        }
+        if (nvmeDrive[0] != null && nvmeDrive[1] != null)
+        {
+            if (weights == null)
+            {
+                result += nvmeDrive[0].compareTo(nvmeDrive[1]);
+            }
+            else
+            {
+                result += nvmeDrive[0].compareTo(nvmeDrive[1], weights);
+            }
+        }
+        return result;
+    }
+
+    private int compareInterfaces(Computer other, WeightedPreferences weights)
+    {
+        int result = 0;
+        NetworkComponent[] wireless = new NetworkComponent[2];
+        NetworkComponent[] wired = new NetworkComponent[2];
+        for (NetworkComponent adapter : interfaces)
+        {
+            if (adapter.isWireless())
+            {
+                wireless[0] = adapter;
+            }
+            else
+            {
+                wired[0] = adapter;
+            }
+        }
+        for (NetworkComponent adapter : other.interfaces)
+        {
+            if (adapter.isWireless())
+            {
+                wireless[1] = adapter;
+            }
+            else
+            {
+                wired[1] = adapter;
+            }
+        }
+        if (wireless[0] != null && wireless[1] != null)
+        {
+            result += wireless[0].compareTo(wireless[1]);
+        }
+        if (wired[0] != null && wired[1] != null)
+        {
+            result += wired[0].compareTo(wired[1]);
+        }
+        return result;
     }
 
     @Override
