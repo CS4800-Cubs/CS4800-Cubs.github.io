@@ -135,11 +135,8 @@ public class WeightedPreferences
             }
             else if (category.equalsIgnoreCase("education"))
             {
-                if (survey.portable.equals("true"))
-                {
-                    batteryLifeWeight += 1.0;
-                    batteryCapacityWeight += 1.0;
-                }
+                batteryLifeWeight += 1.0;
+                batteryCapacityWeight += 1.0;
                 singleThreadWeight += 0.5;
                 ramAmountWeight += 0.5;
                 storageCapacityWeight += 1.0;
@@ -148,11 +145,8 @@ public class WeightedPreferences
             }
             else if (category.equalsIgnoreCase("work"))
             {
-                if (survey.portable.equals("true"))
-                {
-                    batteryLifeWeight += 1.0;
-                    batteryCapacityWeight += 1.0;
-                }
+                batteryLifeWeight += 1.0;
+                batteryCapacityWeight += 1.0;
                 singleThreadWeight += 1.0;
                 multiThreadWeight += 0.5;
                 ramAmountWeight += 0.5;
@@ -160,6 +154,18 @@ public class WeightedPreferences
                 storageSolidStateWeight += 0.75;
                 storageNvmeWeight += 0.25;
             }
+        }
+        // Don't Give Huge Advantages To Laptops Compared
+        // To Desktops Based On Battery Life
+        if (survey.portable.isEmpty())
+        {
+            batteryCapacityWeight = 0.5;
+            batteryLifeWeight = 0.5;
+        }
+        else if (survey.portable.equalsIgnoreCase("false"))
+        {
+            batteryCapacityWeight = 0.0;
+            batteryLifeWeight = 0.0;
         }
     }
 
