@@ -59,7 +59,11 @@ export default new Vuex.Store({
 			sessionStorage.setItem('query', query)
 
 			axios
-				.get(`https://jsonplaceholder.typicode.com/posts?_limit=5`)
+				.get(`https://compucompare/generalSearch`, {
+          params: {
+            query: query
+          }
+        })
 				.then( res =>
 					commit('SET_COMPUTERS', res.data)
 				)
