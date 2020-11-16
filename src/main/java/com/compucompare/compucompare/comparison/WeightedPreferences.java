@@ -1,5 +1,7 @@
 package com.compucompare.compucompare.comparison;
 
+import com.compucompare.compucompare.SurveyResponse;
+
 /**
  * Used for customized comparisons between computer
  * objects, where static standard multipliers
@@ -97,6 +99,68 @@ public class WeightedPreferences
         storageCapacityWeight = 1.0;
         storageSolidStateWeight = 1.0;
         storageNvmeWeight = 1.0;
+    }
+
+    /**
+     * Assign weights based on the user's
+     * survey responses.
+     * 
+     * @param survey
+     */
+    public WeightedPreferences(SurveyResponse survey)
+    {
+        this();
+        for (String category : survey.categories)
+        {
+            if (category.equalsIgnoreCase("editing"))
+            {
+                singleThreadWeight += 1.0;
+                multiThreadWeight += 2.5;
+                numCoresWeight += 4.0;
+                ramAmountWeight += 2.0;
+                ramSpeedWeight += 0.5;
+                gpuScoreWeight += 1.0;
+                storageCapacityWeight += 2.0;
+            }
+            else if (category.equalsIgnoreCase("gaming"))
+            {
+                singleThreadWeight += 1.5;
+                multiThreadWeight += 0.5;
+                ramAmountWeight += 0.5;
+                ramSpeedWeight += 0.5;
+                gpuScoreWeight += 2.5;
+                storageCapacityWeight += 0.5;
+                storageSolidStateWeight += 0.5;
+                storageNvmeWeight += 0.25;
+            }
+            else if (category.equalsIgnoreCase("education"))
+            {
+                if (survey.portable.equals("true"))
+                {
+                    batteryLifeWeight += 1.0;
+                    batteryCapacityWeight += 1.0;
+                }
+                singleThreadWeight += 0.5;
+                ramAmountWeight += 0.5;
+                storageCapacityWeight += 1.0;
+                storageSolidStateWeight += 0.75;
+                storageNvmeWeight += 0.25;
+            }
+            else if (category.equalsIgnoreCase("work"))
+            {
+                if (survey.portable.equals("true"))
+                {
+                    batteryLifeWeight += 1.0;
+                    batteryCapacityWeight += 1.0;
+                }
+                singleThreadWeight += 1.0;
+                multiThreadWeight += 0.5;
+                ramAmountWeight += 0.5;
+                storageCapacityWeight += 1.0;
+                storageSolidStateWeight += 0.75;
+                storageNvmeWeight += 0.25;
+            }
+        }
     }
 
     public double getSingleThreadMultiplier()
