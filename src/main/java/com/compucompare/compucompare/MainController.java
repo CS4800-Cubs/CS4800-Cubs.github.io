@@ -132,13 +132,27 @@ public class MainController
     /**
      * Get Laptop or Computer based on filtered searches
      *
-     * @param results A JSONObject that lists the survey results
+     * @param survey A JSONObject that lists the survey results
      * @return A Laptop/Computer object
      */
     @RequestMapping("/surveySearch")
-    public SurveyResponse getByFilter(@RequestBody SurveyResponse results){
+    public Set<Computer> getByFilter(@RequestBody SurveyResponse survey){
+        WeightedPreferences weights = new WeightedPreferences(survey);
+        WeightedComparator<Computer> comparator = new WeightedComparator<>(weights);
+        Set<Computer> comparedComputers = new TreeSet<>(comparator);
+        Iterable<Computer> computers = laptopRepository.findAll();
 
-        return results;
+        List<String> brands = survey.brands;
+        String portable = survey.portable;
+
+        for(Computer computer : computers){
+            if(!portable.isEmpty() && !String.valueOf(computer.isPortable()).equals(portable.toLowerCase()))
+                continue;
+            for(String brand: brands)
+                if(computer.getBrand().equals(brand))
+                    comparedComputers.add(computer);
+        }
+        return comparedComputers;
     }
 
     @RequestMapping("/compare")
