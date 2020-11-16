@@ -97,23 +97,24 @@ public class MainController
                                 String graphics, double minRam, double maxRam, double minStorage,
                                 double maxStorage, double display){
         Set<StorageComponent> storageSet = laptop.getStorage();
-        // Check if it's default value, then continue
-        if (!laptop.getBrand().equals(brand) && !brand.isEmpty())
+        
+        if (!brand.isEmpty() && !laptop.getBrand().equals(brand))
             return false;
-        if(!(laptop.getRam().getMemory() >= minRam) && !(laptop.getRam().getMemory() <= maxRam)
-            && minRam != 0.0 && maxRam != 0.0)
+        if(minRam != 0.0 && maxRam != 0.0
+            && !(laptop.getRam().getMemory() >= minRam)
+            && !(laptop.getRam().getMemory() <= maxRam))
             return false;
-        if(!laptop.getProcessor().getBrand().contains(cpu) && !cpu.isEmpty())
+        if(!cpu.isEmpty() && !laptop.getProcessor().getBrand().contains(cpu))
             return false;
-        if(!laptop.getProcessor().getModel().contains(cpu) && !cpu.isEmpty())
+        if(!cpu.isEmpty() && !laptop.getProcessor().getModel().contains(cpu))
             return false;
-        if(!laptop.getGraphics().getBrand().contains(graphics) && !graphics.isEmpty())
+        if(!graphics.isEmpty() && !laptop.getGraphics().getBrand().contains(graphics))
             return false;
         double storageTotal = getStorageTotal(storageSet);
-        if(!(storageTotal > minStorage) && !(storageTotal < maxStorage)
-                && minStorage != 0.0 && maxStorage != 0.0)
+        if(minStorage != 0.0 && maxStorage != 0.0 &&
+            !(storageTotal > minStorage) && !(storageTotal < maxStorage))
             return false;
-        if(laptop.getDisplay().getSize() != display && display != 0.0)
+        if( display != 0.0 && laptop.getDisplay().getSize() != display)
             return false;
 
         return true;
