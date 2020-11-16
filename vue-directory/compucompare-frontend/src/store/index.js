@@ -15,7 +15,7 @@ export default new Vuex.Store({
             //processorModelSelected : [],
             //graphicsBrandSelected : [],
             ramSizeSelected : ["All"],
-            storageSizeSelected : [],
+            storageSizeSelected : ["All"],
             screenSizeSelected : []
          },
          results: [],
@@ -46,7 +46,6 @@ export default new Vuex.Store({
 		},
 		SET_FILTERS(state, filtersObject){
 			state.filters = filtersObject
-			console.log(JSON.stringify(state.filters))
 		},
 		SET_SurveyResults(state, results){
             state.results = results
@@ -56,39 +55,12 @@ export default new Vuex.Store({
 	},
 	actions: {
 		async generalSearch({commit}, query){
-			var testObject = [
-				{
-					"id": 0,
-					"brand" : "HP",
-					"model" : "model1"
-				},
-				{
-					"id": 1,
-					"brand" : "Dell",
-					"model" : "model2"
-				},
-				{
-					"id": 2,
-					"brand" : "Apple",
-					"model" : "model3"
-				},
-			]
-			commit('SET_COMPUTERS', testObject)
 
 			sessionStorage.setItem('query', query)
-			/*
+
 			axios
 				.get(`https://jsonplaceholder.typicode.com/posts?_limit=5`)
 				.then( res =>
-					commit('SET_COMPUTERS', res.data)
-				)
-				.catch(error => console.log(error))*/
-		},
-		async filteredSearch({commit}, params){
-			console.log(params)
-			axios
-					.get(`https://compucompare/generalSearch`)
-					.then( res =>
 					commit('SET_COMPUTERS', res.data)
 				)
 				.catch(error => console.log(error))

@@ -14,14 +14,14 @@
 						<h3>
 							{{computer.title}}
 						</h3>-->
-						<v-list-item-subtitle>Specifications</v-list-item-subtitle>
+						<v-list-item-subtitle>{{computer.displayName}}</v-list-item-subtitle>
 					</v-list-item-content>
 	
 					<v-list-item-avatar
 						tile
 						size="80"
-						color="grey"
-					></v-list-item-avatar>
+					><v-img :src="computer.thumbnailUrl"></v-img></v-list-item-avatar>
+
 					<v-btn
 						text
 						v-on:click="emitEvent(computer)"
@@ -55,10 +55,25 @@ export default{
 			var filters = this.$store.state.filters
 			return this.$store.state.computers.filter(function(obj){
 				var matchingComputerBrand = true
+				var matchingRamSize = true
+				var matchingStorageSize = true
+				var matchingProcessorBrand = true
 				if(!filters["computerBrandSelected"].includes("All")){
 					matchingComputerBrand = filters["computerBrandSelected"].includes(obj.brand)
 				}
-				return matchingComputerBrand
+				if(!filters["ramSizeSelected"].includes("All")){
+					matchingRamSize = filters["ramSizeSelected"].includes(obj.ram.memory)
+				}
+				if(!filters["storageSizeSelected"].includes("All")){
+					if(obj.storage[0] != null){
+						matchingStorageSize = filters["storageSizeSelected"].includes(obj.storage[0].capacity)
+					}
+					matchingStorageSize = false
+				}
+				if(!filters["processorBrandSelected"].includes("All")){
+					matchingProcessorBrand = filters["processorBrandSelected"].includes(obj.processor.brand)
+				}
+				return matchingComputerBrand && matchingRamSize && matchingStorageSize && matchingProcessorBrand
 			})
 		}
 	},
@@ -68,7 +83,6 @@ export default{
 		},
 		emitEvent: function (computer) {
             this.$emit('expandDevice', computer);
-            console.log(computer)
       }
 	},
 }
