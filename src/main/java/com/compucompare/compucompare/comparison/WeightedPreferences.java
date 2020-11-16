@@ -10,35 +10,35 @@ package com.compucompare.compucompare.comparison;
 public class WeightedPreferences
 {
     // Standard CPU Weight Multipliers
-    public static double STANDARD_SINGLE_THREAD_MULTIPLIER = 1.0;
-    public static double STANDARD_MULTI_THREAD_MULTIPLIER = 1.0;
-    public static double STANDARD_NUMBER_CORES_MULTIPLIER = 1.0;
+    public static double standardSingleThreadMultiplier = 1.0;
+    public static double standardMultiThreadMultiplier = 1.0;
+    public static double standardNumberCoresMultiplier = 1.0;
 
     // Standard RAM Weight Multipliers
-    public static double STANDARD_RAM_AMOUNT_MULTIPLIER = 1.0;
-    public static double STANDARD_RAM_SPEED_MULTIPLIER = 1.0;
-    public static double STANDARD_DUAL_CHANNEL_MULTIPLIER = 0.0;
+    public static double standardRamAmountMultiplier = 1.0;
+    public static double standardRamSpeedMultiplier = 1.0;
+    public static double standardDualChannelMultiplier = 0.0;
 
     // Standard GPU Weight Multipliers
-    public static double STANDARD_GPU_MULTIPLIER = 1.0;
+    public static double standardGpuMultiplier = 1.0;
 
     // Standard Battery Weight Multipliers
-    public static double STANDARD_BATTERY_LIFE_MULTIPLIER = 1.0;
-    public static double STANDARD_BATTERY_CAPACITY_MULTIPLIER = 1.0;
+    public static double standardBatteryLifeMultiplier = 1.0;
+    public static double standardBatteryCapacityMultiplier = 1.0;
 
     // Standard Display Weight Multipliers
-    public static double STANDARD_REFRESH_RATE_MULTIPLIER = 1.0;
-    public static double STANDARD_SCREEN_SIZE_MULTIPLIER = 1.0;
-    public static double STANDARD_SCREEN_RESOLUTION_WEIGHT = 1.0;
+    public static double standardRefreshRateMultiplier = 1.0;
+    public static double standardScreenSizeMultiplier = 1.0;
+    public static double standardScreenResolutionMultiplier = 1.0;
 
     // Standard Network Weight Multipliers
-    public static double STANDARD_WIRELESS_SPEED_MULTIPLIER = 1.0;
-    public static double STANDARD_WIRED_SPEED_MULTIPLIER = 1.0;
+    public static double standardWirelessSpeedMultiplier = 1.0;
+    public static double standardWiredSpeedMultiplier = 1.0;
 
     // Standard Storage Weight Multipliers
-    public static double STANDARD_STORAGE_CAPACITY_MULTIPLIER = 1.0;
-    public static double STANDARD_STORAGE_SSD_MULTIPLIER = 1.0;
-    public static double STANDARD_STORAGE_NVME_MULTIPLIER = 1.0;
+    public static double standardStorageCapacityMultiplier = 1.0;
+    public static double standardSolidStateMultiplier = 1.0;
+    public static double standardNvmeMultiplier = 1.0;
 
     // CPU Weights
     public double singleThreadWeight;
@@ -101,76 +101,76 @@ public class WeightedPreferences
 
     public double getSingleThreadMultiplier()
     {
-        return STANDARD_SINGLE_THREAD_MULTIPLIER * singleThreadWeight;
+        return standardSingleThreadMultiplier * singleThreadWeight;
     }
 
     public double getMultiThreadMultiplier()
     {
-        return STANDARD_MULTI_THREAD_MULTIPLIER * multiThreadWeight;
+        return standardMultiThreadMultiplier * multiThreadWeight;
     }
 
     public double getRamAmountMultiplier()
     {
-        return STANDARD_RAM_AMOUNT_MULTIPLIER * ramAmountWeight;
+        return standardRamAmountMultiplier * ramAmountWeight;
     }
 
     public double getRamSpeedMultiplier()
     {
-        return STANDARD_RAM_SPEED_MULTIPLIER * ramSpeedWeight;
+        return standardRamSpeedMultiplier * ramSpeedWeight;
     }
 
     public double getDualChannelMultiplier()
     {
-        return STANDARD_DUAL_CHANNEL_MULTIPLIER * dualChannelWeight;
+        return standardDualChannelMultiplier * dualChannelWeight;
     }
 
     public double getGraphicsMultiplier()
     {
-        return STANDARD_GPU_MULTIPLIER * gpuScoreWeight;
+        return standardGpuMultiplier * gpuScoreWeight;
     }
 
     public double getBatteryLifeMultiplier()
     {
-        return STANDARD_BATTERY_LIFE_MULTIPLIER * batteryLifeWeight;
+        return standardBatteryLifeMultiplier * batteryLifeWeight;
     }
 
     public double getBatteryCapacityMultiplier()
     {
-        return STANDARD_BATTERY_CAPACITY_MULTIPLIER * batteryCapacityWeight;
+        return standardBatteryCapacityMultiplier * batteryCapacityWeight;
     }
 
     public double getScreenSizeMultiplier()
     {
-        return STANDARD_SCREEN_SIZE_MULTIPLIER * screenSizeWeight;
+        return standardScreenSizeMultiplier * screenSizeWeight;
     }
 
     public double getScreenResolutionMultiplier()
     {
-        return STANDARD_SCREEN_RESOLUTION_WEIGHT * screenResolutionWeight;
+        return standardScreenResolutionMultiplier * screenResolutionWeight;
     }
 
     public double getWirelessSpeedMultiplier()
     {
-        return STANDARD_WIRELESS_SPEED_MULTIPLIER * wirelessSpeedWeight;
+        return standardWirelessSpeedMultiplier * wirelessSpeedWeight;
     }
 
     public double getWiredSpeedMultiplier()
     {
-        return STANDARD_WIRED_SPEED_MULTIPLIER * wiredSpeedWeight;
+        return standardWiredSpeedMultiplier * wiredSpeedWeight;
     }
 
     public double getStorageCapacityMultiplier()
     {
-        return STANDARD_STORAGE_CAPACITY_MULTIPLIER * storageCapacityWeight;
+        return standardStorageCapacityMultiplier * storageCapacityWeight;
     }
 
     public double getSolidStateMultiplier()
     {
-        return STANDARD_STORAGE_SSD_MULTIPLIER * storageSolidStateWeight;
+        return standardSolidStateMultiplier * storageSolidStateWeight;
     }
 
     public double getNvmeMultiplier()
     {
-        return STANDARD_STORAGE_NVME_MULTIPLIER * storageNvmeWeight;
+        return standardNvmeMultiplier * storageNvmeWeight;
     }
 }
