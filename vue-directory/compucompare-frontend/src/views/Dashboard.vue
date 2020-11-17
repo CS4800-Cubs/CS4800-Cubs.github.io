@@ -94,18 +94,13 @@
             <div class="overline mb-4">
               {{computer.brand}} - {{computer.model}}
             </div>
-            <!--
-            <h3>
-              {{computer.title}}
-            </h3>-->
-            <v-list-item-subtitle>Specifications</v-list-item-subtitle>
+            <v-list-item-subtitle>{{computer.displayName}}</v-list-item-subtitle>
           </v-list-item-content>
   
           <v-list-item-avatar
             tile
             size="80"
-            color="grey"
-          ></v-list-item-avatar>
+          ><v-img :src="computer.thumbnailUrl"></v-img></v-list-item-avatar>
           <v-btn
             text
             v-on:click="expandDeviceFromCompare(computer)"
@@ -237,8 +232,7 @@ import Filters from "../components/Filters"
       }
     },
     created(){
-        this.window = 4
-        console.log(this.$store.state.windowPosition)
+        this.window = 0
        //this.window = this.$store.state.windowPosition
        }}
 </script>

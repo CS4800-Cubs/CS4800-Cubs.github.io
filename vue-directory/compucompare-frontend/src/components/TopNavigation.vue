@@ -44,7 +44,7 @@
                 background-color="#E3F2FD"
                 placeholder="Search"
                 solo
-                @keydown.enter="processForm()"
+                @keypress.enter.prevent
               >
               </v-text-field>
 
