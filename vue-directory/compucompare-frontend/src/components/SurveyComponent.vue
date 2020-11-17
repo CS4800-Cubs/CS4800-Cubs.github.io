@@ -99,7 +99,7 @@
                                 value: "asus",
                                 text: "Asus"
                                },
-                               {a
+                               {
                                 value: "dell",
                                 text: "Dell"
                                },
