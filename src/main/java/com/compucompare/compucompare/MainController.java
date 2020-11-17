@@ -148,9 +148,8 @@ public class MainController
         for(Computer computer : computers){
             if(!portable.isEmpty() && !String.valueOf(computer.isPortable()).equals(portable.toLowerCase()))
                 continue;
-            for(String brand: brands)
-                if(computer.getBrand().equals(brand))
-                    comparedComputers.add(computer);
+            if(brands.contains(computer.getBrand().toLowerCase()))
+                comparedComputers.add(computer);
         }
         return comparedComputers;
     }

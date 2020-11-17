@@ -88,19 +88,19 @@
                               ],
                               choices: [
                                {
-                                value: "Acer",
+                                value: "acer",
                                 text: "Acer"
                                },
                                {
-                                value: "Apple",
+                                value: "apple",
                                 text: "Apple"
                                },
                                {
-                                value: "Asus",
+                                value: "asus",
                                 text: "Asus"
                                },
-                               {
-                                value: "Dell",
+                               {a
+                                value: "dell",
                                 text: "Dell"
                                },
                                {
@@ -108,31 +108,31 @@
                                 text: "hp"
                                },
                                {
-                                value: "Kano",
+                                value: "kano",
                                 text: "Kano"
                                },
                                {
-                                value: "Lenovo",
+                                value: "lenovo",
                                 text: "Lenovo"
                                },
                                {
-                                value: "LG",
+                                value: "lg",
                                 text: "LG"
                                },
                                {
-                                value: "Microsoft",
+                                value: "microsoft",
                                 text: "Microsoft"
                                },
                                {
-                                value: "MSI",
+                                value: "msi
                                 text: "MSI"
                                },
                                {
-                                value: "Razer",
+                                value: "razer",
                                 text: "Razer"
                                },
                                {
-                                value: "Samsung",
+                                value: "samsung",
                                 text: "Samsung"
                                }
                               ],
