@@ -124,7 +124,7 @@
                                 text: "Microsoft"
                                },
                                {
-                                value: "msi
+                                value: "msi",
                                 text: "MSI"
                                },
                                {
