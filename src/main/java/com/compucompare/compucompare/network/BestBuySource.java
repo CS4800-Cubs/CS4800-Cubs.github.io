@@ -63,6 +63,7 @@ public class BestBuySource extends LaptopSource
         }
         catch (IOException e)
         {
+            e.printStackTrace();
             System.out.println("Error Fetching Best Buy Laptops!");
         }
         return listings;
@@ -202,7 +203,7 @@ public class BestBuySource extends LaptopSource
                     {
                         traditionalStorage = new StorageListing();
                     }
-                    solidStateStorage.isSolidState = false;
+                    traditionalStorage.isSolidState = false;
                     try
                     {
                         traditionalStorage.capacity = Integer.parseInt(val.split(" ", 2)[0]);
