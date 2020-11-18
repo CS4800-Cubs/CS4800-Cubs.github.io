@@ -17,4 +17,14 @@ public class SearchResult implements Comparable<SearchResult> {
             return 1;
         return this.relevance - other.relevance;
     }
+
+    public Computer getResult()
+    {
+        return result;
+    }
+    
+    public int getRelevance()
+    {
+        return relevance;
+    }
 }
