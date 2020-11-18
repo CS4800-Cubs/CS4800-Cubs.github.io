@@ -6,9 +6,9 @@
       flat
     >
       <v-container class="py-0 fill-height">
-        <h3>
-          CompuCompare
-        </h3>
+
+        <v-img src="../assets/cc_laptop.png" max-width="100" style="padding-left:50px;">
+        </v-img>
         <v-spacer></v-spacer>
 
         <!-- Navigation Links -->
