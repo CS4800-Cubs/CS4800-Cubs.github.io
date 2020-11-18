@@ -87,6 +87,7 @@ public class BestBuySource extends LaptopSource
         Elements specificationTables = laptopPage.select("div.specs-table");
         String cpuModelNumber = "", cpuModelLine = "";
         StorageListing solidStateStorage = null;
+        StorageListing traditionalStorage = null;
         NetworkListing ethernetInterface = null;
         NetworkListing wirelessInterface = null;
         for (Element specificationTable : specificationTables)
@@ -195,6 +196,22 @@ public class BestBuySource extends LaptopSource
                         System.out.println("Error Parsing Resolution");
                     }
                 }
+                else if (key.equals("Hard Drive Capacity"))
+                {
+                    if (traditionalStorage == null)
+                    {
+                        traditionalStorage = new StorageListing();
+                    }
+                    solidStateStorage.isSolidState = false;
+                    try
+                    {
+                        traditionalStorage.capacity = Integer.parseInt(val.split(" ", 2)[0]);
+                    }
+                    catch (NumberFormatException | IndexOutOfBoundsException e)
+                    {
+                        System.out.println("Error Parsing HDD Storage");
+                    }
+                }
                 else if (key.equals("Solid State Drive Capacity"))
                 {
                     if (solidStateStorage == null)
@@ -204,7 +221,7 @@ public class BestBuySource extends LaptopSource
                     solidStateStorage.isSolidState = true;
                     try
                     {
-                        listing.displaySize = Integer.parseInt(val.split(" ", 2)[0]);
+                        solidStateStorage.capacity = Integer.parseInt(val.split(" ", 2)[0]);
                     }
                     catch (NumberFormatException | IndexOutOfBoundsException e)
                     {
@@ -309,6 +326,10 @@ public class BestBuySource extends LaptopSource
         if (solidStateStorage != null)
         {
             storageListings.add(solidStateStorage);
+        }
+        if (traditionalStorage != null)
+        {
+            storageListings.add(traditionalStorage);
         }
         if (wirelessInterface != null)
         {
