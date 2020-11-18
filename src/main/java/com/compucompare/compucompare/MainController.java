@@ -136,13 +136,23 @@ public class MainController
         return comparedComputers;
     }
 
+    /**
+     * Compare a set of laptops based on user preferences and
+     * return them in an ordered set with the best laptops
+     * at the beginning of the set.
+     * 
+     * @param compareRequest A comparison request containing a survey reponse
+     *                       for personalized results and a set of computer ids
+     *                       corresponding to the computers to be compared.
+     * @return A set of ordered computer objects with the best options first.
+     */
     @RequestMapping("/compare")
-    public Set<Computer> compareComputers(@RequestParam(value = "ids") Set<Integer> ids)
+    public Set<Computer> compareComputers(@RequestBody CompareRequest compareRequest)
     {
-        WeightedPreferences weights = new WeightedPreferences();
+        WeightedPreferences weights = new WeightedPreferences(compareRequest.surveyResponse);
         WeightedComparator<Computer> comparator = new WeightedComparator<>(weights);
         Set<Computer> comparedComputers = new TreeSet<>(comparator);
-        Iterable<Computer> selected = laptopRepository.findAllById(ids);
+        Iterable<Computer> selected = laptopRepository.findAllById(compareRequest.computerIds);
         for (Computer computer : selected)
         {
             comparedComputers.add(computer);
