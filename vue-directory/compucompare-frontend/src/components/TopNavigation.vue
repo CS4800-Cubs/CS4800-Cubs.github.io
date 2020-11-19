@@ -7,7 +7,7 @@
     >
       <v-container class="py-0 fill-height">
 
-        <v-img src="../assets/cc_laptop.png" max-width="100" style="padding-left:50px;">
+        <v-img src="../assets/cc_logo.png" contain max-width="250" style="padding-left:50px;">
         </v-img>
         <v-spacer></v-spacer>
 
