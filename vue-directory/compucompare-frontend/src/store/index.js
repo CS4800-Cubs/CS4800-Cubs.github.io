@@ -21,6 +21,7 @@ export default new Vuex.Store({
          results: [],
          windowPosition: 0,
          query: [],
+         compareResults: []
 	},
 	mutations: {
 		SET_COMPUTERS(state, data){
@@ -57,10 +58,28 @@ export default new Vuex.Store({
             if(JSON.parse(sessionStorage.getItem("results")) != null){
                 state.results = JSON.parse(sessionStorage.getItem("results"))
             }
-        }
+      },
+      SET_COMPARE_RESULTS(state, data){
+         state.compareResults = data
+      }
 	},
 
 	actions: {
+      async compareComputers({commit}){
+         var computerIds = []
+         for(var i=0; i<this.state.selected.length; i++){
+            computerIds.push(this.state.selected[i].id) 
+         }
+         axios
+            .post(`https://compucompare.com/compare`, 
+               {
+                     computerIds: computerIds,
+                     surveyResponse: {"portable": "true", "categories": ["gaming"], "brands": ["hp", "apple", "razer"]} 
+               }
+            )
+            .then( res => commit('SET_COMPARE_RESULTS', res.data))
+            .catch( error => console.log(error))
+      },
 		async generalSearch({commit}, query){
 
 			sessionStorage.setItem('query', query)

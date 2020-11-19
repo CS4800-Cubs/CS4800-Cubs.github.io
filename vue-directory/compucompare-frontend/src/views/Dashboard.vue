@@ -84,32 +84,32 @@
               </v-col>
               <v-col>
                 <v-sheet min-height="70vh" rounded="lg">
-<div v-for="computer in computers" :key="computer.id">
-      <v-card
-        class="card"
-        outlined
-      >
-        <v-list-item three-line>
-          <v-list-item-content>
-            <div class="overline mb-4">
-              {{computer.brand}} - {{computer.model}}
-            </div>
-            <v-list-item-subtitle>{{computer.displayName}}</v-list-item-subtitle>
-          </v-list-item-content>
-  
-          <v-list-item-avatar
-            tile
-            size="80"
-          ><v-img contain :src="computer.thumbnailUrl"></v-img></v-list-item-avatar>
-          <v-btn
-            text
-            v-on:click="expandDeviceFromCompare(computer)"
-          >
-            <v-icon>mdi-chevron-right</v-icon>
-          </v-btn>
-        </v-list-item>
-      </v-card>
-    </div>
+                  <div v-for="comparedComputer in comparisonResults" :key="comparedComputer.id">
+                        <v-card
+                          class="card"
+                          outlined
+                        >
+                          <v-list-item three-line>
+                            <v-list-item-content>
+                              <div class="overline mb-4">
+                                {{comparedComputer.brand}} - {{comparedComputer.model}}
+                              </div>
+                              <v-list-item-subtitle>{{comparedComputer.displayName}}</v-list-item-subtitle>
+                            </v-list-item-content>
+                    
+                            <v-list-item-avatar
+                              tile
+                              size="80"
+                            ><v-img contain :src="comparedComputer.thumbnailUrl"></v-img></v-list-item-avatar>
+                            <v-btn
+                              text
+                              v-on:click="expandDeviceFromCompare(comparedComputer)"
+                            >
+                              <v-icon>mdi-chevron-right</v-icon>
+                            </v-btn>
+                          </v-list-item>
+                        </v-card>
+                    </div>
                 </v-sheet>
               </v-col>
             </v-row>
@@ -281,6 +281,9 @@ import AdvanceDetails from "../components/AdvanceDetails"
       },
       results() {
         return this.$store.state.results
+      },
+      comparisonResults(){
+        return this.$store.state.compareResults
       }
     },
     created(){
