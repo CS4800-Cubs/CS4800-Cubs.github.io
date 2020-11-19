@@ -56,7 +56,7 @@
               </v-col>
               <v-col>
                 <v-card min-height="70vh">
-                  {{expandedDevice}}
+                  <AdvanceDetails :computer="expandedDevice"/>
                 </v-card>
               </v-col>
               <v-col cols="3">
@@ -133,7 +133,7 @@
               </v-col>
               <v-col>
                 <v-card min-height="70vh">
-                  monica - compare one
+                  <AdvanceDetails :computer="expandedDevice"/>
                 </v-card>
               </v-col>
               <v-col cols="3">
@@ -222,13 +222,15 @@
 import ComputerList from "../components/ComputerList"
 import Cart from "../components/Cart"
 import Filters from "../components/Filters"
+import AdvanceDetails from "../components/AdvanceDetails"
 
 
   export default {
     components: {
       ComputerList,
       Cart,
-      Filters
+      Filters,
+      AdvanceDetails
     },
     data: ()=>({
       window: 0,
