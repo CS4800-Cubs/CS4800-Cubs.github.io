@@ -56,7 +56,7 @@
               </v-col>
               <v-col>
                 <v-card min-height="70vh">
-                  <AdvanceDetails :computer="expandedDevice"/>
+                  <AdvanceDetails :computer="expandedDevice" />
                 </v-card>
               </v-col>
               <v-col cols="3">
