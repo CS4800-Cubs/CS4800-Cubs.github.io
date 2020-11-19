@@ -269,7 +269,7 @@ public class Computer implements Comparable<Computer>, WeightedComparable<Comput
         return result;
     }
 
-    private int compareDrives(Computer other, WeightedPreferences weights)
+    public int compareDrives(Computer other, WeightedPreferences weights)
     {
         int result = 0;
         StorageComponent[] hardDrive = new StorageComponent[2];
@@ -341,7 +341,7 @@ public class Computer implements Comparable<Computer>, WeightedComparable<Comput
         return result;
     }
 
-    private int compareInterfaces(Computer other, WeightedPreferences weights)
+    public int compareInterfaces(Computer other, WeightedPreferences weights)
     {
         int result = 0;
         NetworkComponent[] wireless = new NetworkComponent[2];
