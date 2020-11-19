@@ -1,22 +1,26 @@
 <template>
     <div>
         <div id="surveyElement">
-            <SurveyComponent />
+            <Survey/>
         </div>
     </div>
 </template>
 
 <script>
-import SurveyComponent from "../components/SurveyComponent";
+import Survey from "../components/Survey";
 export default{
 	name: "DeviceRecommendations",
   components: {
-    SurveyComponent
+    Survey
   }
 };
 </script>
 
 <style scoped>
+#surveyElement {
+    text-align: center;
+    margin: 150px;
+}
 
 </style>
 

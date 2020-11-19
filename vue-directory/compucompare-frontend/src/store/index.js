@@ -49,10 +49,15 @@ export default new Vuex.Store({
 		},
 		SET_SurveyResults(state, results){
             state.results = results
-		}
-
-
+            sessionStorage.setItem("results", JSON.stringify(state.results))
+		},
+		loadSurveyResults(state){
+            if(JSON.parse(sessionStorage.getItem("results")) != null){
+                state.results = JSON.parse(sessionStorage.getItem("results"))
+            }
+        }
 	},
+
 	actions: {
 		async generalSearch({commit}, query){
 
@@ -81,6 +86,10 @@ export default new Vuex.Store({
 		setFilters({commit}, filtersObject){
 			commit('SET_FILTERS', filtersObject)
 		},
+		loadSurveyResults({commit}){
+            commit('loadSurveyResults')
+		},
+
 		async surveySearch({commit}, surveyResults){
             axios
                    .post('https://compucompare.com/surveySearch', surveyResults)

@@ -100,7 +100,7 @@
           <v-list-item-avatar
             tile
             size="80"
-          ><v-img :src="computer.thumbnailUrl"></v-img></v-list-item-avatar>
+          ><v-img contain :src="computer.thumbnailUrl"></v-img></v-list-item-avatar>
           <v-btn
             text
             v-on:click="expandDeviceFromCompare(computer)"
@@ -133,7 +133,7 @@
               </v-col>
               <v-col>
                 <v-card min-height="70vh">
-                  {{expandedDevice}}
+                  monica - compare one
                 </v-card>
               </v-col>
               <v-col cols="3">
@@ -158,9 +158,49 @@
                         </v-sheet>
                       </v-col>
                       <v-col>
-                        <v-card min-height="70vh">
-                          monica
-                        </v-card>
+                        <div v-for="item in results" :key="item.id">
+                            <v-card
+                            class="card"
+                            outlined
+                            >
+                                <v-list-item three-line>
+                                    <v-list-item-content>
+                                        <div class="overline mb-4">
+                                        {{item.brand}} - {{item.model}}
+                                        </div>
+                                    <!--
+                                        <h3>
+                                        {{item.title}}
+                                        </h3>-->
+                                        <v-list-item-subtitle>{{item.displayName}}</v-list-item-subtitle>
+                                        </v-list-item-content>
+
+                                        <v-list-item-avatar
+                                        tile
+                                        size="80"
+                                        ><v-img contain :src="item.thumbnailUrl"></v-img></v-list-item-avatar>
+
+                                        <v-btn
+                                        text
+                                        v-on:click="expandDevice(item)"
+                                        >
+                                        <v-icon>mdi-chevron-right</v-icon>
+                                        </v-btn>
+                                    </v-list-item>
+
+                                    <v-card-actions>
+                                        <v-btn
+                                        outlined
+                                        rounded
+                                        text
+                                        v-on:click="addToCompare(item)"
+                                        small
+                                        >
+                                        Compare
+                                        </v-btn>
+                                </v-card-actions>
+                            </v-card>
+                        </div>
                       </v-col>
                       <v-col cols="3">
                                      <v-card class="mx-auto">
@@ -182,6 +222,7 @@
 import ComputerList from "../components/ComputerList"
 import Cart from "../components/Cart"
 import Filters from "../components/Filters"
+
 
   export default {
     components: {
@@ -224,14 +265,24 @@ import Filters from "../components/Filters"
       goToSurveyResults() {
       this.window = 4
       this.$store.state.windowPosition = 4
+      },
+      addToCompare(computer){
+        this.$store.dispatch('addToCompare', computer)
+      },
+      emitEvent: function (computer) {
+        this.$emit('expandDevice', computer);
       }
     },
     computed: {
       computers(){
         return this.$store.state.selected
+      },
+      results() {
+        return this.$store.state.results
       }
     },
     created(){
+        this.$store.dispatch("loadSurveyResults")
         this.window = 0
        //this.window = this.$store.state.windowPosition
        }}
