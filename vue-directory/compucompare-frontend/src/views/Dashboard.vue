@@ -133,7 +133,7 @@
               </v-col>
               <v-col>
                 <v-card min-height="70vh">
-                  <AdvanceDetails :computer="expandedDevice"/>
+                  <CompareDetails :computer="expandedDevice"/>
                 </v-card>
               </v-col>
               <v-col cols="3">
@@ -223,6 +223,7 @@ import ComputerList from "../components/ComputerList"
 import Cart from "../components/Cart"
 import Filters from "../components/Filters"
 import AdvanceDetails from "../components/AdvanceDetails"
+import CompareDetails from "../components/CompareDetails"
 
 
   export default {
@@ -230,7 +231,8 @@ import AdvanceDetails from "../components/AdvanceDetails"
       ComputerList,
       Cart,
       Filters,
-      AdvanceDetails
+      AdvanceDetails,
+      CompareDetails
     },
     data: ()=>({
       window: 0,
