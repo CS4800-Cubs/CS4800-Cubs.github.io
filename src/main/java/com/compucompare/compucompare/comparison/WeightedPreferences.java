@@ -12,9 +12,9 @@ import com.compucompare.compucompare.SurveyResponse;
 public class WeightedPreferences
 {
     // Standard CPU Weight Multipliers
-    public static double standardSingleThreadMultiplier = 1.0;
-    public static double standardMultiThreadMultiplier = 1.0;
-    public static double standardNumberCoresMultiplier = 1.0;
+    public static double standardSingleThreadMultiplier = 2.0;
+    public static double standardMultiThreadMultiplier = 2.0;
+    public static double standardNumberCoresMultiplier = 2.0;
 
     // Standard RAM Weight Multipliers
     public static double standardRamAmountMultiplier = 1.0;
@@ -22,7 +22,7 @@ public class WeightedPreferences
     public static double standardDualChannelMultiplier = 0.0;
 
     // Standard GPU Weight Multipliers
-    public static double standardGpuMultiplier = 1.0;
+    public static double standardGpuMultiplier = 0.5;
 
     // Standard Battery Weight Multipliers
     public static double standardBatteryLifeMultiplier = 1.0;
@@ -115,7 +115,7 @@ public class WeightedPreferences
             if (category.equalsIgnoreCase("editing"))
             {
                 singleThreadWeight += 1.0;
-                multiThreadWeight += 2.5;
+                multiThreadWeight += 4.0;
                 numCoresWeight += 4.0;
                 ramAmountWeight += 2.0;
                 ramSpeedWeight += 0.5;
