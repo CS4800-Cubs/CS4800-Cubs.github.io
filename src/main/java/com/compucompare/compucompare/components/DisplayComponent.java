@@ -77,8 +77,8 @@ public class DisplayComponent extends Component
     {
         int result = (size == 0.0 || other.size == 0.0)
                      ? 0 : (int) (weights.getScreenSizeMultiplier() * (size - other.size));
-        int resolution = resX * resY;
-        int otherResolution = other.resX * resY;
+        int resolution = resX + resY;
+        int otherResolution = other.resX + resY;
         result += (resolution == 0 || otherResolution == 0)
                    ? 0 : (int) (weights.getScreenResolutionMultiplier() * (resolution - otherResolution));
         if (result == 0 && !this.equals(other))

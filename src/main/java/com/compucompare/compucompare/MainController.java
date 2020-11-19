@@ -161,4 +161,39 @@ public class MainController
         }
         return comparedComputers;
     }
+
+    @RequestMapping("/debugCompare")
+    public String debugCompare(@RequestBody CompareRequest compareRequest)
+    {
+        WeightedPreferences weights = new WeightedPreferences(compareRequest.surveyResponse);
+        Iterable<Computer> selected = laptopRepository.findAllById(compareRequest.computerIds);
+        String results = "";
+        Computer first = null, second = null;
+        for (Computer computer : selected)
+        {
+            if (first == null)
+            {
+                first = computer;
+            }
+            else if (second == null)
+            {
+                second = computer;
+            }
+        }
+        if (first == null || second == null)
+        {
+            return "Error: Null";
+        }
+        results += first.getBrand() + " vs. " + second.getBrand();
+        results += "\nProcessor: " + first.getProcessor().compareTo(second.getProcessor(), weights);
+        results += "\nUnweighted Processor: " + first.getProcessor().compareTo(second.getProcessor());
+        results += "\nGraphics: " + first.getGraphics().compareTo(second.getGraphics(), weights);
+        results += "\nRAM: " + first.getRam().compareTo(second.getRam(), weights);
+        results += "\nBattery: " + first.getBattery().compareTo(second.getBattery(), weights);
+        results += "\nDisplay: " + first.getDisplay().compareTo(second.getDisplay(), weights);
+        results += "\nStorage: " + first.compareDrives(second, weights);
+        results += "\nNetwork: " + first.compareInterfaces(second, weights);
+        results += "\nTotal: " + first.compareTo(second, weights);
+        return results;
+    }
 }
