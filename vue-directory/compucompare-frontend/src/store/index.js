@@ -59,7 +59,7 @@ export default new Vuex.Store({
 			sessionStorage.setItem('query', query)
 
 			axios
-				.get(`https://compucompare/generalSearch`, {
+				.get(`https://compucompare.com/generalSearch`, {
           params: {
             query: query
           }
@@ -83,7 +83,7 @@ export default new Vuex.Store({
 		},
 		async surveySearch({commit}, surveyResults){
             axios
-                   .post('https://compucompare/surveySearch', surveyResults)
+                   .post('https://compucompare.com/surveySearch', surveyResults)
                    .then( res => commit('SET_SurveyResults', res.data))
 				.catch(error => console.log(error))
 				}
