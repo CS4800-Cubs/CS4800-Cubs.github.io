@@ -75,7 +75,6 @@ export default{
             {
                 console.log("Pre Dispatch")
                 this.$store.dispatch('surveySearch', this.searchFor)
-                window.location.href = "/"
             }
 
 

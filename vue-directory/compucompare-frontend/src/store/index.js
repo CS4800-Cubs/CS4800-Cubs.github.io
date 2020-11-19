@@ -51,6 +51,7 @@ export default new Vuex.Store({
             console.log("Alec")
             state.results = results
             sessionStorage.setItem("results", JSON.stringify(state.results))
+            window.location.href = "/"
 		},
 		loadSurveyResults(state){
             if(JSON.parse(sessionStorage.getItem("results")) != null){
@@ -95,10 +96,9 @@ export default new Vuex.Store({
             console.log("Pre Post")
             console.log(surveyResults)
             axios
-               .post('https://compucompare.com/surveySearch', surveyResults)
+               .post('https://compucompare.com/surveySearch', surveyResults, {timeout: 10000})
                .then( res => commit('SET_SurveyResults', res.data))
-               .catch(error => console.log(error))
-
+               .catch(error => console.log(error)) 
 		}
 	},
 
