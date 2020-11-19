@@ -151,7 +151,15 @@ public class MainController
     @RequestMapping("/compare")
     public Set<Computer> compareComputers(@RequestBody CompareRequest compareRequest)
     {
-        WeightedPreferences weights = new WeightedPreferences(compareRequest.surveyResponse);
+        WeightedPreferences weights;
+        if (compareRequest.surveyResponse != null)
+        {
+            weights = new WeightedPreferences(compareRequest.surveyResponse);
+        }
+        else
+        {
+            weights = new WeightedPreferences();
+        }
         WeightedComparator<Computer> comparator = new WeightedComparator<>(weights);
         Set<Computer> comparedComputers = new TreeSet<>(comparator);
         Iterable<Computer> selected = laptopRepository.findAllById(compareRequest.computerIds);

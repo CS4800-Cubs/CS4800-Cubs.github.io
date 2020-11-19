@@ -58,6 +58,7 @@ export default{
 				var matchingRamSize = true
 				var matchingStorageSize = true
 				var matchingProcessorBrand = true
+				var matchingComputerType = true;
 				if(!filters["computerBrandSelected"].includes("All")){
 					matchingComputerBrand = filters["computerBrandSelected"].includes(obj.result.brand)
 				}
@@ -73,6 +74,16 @@ export default{
 				if(!filters["processorBrandSelected"].includes("All")){
 					matchingProcessorBrand = filters["processorBrandSelected"].includes(obj.result.processor.brand)
 				}
+				/*if(!filters["computerTypeSelected"].includes("Both")){
+					if (obj.result.portable)
+					{
+						matchingComputerType = filters["computerTypeSelected"].includes("Laptop");
+					}
+					else
+					{
+						matchingComputerType = filters["computerTypeSelected"].includes("Desktop");
+					}
+				}*/
 				return matchingComputerBrand && matchingRamSize && matchingStorageSize && matchingProcessorBrand && matchingComputerType
 			})
 		}
