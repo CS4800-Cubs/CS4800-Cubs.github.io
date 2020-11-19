@@ -262,6 +262,10 @@ public class Computer implements Comparable<Computer>, WeightedComparable<Comput
             + display.compareTo(other.display, weights);
         result += compareDrives(other, weights);
         result += compareInterfaces(other, weights);
+        if (result == 0 && !this.equals(other))
+        {
+            return -1;
+        }
         return result;
     }
 

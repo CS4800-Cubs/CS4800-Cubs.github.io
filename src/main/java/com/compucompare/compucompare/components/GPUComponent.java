@@ -42,8 +42,13 @@ public class GPUComponent extends Component
     @Override
     public int compareTo(GPUComponent other, WeightedPreferences weights)
     {
-        return (benchmark == 0 || other.benchmark == 0)
-               ? 0 : (int) (weights.getGraphicsMultiplier() * (benchmark - other.benchmark));
+        int result = (benchmark == 0 || other.benchmark == 0)
+                      ? 0 : (int) (weights.getGraphicsMultiplier() * (benchmark - other.benchmark));
+        if (result == 0 && !this.equals(other))
+        {
+            return -1;
+        }
+        return result;
     }
 
     @Override

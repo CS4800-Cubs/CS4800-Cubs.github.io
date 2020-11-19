@@ -55,6 +55,10 @@ public class BatteryComponent extends Component
                      ? 0 : (int) (weights.getBatteryLifeMultiplier() * (expectedLife - other.expectedLife));
         result += capacity == 0 || other.capacity == 0
                   ? 0 : (int) (weights.getBatteryCapacityMultiplier() * (capacity - other.capacity));
+        if (result == 0 && !this.equals(other))
+        {
+            return -1;
+        }
         return result;
     }
 

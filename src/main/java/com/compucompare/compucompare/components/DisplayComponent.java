@@ -80,7 +80,11 @@ public class DisplayComponent extends Component
         int resolution = resX * resY;
         int otherResolution = other.resX * resY;
         result += (resolution == 0 || otherResolution == 0)
-                  ? 0 : (int) (weights.getScreenResolutionMultiplier() * (resolution - otherResolution));
+                   ? 0 : (int) (weights.getScreenResolutionMultiplier() * (resolution - otherResolution));
+        if (result == 0 && !this.equals(other))
+        {
+            return -1;
+        }
         return result;
     }
 

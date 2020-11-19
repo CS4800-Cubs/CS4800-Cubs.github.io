@@ -49,9 +49,13 @@ public class StorageComponent extends Component
     public int compareTo(StorageComponent other, WeightedPreferences weights)
     {
         int result = (capacity == 0.0 || other.capacity == 0.0)
-                     ? 0 : (int) (weights.getStorageCapacityMultiplier() * (capacity - other.capacity));
+                      ? 0 : (int) (weights.getStorageCapacityMultiplier() * (capacity - other.capacity));
         result += (int) (weights.getSolidStateMultiplier() * ((solidState ? 1 : 0) - (other.solidState ? 1 : 0)));
         result += (int) (weights.getNvmeMultiplier() * ((nvme ? 1 : 0) - (other.nvme ? 1 : 0)));
+        if (result == 0 && !this.equals(other))
+        {
+            return -1;
+        }
         return result;
     }
 

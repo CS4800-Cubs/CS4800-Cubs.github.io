@@ -87,9 +87,13 @@ public class CPUComponent extends Component
     public int compareTo(CPUComponent other, WeightedPreferences weights)
     {
         int result = (multiBench == 0 || other.multiBench == 0)
-                     ? 0 : (int) (weights.getMultiThreadMultiplier() * (multiBench - other.multiBench));
+                      ? 0 : (int) (weights.getMultiThreadMultiplier() * (multiBench - other.multiBench));
         result += (singleBench == 0 || other.singleBench == 0)
-                  ? 0 : (int) (weights.getSingleThreadMultiplier() * (singleBench - other.singleBench));
+                   ? 0 : (int) (weights.getSingleThreadMultiplier() * (singleBench - other.singleBench));
+        if (result == 0 && !this.equals(other))
+        {
+            return -1;
+        }
         return result;
     }
 

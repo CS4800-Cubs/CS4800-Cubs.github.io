@@ -50,10 +50,14 @@ public class RAMComponent extends Component
     public int compareTo(RAMComponent other, WeightedPreferences weights)
     {
         int result = (memory == 0.0 || other.memory == 0.0)
-                     ? 0 : (int) (weights.getRamAmountMultiplier() * (memory - other.memory));
+                      ? 0 : (int) (weights.getRamAmountMultiplier() * (memory - other.memory));
         result += (speed == 0 || other.speed == 0)
-                  ? 0 : (int) (weights.getRamSpeedMultiplier() * (speed - other.speed));
+                   ? 0 : (int) (weights.getRamSpeedMultiplier() * (speed - other.speed));
         result += (int) (weights.getDualChannelMultiplier() * ((dualChannel ? 1 : 0) - (other.dualChannel ? 1 : 0)));
+        if (result == 0 && !this.equals(other))
+        {
+            return -1;
+        }
         return result;
     }
 

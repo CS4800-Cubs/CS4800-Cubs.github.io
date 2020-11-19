@@ -47,7 +47,7 @@ public class MainController
                                       @RequestParam(value = "display", defaultValue = "0.0") double display){
         Iterable<Computer> computers = laptopRepository.findAll();
 
-        Set<SearchResult> results = new TreeSet<>();
+        Set<SearchResult> results = new TreeSet<>(Comparator.reverseOrder());
         int minRelScore = 1;
 
         for (Computer laptop : computers) {
@@ -85,8 +85,8 @@ public class MainController
         if (!brand.isEmpty() && !laptop.getBrand().equals(brand))
             return false;
         if(minRam != 0.0 && maxRam != 0.0
-            && !(laptop.getRam().getMemory() >= minRam)
-            && !(laptop.getRam().getMemory() <= maxRam))
+            && laptop.getRam().getMemory() < minRam
+            && laptop.getRam().getMemory() > maxRam)
             return false;
         if(!cpu.isEmpty() && !laptop.getProcessor().getBrand().contains(cpu))
             return false;
@@ -96,9 +96,9 @@ public class MainController
             return false;
         double storageTotal = getStorageTotal(storageSet);
         if(minStorage != 0.0 && maxStorage != 0.0 &&
-            !(storageTotal > minStorage) && !(storageTotal < maxStorage))
+            storageTotal < minStorage && storageTotal > maxStorage)
             return false;
-        if( display != 0.0 && laptop.getDisplay().getSize() != display)
+        if(display != 0.0 && laptop.getDisplay().getSize() != display)
             return false;
 
         return true;

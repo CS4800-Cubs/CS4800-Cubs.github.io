@@ -14,6 +14,6 @@ public class WeightedComparator<T extends WeightedComparable<T>> implements Comp
     @Override
     public int compare(T first, T second)
     {
-        return first.compareTo(second, weights);
+        return -first.compareTo(second, weights);
     }
 }

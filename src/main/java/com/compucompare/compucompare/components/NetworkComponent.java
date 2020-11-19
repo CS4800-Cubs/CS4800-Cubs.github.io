@@ -76,9 +76,14 @@ public class NetworkComponent extends Component
     @Override
     public int compareTo(NetworkComponent other, WeightedPreferences weights)
     {
-        return (maxSpeed == 0 || other.maxSpeed == 0)
-               ? 0 : (int) ((wireless ? weights.getWiredSpeedMultiplier() :
-               weights.getWiredSpeedMultiplier()) * (maxSpeed - other.maxSpeed));
+        int result = (maxSpeed == 0 || other.maxSpeed == 0)
+                      ? 0 : (int) ((wireless ? weights.getWiredSpeedMultiplier() :
+                      weights.getWiredSpeedMultiplier()) * (maxSpeed - other.maxSpeed));
+        if (result == 0 && !this.equals(other))
+        {
+            return -1;
+        }
+        return result;
     }
 
     @Override

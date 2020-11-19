@@ -15,7 +15,8 @@ public class SearchResult implements Comparable<SearchResult> {
     public int compareTo(SearchResult other){
         if(other == null)
             return 1;
-        return this.relevance - other.relevance;
+        return (this.relevance - other.relevance) == 0
+                ? -1 : this.relevance - other.relevance;
     }
 
     public Computer getResult()
@@ -26,5 +27,11 @@ public class SearchResult implements Comparable<SearchResult> {
     public int getRelevance()
     {
         return relevance;
+    }
+    
+    @Override
+    public boolean equals(Object other)
+    {
+        return false;
     }
 }
