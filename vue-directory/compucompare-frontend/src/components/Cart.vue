@@ -56,6 +56,7 @@ export default{
             this.$store.dispatch("removeFromCart", computer)
         },
         compareCart(){
+            this.$store.dispatch("compareComputers")
             this.$emit('goToCompare');
         }
     }

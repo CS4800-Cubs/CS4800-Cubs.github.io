@@ -67,6 +67,7 @@ export default new Vuex.Store({
 	actions: {
       async compareComputers({commit}){
          var computerIds = []
+         console.log(this.state.selected.length)
          for(var i=0; i<this.state.selected.length; i++){
             computerIds.push(this.state.selected[i].id) 
          }
@@ -74,7 +75,7 @@ export default new Vuex.Store({
             .post(`https://compucompare.com/compare`, 
                {
                      computerIds: computerIds,
-                     surveyResponse: {"portable": "true", "categories": ["gaming"], "brands": ["hp", "apple", "razer"]} 
+                     surveyResponse: JSON.parse(sessionStorage.getItem("survey"))
                }
             )
             .then( res => commit('SET_COMPARE_RESULTS', res.data))
@@ -112,8 +113,7 @@ export default new Vuex.Store({
 		},
 
 		async surveySearch({commit}, surveyResults){
-            console.log("Pre Post")
-            console.log(surveyResults)
+            sessionStorage.setItem("survey", JSON.stringify(surveyResults))
             axios
                .post('https://compucompare.com/surveySearch', surveyResults, {timeout: 10000})
                .then( res => commit('SET_SurveyResults', res.data))

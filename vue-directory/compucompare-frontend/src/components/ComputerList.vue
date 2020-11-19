@@ -59,21 +59,21 @@ export default{
 				var matchingStorageSize = true
 				var matchingProcessorBrand = true
 				if(!filters["computerBrandSelected"].includes("All")){
-					matchingComputerBrand = filters["computerBrandSelected"].includes(obj.brand)
+					matchingComputerBrand = filters["computerBrandSelected"].includes(obj.result.brand)
 				}
 				if(!filters["ramSizeSelected"].includes("All")){
-					matchingRamSize = filters["ramSizeSelected"].includes(obj.ram.memory)
+					matchingRamSize = filters["ramSizeSelected"].includes(obj.result.ram.memory)
 				}
 				if(!filters["storageSizeSelected"].includes("All")){
 					if(obj.storage[0] != null){
-						matchingStorageSize = filters["storageSizeSelected"].includes(obj.storage[0].capacity)
+						matchingStorageSize = filters["storageSizeSelected"].includes(obj.result.storage[0].capacity)
 					}
 					matchingStorageSize = false
 				}
 				if(!filters["processorBrandSelected"].includes("All")){
-					matchingProcessorBrand = filters["processorBrandSelected"].includes(obj.processor.brand)
+					matchingProcessorBrand = filters["processorBrandSelected"].includes(obj.result.processor.brand)
 				}
-				return matchingComputerBrand && matchingRamSize && matchingStorageSize && matchingProcessorBrand
+				return matchingComputerBrand && matchingRamSize && matchingStorageSize && matchingProcessorBrand && matchingComputerType
 			})
 		}
 	},
