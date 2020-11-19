@@ -48,6 +48,7 @@ export default new Vuex.Store({
 			state.filters = filtersObject
 		},
 		SET_SurveyResults(state, results){
+            console.log("Alec")
             state.results = results
             sessionStorage.setItem("results", JSON.stringify(state.results))
 		},
@@ -91,11 +92,14 @@ export default new Vuex.Store({
 		},
 
 		async surveySearch({commit}, surveyResults){
+            console.log("Pre Post")
+            console.log(surveyResults)
             axios
-                   .post('https://compucompare.com/surveySearch', surveyResults)
-                   .then( res => commit('SET_SurveyResults', res.data))
-				.catch(error => console.log(error))
-				}
+               .post('https://compucompare.com/surveySearch', surveyResults)
+               .then( res => commit('SET_SurveyResults', res.data))
+               .catch(error => console.log(error))
+
+		}
 	},
 
 	getters: {

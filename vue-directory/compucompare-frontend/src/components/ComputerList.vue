@@ -8,19 +8,19 @@
 				<v-list-item three-line>
 					<v-list-item-content>
 						<div class="overline mb-4">
-							{{computer.brand}} - {{computer.model}}
+							{{computer.result.brand}} - {{computer.result.model}}
 						</div>
 						<!--
 						<h3>
 							{{computer.title}}
 						</h3>-->
-						<v-list-item-subtitle>{{computer.displayName}}</v-list-item-subtitle>
+						<v-list-item-subtitle>{{computer.result.displayName}}</v-list-item-subtitle>
 					</v-list-item-content>
 	
 					<v-list-item-avatar
 						tile
 						size="80"
-					><v-img :src="computer.thumbnailUrl"></v-img></v-list-item-avatar>
+					><v-img contain :src="computer.result.thumbnailUrl"></v-img></v-list-item-avatar>
 
 					<v-btn
 						text
@@ -35,7 +35,7 @@
 					outlined
 					rounded
 					text
-					v-on:click="addToCompare(computer)"
+					v-on:click="addToCompare(computer.result)"
 					small
 					>
 						Compare

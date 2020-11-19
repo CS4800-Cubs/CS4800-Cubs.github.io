@@ -56,11 +56,13 @@ export default{
         name: 'Survey',
         data()
         {
-            return{searchFor: {
-                portable:null,
-                categories:[],
-                brands:[]
-            }}
+            return{
+                searchFor: {
+                    portable:null,
+                    categories:[],
+                    brands:[]
+                }
+            }
         },
         methods:{
             limitReached(brands, value)
@@ -71,6 +73,7 @@ export default{
             },
             submitSurvey()
             {
+                console.log("Pre Dispatch")
                 this.$store.dispatch('surveySearch', this.searchFor)
                 window.location.href = "/"
             }
