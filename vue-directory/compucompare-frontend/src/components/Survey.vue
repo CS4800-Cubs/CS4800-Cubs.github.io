@@ -1,5 +1,5 @@
 <template>
-    <div style = "background-color: lightblue;">
+    <div>
         <h3> Are you looking for a laptop or a desktop? </h3>
         <input type="radio" value="true" v-model="searchFor.portable" > Laptop
         <br>
@@ -26,6 +26,8 @@
         <input type="checkbox" value="dell" v-model="searchFor.brands" :disabled=limitReached(searchFor.brands)> Dell
         <br>
         <input type="checkbox" value="hp" v-model="searchFor.brands" :disabled=limitReached(searchFor.brands)> Hp
+        <br>
+        <input type="checkbox" value="kano" v-model="searchFor.brands" :disabled=limitReached(searchFor.brands)> Kano
         <br>
         <input type="checkbox" value="lenovo" v-model="searchFor.brands" :disabled=limitReached(searchFor.brands)> Lenovo
         <br>
