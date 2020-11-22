@@ -16,30 +16,28 @@
         <input type="checkbox" value="education" v-model="searchFor.categories" > Education
         <br><br>
 
-        <h3> Which brand(s) do you prefer? Select up to 3 options </h3>
-        <input type="checkbox" value="acer" v-model="searchFor.brands" :disabled=limitReached(searchFor.brands)> Acer
+        <h3> Which brand(s) do you prefer? </h3>
+        <input type="checkbox" value="acer" v-model="searchFor.brands"> Acer
         <br>
-        <input type="checkbox" value="apple" v-model="searchFor.brands" :disabled=limitReached(searchFor.brands)> Apple
+        <input type="checkbox" value="apple" v-model="searchFor.brands"> Apple
         <br>
-        <input type="checkbox" value="asus" v-model="searchFor.brands" :disabled=limitReached(searchFor.brands) > Asus
+        <input type="checkbox" value="asus" v-model="searchFor.brands"> Asus
         <br>
-        <input type="checkbox" value="dell" v-model="searchFor.brands" :disabled=limitReached(searchFor.brands)> Dell
+        <input type="checkbox" value="dell" v-model="searchFor.brands"> Dell
         <br>
-        <input type="checkbox" value="hp" v-model="searchFor.brands" :disabled=limitReached(searchFor.brands)> Hp
+        <input type="checkbox" value="hp" v-model="searchFor.brands"> Hp
         <br>
-        <input type="checkbox" value="kano" v-model="searchFor.brands" :disabled=limitReached(searchFor.brands)> Kano
+        <input type="checkbox" value="lenovo" v-model="searchFor.brands"> Lenovo
         <br>
-        <input type="checkbox" value="lenovo" v-model="searchFor.brands" :disabled=limitReached(searchFor.brands)> Lenovo
+        <input type="checkbox" value="lg" v-model="searchFor.brands"> LG
         <br>
-        <input type="checkbox" value="lg" v-model="searchFor.brands" :disabled=limitReached(searchFor.brands)> LG
+        <input type="checkbox" value="microsoft" v-model="searchFor.brands"> Microsoft
         <br>
-        <input type="checkbox" value="microsoft" v-model="searchFor.brands" :disabled=limitReached(searchFor.brands)> Microsoft
+        <input type="checkbox" value="msi" v-model="searchFor.brands"> MSI
         <br>
-        <input type="checkbox" value="msi" v-model="searchFor.brands" :disabled=limitReached(searchFor.brands)> MSI
+        <input type="checkbox" value="razer" v-model="searchFor.brands"> Razer
         <br>
-        <input type="checkbox" value="razer" v-model="searchFor.brands" :disabled=limitReached(searchFor.brands)> Razer
-        <br>
-        <input type="checkbox" value="samsung" v-model="searchFor.brands" :disabled=limitReached(searchFor.brands)> Samsung
+        <input type="checkbox" value="samsung" v-model="searchFor.brands"> Samsung
         <br><br>
         <v-row
             align="center"
@@ -65,12 +63,6 @@ export default{
             }
         },
         methods:{
-            limitReached(brands, value)
-            {
-                if (brands.length == 3 && !brands.includes(value) )
-                    return true;
-                return false;
-            },
             submitSurvey()
             {
                 console.log("Pre Dispatch")

@@ -17,7 +17,8 @@
 
               <v-col>
               <v-banner>
-                <v-btn v-on:click="goToSurveyResults">
+                <v-btn v-on:click="goToSurveyResults"
+                v-if="this.$store.state.results.length!=0">
                 View your survey results!
                 <v-icon>
                 mdi-laptop

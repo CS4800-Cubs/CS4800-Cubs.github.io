@@ -18,7 +18,7 @@ export default{
 
 <style scoped>
 #surveyElement {
-    text-align: center;
+    text-align: left;
     margin: 150px;
 }
 
