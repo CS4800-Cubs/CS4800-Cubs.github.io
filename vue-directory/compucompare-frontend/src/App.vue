@@ -16,3 +16,9 @@ import TopNavigation from "./components/TopNavigation"
 
 
 </script>
+<style scoped>
+
+.theme--light.v-application {
+  background-color: #e3f2fd;
+}
+</style>
