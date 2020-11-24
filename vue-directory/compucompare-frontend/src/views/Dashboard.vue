@@ -202,7 +202,7 @@
               </v-col>
               <v-col cols="3">
                 <v-card class="mx-auto">
-                  <Cart v-on:goToCompare="goToCompare"></Cart>
+                  <!--<Cart v-on:goToCompare="goToCompare"></Cart>-->
                 </v-card>
               </v-col>
             </v-row>
