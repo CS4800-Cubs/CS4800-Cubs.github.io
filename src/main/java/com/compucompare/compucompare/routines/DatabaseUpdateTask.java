@@ -2,7 +2,7 @@ package com.compucompare.compucompare.routines;
 
 import com.compucompare.compucompare.network.GeekbenchCPUSource;
 import com.compucompare.compucompare.network.GeekbenchGPUSource;
-import com.compucompare.compucompare.network.LaptopSource;
+import com.compucompare.compucompare.network.ComputerSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
@@ -20,7 +20,7 @@ public class DatabaseUpdateTask
     GeekbenchGPUSource gpuData;
 
     @Autowired
-    LaptopSource laptopData;
+    ComputerSource laptopData;
 
     @Scheduled(fixedDelay = 86400000, initialDelay = 0)
     public void updateDatabase()
