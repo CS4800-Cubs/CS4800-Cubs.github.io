@@ -14,19 +14,30 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class BestBuySource extends LaptopSource
+public class BestBuySource extends ComputerSource
 {
     public static final String LAPTOP_LIST_URL = "https://www.bestbuy.com/site/laptop-computers/all-laptops/pcmcat138500050001.c?id=pcmcat138500050001";
+    public static final String DESKTOP_LIST_URL = "https://www.bestbuy.com/site/desktop-computers/all-desktops/pcmcat143400050013.c?id=pcmcat143400050013";
     public static final int MAX_PAGES = 100;
 
     @Autowired
     ComputerRepository laptopRepository;
 
     @Override
-    public Set<LaptopListing> fetchLaptopListings()
+    public Set<ComputerListing> fetchLaptopListings()
     {
-        Set<LaptopListing> listings = new HashSet<>();
-        String currentPageUrl = LAPTOP_LIST_URL;
+        return fetchListings(LAPTOP_LIST_URL, true);
+    }
+
+    @Override
+    public Set<ComputerListing> fetchDesktopListings()
+    {
+        return fetchListings(DESKTOP_LIST_URL, false);
+    }
+
+    public Set<ComputerListing> fetchListings(String currentPageUrl, boolean portable)
+    {
+        Set<ComputerListing> listings = new HashSet<>();
         try
         {
             Element nextPageLink = null;
@@ -56,7 +67,9 @@ public class BestBuySource extends LaptopSource
                         continue;
                     }
                     String laptopPageUrl = link.attr("abs:href");
-                    listings.add(fetchLaptopListing(laptopPageUrl));
+                    ComputerListing listing = fetchListing(laptopPageUrl);
+                    listing.portable = portable;
+                    listings.add(listing);
                 }
                 nextPageLink = resultPage.selectFirst(".sku-list-page-next");
             } while (nextPageLink != null && ++pages < MAX_PAGES);
@@ -76,9 +89,9 @@ public class BestBuySource extends LaptopSource
     }
 
     @Override
-    public LaptopListing fetchLaptopListing(String laptopPageUrl) throws IOException
+    public ComputerListing fetchListing(String laptopPageUrl) throws IOException
     {
-        LaptopListing listing = new LaptopListing();
+        ComputerListing listing = new ComputerListing();
         listing.pageUrl = laptopPageUrl;
         Set<StorageListing> storageListings = new HashSet<>();
         Set<NetworkListing> networkListings = new HashSet<>();

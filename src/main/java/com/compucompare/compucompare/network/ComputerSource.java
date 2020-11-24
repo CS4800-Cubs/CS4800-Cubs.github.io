@@ -23,7 +23,7 @@ import com.compucompare.compucompare.database.StorageRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-public abstract class LaptopSource implements DataSource
+public abstract class ComputerSource implements DataSource
 {
     @Autowired
     ComputerRepository laptopRepository;
@@ -56,8 +56,15 @@ public abstract class LaptopSource implements DataSource
     @Override
     public void updateDatabase()
     {
-        Set<LaptopListing> listings = fetchLaptopListings();
-        for (LaptopListing listing : listings)
+        System.out.println("Fetching Laptops...");
+        addListings(fetchLaptopListings());
+        System.out.println("Fetching Desktops...");
+        addListings(fetchDesktopListings());
+    }
+
+    public void addListings(Set<ComputerListing> listings)
+    {
+        for (ComputerListing listing : listings)
         {
             // Check If Laptop Is Already In Database
             if (laptopRepository.existsByBrandAndModel(listing.brand, listing.model))
@@ -80,6 +87,7 @@ public abstract class LaptopSource implements DataSource
             }
             // With Primary Benchmarks Available, Can Create Laptop
             Computer laptop = new Computer();
+            laptop.setPortable(listing.portable);
             laptop.setBrand(listing.brand);
             laptop.setModel(listing.model);
             laptop.setDisplayName(listing.displayName);
@@ -153,7 +161,15 @@ public abstract class LaptopSource implements DataSource
      * 
      * @return The list of laptop objects.
      */
-    public abstract Set<LaptopListing> fetchLaptopListings();
+    public abstract Set<ComputerListing> fetchLaptopListings();
+
+    /**
+     * Creates a list of desktop objects from some
+     * external source.
+     * 
+     * @return The list of laptop objects.
+     */
+    public abstract Set<ComputerListing> fetchDesktopListings();
 
     /**
      * Determines whether this source can parse
@@ -170,17 +186,18 @@ public abstract class LaptopSource implements DataSource
      * @param laptopPageUrl The laptop page URL.
      * @return a LaptopListing containing the parsed information.
      */
-    public abstract LaptopListing fetchLaptopListing(String laptopPageUrl) throws IOException;
+    public abstract ComputerListing fetchListing(String laptopPageUrl) throws IOException;
 
     /**
      * Listing classes hold data parsed from websites
      * in a standard format so that a generic function
      * can use the results to update the database.
      */
-    class LaptopListing
+    class ComputerListing
     {
         String brand;
         String model;
+        boolean portable;
         String displayName;
         String thumbnailUrl;
         String pageUrl;
@@ -206,10 +223,11 @@ public abstract class LaptopSource implements DataSource
         double expectedBatteryLife;
         int batteryCapacity;
 
-        LaptopListing()
+        ComputerListing()
         {
             brand = "Unknown Brand";
             model = "Unknown Model";
+            portable = true;
             displayName = "Unknown";
             thumbnailUrl = "img/cc_laptop.png";
             pageUrl = "";
