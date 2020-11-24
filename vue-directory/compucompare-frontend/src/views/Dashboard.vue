@@ -46,7 +46,7 @@
                 </v-sheet>
               </v-col>
               <v-col>
-                <v-card min-height="70vh">
+                <v-card min-height="50vh">
                   <AdvanceDetails :computer="expandedDevice" />
                 </v-card>
               </v-col>
@@ -119,7 +119,7 @@
                 </v-sheet>
               </v-col>
               <v-col>
-                <v-card min-height="70vh">
+                <v-card min-height="50vh">
                   <CompareDetails :computer="expandedDevice" />
                 </v-card>
               </v-col>
@@ -194,7 +194,7 @@
                 </v-sheet>
               </v-col>
               <v-col>
-                <v-card min-height="70vh">
+                <v-card min-height="50vh">
                   <SurveyAdvanceDetails
                     :computer="testDevice"
                   ></SurveyAdvanceDetails>
