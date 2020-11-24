@@ -9,7 +9,7 @@ export default new Vuex.Store({
 		computers: [],
 		selected: [],
 		filters: {
-            computerTypeSelected : ["Both"],
+            computerTypeSelected : "Both",
             computerBrandSelected : ["All"],
             processorBrandSelected : ["All"],
             //processorModelSelected : [],

@@ -137,10 +137,10 @@ export default{
          //processorModelOptions :  ["i5", "i7", "i9", "Ryzen 5", "Ryzen 7"],
          //graphicsBrandOptions :  ["NVIDIA"],
          ramSizeOptions : ["All", "4", "8", "16", "32"],
-         storageSizeOptions :  ["All", "250GB", "500GB", "1TB"],
+         storageSizeOptions :  ["All", "256", "512", "1000"],
          //screenSizeOptions :  ["13inch", "15inch"],
          selections: {
-            computerTypeSelected : [],
+            computerTypeSelected : "",
             computerBrandSelected : [],
             processorBrandSelected : [],
             processorModelSelected : [],

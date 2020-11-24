@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-main class="blue lighten-5">
+    <v-main class="blue lighten-5" height=100vh>
       <v-window v-model="window">
         <v-window-item>
           <v-container>
