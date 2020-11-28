@@ -32,7 +32,7 @@ public class ComputerRepoImpl implements CustomComputerRepository{
         List<Predicate> predicates = new ArrayList<>();
 
         predicates.add(cb.like(computer.get("brand"), "%" + query + "%"));
-        predicates.add(cb.like(computer.get("model"), "%" + query + "%");
+        predicates.add(cb.like(computer.get("model"), "%" + query + "%"));
         predicates.add(cb.like(cpu.get("brand"), "%" + query + "%"));
         predicates.add(cb.like(cpu.get("model"), "%" + query + "%"));
         predicates.add(cb.like(gpu.get("brand")," %" + query + "%"));
