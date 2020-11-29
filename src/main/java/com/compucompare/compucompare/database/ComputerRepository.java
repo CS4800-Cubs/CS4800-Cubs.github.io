@@ -2,7 +2,6 @@ package com.compucompare.compucompare.database;
 
 import com.compucompare.compucompare.computerType.Computer;
 
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
@@ -11,7 +10,7 @@ import java.util.List;
  * Computer Repository - Store & Retrieve Computer Objects From Database
  * Automatically Implemented By Spring Data
  */
-public interface ComputerRepository extends CrudRepository<Computer, Integer>, JpaRepository<Computer, Integer>
+public interface ComputerRepository extends CrudRepository<Computer, Integer>, CustomComputerRepository
 {
     boolean existsByBrandAndModel(String brand, String model);
 

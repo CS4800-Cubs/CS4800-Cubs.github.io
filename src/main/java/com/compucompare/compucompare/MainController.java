@@ -47,7 +47,7 @@ public class MainController
                                       @RequestParam(value = "minStorage", defaultValue = "0.0") double minStorage,
                                       @RequestParam(value = "maxStorage", defaultValue = "0.0") double maxStorage,
                                       @RequestParam(value = "display", defaultValue = "0.0") double display){
-        Iterable<Computer> computers = laptopRepository.findAll();
+        Iterable<Computer> computers = laptopRepository.findComputerByQuery(query);
 
         Set<SearchResult> results = new TreeSet<>(Comparator.reverseOrder());
         int minRelScore = 1;
