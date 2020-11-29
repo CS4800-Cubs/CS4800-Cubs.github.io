@@ -37,16 +37,7 @@ public class MainController
      * @return A list of Laptop/Computer objects
      */
     @RequestMapping("/generalSearch")
-    public Set<SearchResult> getByFilter(@RequestParam(value = "query", defaultValue = "") String query,
-                                      @RequestParam(value = "portable", defaultValue = "") String portable,
-                                      @RequestParam(value = "brand", defaultValue = "") String brand,
-                                      @RequestParam(value = "cpu", defaultValue = "") String cpu,
-                                      @RequestParam(value = "graphics", defaultValue = "") String graphics,
-                                      @RequestParam(value = "minRam", defaultValue = "0.0") double minRam,
-                                      @RequestParam(value = "maxRam", defaultValue = "0.0") double maxRam,
-                                      @RequestParam(value = "minStorage", defaultValue = "0.0") double minStorage,
-                                      @RequestParam(value = "maxStorage", defaultValue = "0.0") double maxStorage,
-                                      @RequestParam(value = "display", defaultValue = "0.0") double display){
+    public Set<SearchResult> getByFilter(@RequestParam(value = "query", defaultValue = "") String query){
         Iterable<Computer> computers = laptopRepository.findComputerByQuery(query);
 
         Set<SearchResult> results = new TreeSet<>(Comparator.reverseOrder());
