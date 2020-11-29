@@ -53,9 +53,6 @@ public class MainController
         int minRelScore = 1;
 
         for (Computer laptop : computers) {
-            if (!checkFilters(laptop, brand, cpu, graphics, minRam, maxRam, minStorage,
-                    maxStorage, display))
-                continue;
             int relevanceScore = 0;
             query = query.toLowerCase();
             if (query.contains(laptop.getBrand().toLowerCase()))
@@ -77,33 +74,6 @@ public class MainController
         }
         return results;
 
-    }
-
-    public boolean checkFilters(Computer laptop, String brand, String cpu,
-                                String graphics, double minRam, double maxRam, double minStorage,
-                                double maxStorage, double display){
-        Set<StorageComponent> storageSet = laptop.getStorage();
-        
-        if (!brand.isEmpty() && !laptop.getBrand().equals(brand))
-            return false;
-        if(minRam != 0.0 && maxRam != 0.0
-            && laptop.getRam().getMemory() < minRam
-            && laptop.getRam().getMemory() > maxRam)
-            return false;
-        if(!cpu.isEmpty() && !laptop.getProcessor().getBrand().contains(cpu))
-            return false;
-        if(!cpu.isEmpty() && !laptop.getProcessor().getModel().contains(cpu))
-            return false;
-        if(!graphics.isEmpty() && !laptop.getGraphics().getBrand().contains(graphics))
-            return false;
-        double storageTotal = getStorageTotal(storageSet);
-        if(minStorage != 0.0 && maxStorage != 0.0 &&
-            storageTotal < minStorage && storageTotal > maxStorage)
-            return false;
-        if(display != 0.0 && laptop.getDisplay().getSize() != display)
-            return false;
-
-        return true;
     }
 
     public double getStorageTotal(Set<StorageComponent> set){

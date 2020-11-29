@@ -1,7 +1,6 @@
 package com.compucompare.compucompare.database;
 
 import com.compucompare.compucompare.components.CPUComponent;
-import com.compucompare.compucompare.components.DisplayComponent;
 import com.compucompare.compucompare.components.GPUComponent;
 import com.compucompare.compucompare.computerType.Computer;
 
@@ -22,36 +21,40 @@ import java.util.List;
 @Repository
 public class ComputerRepositoryImpl implements CustomComputerRepository{
 
+    private static final int MAX_KEYWORDS = 5;
+
     @Autowired
     EntityManager em;
 
     @Override
     public List<Computer> findComputerByQuery(String query){
+        String[] keywords = query.split(" ", MAX_KEYWORDS);
+
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Computer> cq = cb.createQuery(Computer.class);
 
         Root<Computer> computer = cq.from(Computer.class);
         Path<CPUComponent> cpu = computer.get("processor");
         Path<GPUComponent> gpu = computer.get("graphics");
-        Path<DisplayComponent> display = computer.get("display");
 
         List<Predicate> predicates = new ArrayList<>();
 
-        predicates.add(queryContains(cb, query, computer.get("brand")));
-        predicates.add(queryContains(cb, query, computer.get("model")));
-        predicates.add(queryContains(cb, query, cpu.get("brand")));
-        predicates.add(queryContains(cb, query, cpu.get("model")));
-        predicates.add(queryContains(cb, query, gpu.get("brand")));
-        predicates.add(queryContains(cb, query, gpu.get("model")));
-        predicates.add(queryContains(cb, query, display.get("brand")));
+        for (String keyword : keywords)
+        {
+            predicates.add(queryContains(cb, computer.get("brand"), keyword));
+            predicates.add(queryContains(cb, computer.get("model"), keyword));
+            predicates.add(queryContains(cb, cpu.get("brand"), keyword));
+            predicates.add(queryContains(cb, cpu.get("model"), keyword));
+            predicates.add(queryContains(cb, gpu.get("brand"), keyword));
+            predicates.add(queryContains(cb, gpu.get("model"), keyword));
+        }
 
         cq.where(cb.or(predicates.toArray(new Predicate[predicates.size()])));
         return em.createQuery(cq).getResultList();
     }
 
-    private static Predicate queryContains(CriteriaBuilder cb, String query, Expression<String> expression)
+    private static Predicate queryContains(CriteriaBuilder cb, Expression<String> expression, String keyword)
     {
-        return cb.like(cb.literal(query.toLowerCase()),
-                       cb.concat(cb.concat("%", cb.lower(expression)), "%"));
+        return cb.like(cb.lower(expression), "%" + keyword.toLowerCase() + "%");
     }
 }
